@@ -1,0 +1,15 @@
+{
+  "quiet_hours": { "start": "23:00", "end": "09:00" },
+  "slots_per_cli": { "claude": 1, "codex": 1, "kimi": 1 },
+  "watchdog_stale_min": 15,
+  "run_timeout_sec": 900,
+  "probe_timeout_sec": 90,
+  "council": {
+    "lenses": ["риск", "цена отката", "соответствие контракту владельца", "простота"],
+    "min_advisors": 3,
+    "max_advisors": 5,
+    "synthesis_order": ["claude", "codex", "kimi"]
+  },
+  "orchestrator_cmd": "cd \"$HOME/Проекты/conveyor\" && claude -p \"$(cat ORCHESTRATOR.md; echo; echo '--- ХЭНДОФФ ---'; cat docs/HANDOFF.md 2>/dev/null)\" --permission-mode acceptEdits",
+  "secrets_env": "~/.secrets/olympuz-telegram.env"
+}
