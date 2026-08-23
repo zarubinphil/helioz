@@ -105,9 +105,12 @@ function cmdTask(id, role, forcedCli) {
   const execRec = (() => { try { return JSON.parse(readFileSync(path.join(STATE, 'exec', `${id}.json`), 'utf8')) } catch { return {} } })()
   let cli = forcedCli
   if (!cli) {
+    const verifierPref = t.verifier && t.verifier !== execRec.executor_used ? t.verifier : ''
     const pick = spawnSync(process.execPath, [fileURLToPath(import.meta.url), 'pick',
       '--role', isExec ? 'execute' : 'verify',
-      ...(isExec ? (t.executor ? ['--prefer', t.executor] : []) : ['--exclude', execRec.executor_used || '']),
+      ...(isExec
+        ? (t.executor ? ['--prefer', t.executor] : [])
+        : ['--exclude', execRec.executor_used || '', ...(verifierPref ? ['--prefer', verifierPref] : [])]),
     ], { encoding: 'utf8', env: process.env })
     if (pick.status !== 0) { process.stderr.write(pick.stderr || ''); return 2 }
     cli = pick.stdout.trim().split('\n').pop()
