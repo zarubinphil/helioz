@@ -12,7 +12,8 @@
 //
 // Коды: 0 ok (даже если сеть легла — durable цел) · 2 fail-closed (нет секретов/развилки).
 import { parseArgs } from 'node:util'
-import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync } from 'node:fs'
+import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync, renameSync } from 'node:fs'
+import { spawnSync as spawnSyncLock } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import os from 'node:os'
@@ -41,6 +42,21 @@ function readTg() {
 }
 const redact = (s, token) => (token ? String(s).split(token).join('<token>') : String(s))
 
+// лок от гонок (ревью codex+kimi: параллельные flush → дубль в Telegram, параллельные poll → двойная
+// обработка updates). mkdir атомарен; занято >5с → честный отказ, durable-состояние не трогается.
+async function withLock(name, fn) {
+  const dir = path.join(STATE, `.lock-${name}`)
+  mkdirSync(STATE, { recursive: true })
+  const deadline = Date.now() + 5000
+  for (;;) {
+    try { mkdirSync(dir); break } catch {
+      if (Date.now() > deadline) { console.error(`лок ${name} занят >5с — второй экземпляр не начинает`); return 2 }
+      spawnSyncLock('/bin/sleep', ['0.05'])
+    }
+  }
+  try { return await fn() } finally { rmSync(dir, { recursive: true, force: true }) }
+}
+
 async function tg(method, body, tgc) {
   const res = await fetch(`${API}/bot${tgc.token}/${method}`, {
     method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body),
@@ -64,14 +80,21 @@ function enqueue(msg) {
   writeFileSync(f, JSON.stringify({ ...msg, created_at: now(), delivered_at: null, attempts: 0 }, null, 2) + '\n')
   return f
 }
-async function cmdFlush() {
+async function cmdFlush() { return withLock('outbox', cmdFlushLocked) }
+async function cmdFlushLocked() {
   const tgc = readTg()
   let files = []
-  try { files = readdirSync(OUTBOX).filter(f => f.endsWith('.json')).sort() } catch { }
+  try { files = readdirSync(OUTBOX).filter(f => f.endsWith('.json') && !f.endsWith('.corrupt.json')).sort() } catch { }
   let sent = 0, pending = 0
   for (const f of files) {
     const full = path.join(OUTBOX, f)
-    let m; try { m = JSON.parse(readFileSync(full, 'utf8')) } catch { continue }
+    let m
+    try { m = JSON.parse(readFileSync(full, 'utf8')) } catch {
+      // ревью codex: битый outbox-файл раньше молча выпадал из доставки навсегда — теперь виден
+      renameSync(full, full.replace(/\.json$/, '.corrupt.json'))
+      console.error(`flush: битый файл ${f} → помечен .corrupt.json, разберись руками`)
+      continue
+    }
     if (m.delivered_at) continue
     if (!tgc) { pending++; continue }
     const body = { chat_id: tgc.chat, text: m.text, disable_notification: Boolean(m.quiet) }
@@ -114,6 +137,7 @@ async function cmdAsk(id) {
 
 // --- poll: единственная дверь решений владельца ---------------------------------------------------
 function applyAnswer(d, idx, via) {
+  if (!Array.isArray(d.replay)) d.replay = [] // ревью kimi: развилка от внешнего писателя без replay — не повод падать
   const prev = d.answer
   if (d.status === 'answered' && d.answer === idx) return 'повтор — уже так решено'
   if (d.decided_by === 'council' || d.status === 'answered') {
@@ -126,12 +150,17 @@ function applyAnswer(d, idx, via) {
 function matchDilemma(prefix) {
   let files = []
   try { files = readdirSync(DILEMMAS).filter(f => f.endsWith('.json')) } catch { }
-  const hits = files.map(f => JSON.parse(readFileSync(path.join(DILEMMAS, f), 'utf8')))
-    .filter(d => d.id.startsWith(prefix) && ['asked', 'answered', 'council'].includes(d.status))
+  const hits = []
+  for (const f of files) {
+    // ревью kimi: один битый JSON в каталоге раньше убивал весь poll — включая канал «стоп»
+    let d; try { d = JSON.parse(readFileSync(path.join(DILEMMAS, f), 'utf8')) } catch { console.error(`битая развилка ${f} — пропущена`); continue }
+    if (d && d.id && d.id.startsWith(prefix) && ['asked', 'answered', 'council'].includes(d.status)) hits.push(d)
+  }
   return hits.length === 1 ? hits[0] : (hits.length ? 'ambiguous' : null)
 }
 
-async function cmdPoll(timeoutSec) {
+async function cmdPoll(timeoutSec) { return withLock('poll', () => cmdPollLocked(timeoutSec)) }
+async function cmdPollLocked(timeoutSec) {
   const tgc = readTg()
   if (!tgc) { console.error('нет секретов Telegram — poll невозможен'); return 2 }
   const offFile = path.join(STATE, 'telegram-offset.json')
@@ -146,9 +175,17 @@ async function cmdPoll(timeoutSec) {
   const events = []
   for (const u of r.result) {
     offset = Math.max(offset, u.update_id + 1)
+    // poison-update не смеет заблокировать канал (ревью kimi): ошибка одного update логируется,
+    // offset всё равно продвигается — «стоп» доедет следующим сообщением
+    try {
+      await handleUpdate(u)
+    } catch (e) { console.error(`update ${u.update_id}: ${redact(e.message || e, tgc.token)}`) }
+    continue
+  }
+  async function handleUpdate(u) {
     // чужой отправитель → тишина (не подтверждать существование бота)
     const fromId = String(u.message?.from?.id ?? u.callback_query?.from?.id ?? '')
-    if (fromId !== String(tgc.chat)) continue
+    if (fromId !== String(tgc.chat)) return
     if (u.callback_query) {
       const p = String(u.callback_query.data || '').split(':')
       let reply = 'Не понял кнопку.'
@@ -161,22 +198,22 @@ async function cmdPoll(timeoutSec) {
       }
       try { await tg('answerCallbackQuery', { callback_query_id: u.callback_query.id, text: reply.slice(0, 190) }, tgc) } catch { }
       enqueue({ text: reply, quiet: isQuietHours() })
-      continue
+      return
     }
     const text = (u.message?.text || '').trim()
-    if (!text) continue
+    if (!text) return
     const lower = text.toLowerCase()
     if (lower === 'стоп' || lower === 'stop') {
       writeFileSync(path.join(STATE, 'STOP'), now())
       events.push({ kind: 'stop' })
       enqueue({ text: '🛑 СТОП принят. Всё замораживается; состояние в приборе, ничего не потеряно. Возобновить: «пуск».', quiet: false })
-      continue
+      return
     }
     if (lower === 'пуск' || lower === 'go') {
       rmSync(path.join(STATE, 'STOP'), { force: true })
       events.push({ kind: 'go' })
       enqueue({ text: '▶️ Пуск принят, конвейер продолжает по очереди.', quiet: isQuietHours() })
-      continue
+      return
     }
     const m = text.match(/^\/?(?:replay\s+)?([A-Za-zА-Яа-я0-9_-]+)\s+(\d+)$/)
     if (m) {

@@ -17,7 +17,7 @@
 //
 // Коды: 0 ok · 1 красный · 2 fail-closed (пусто/недостаточно) · 3 бюджет · 4 STOP · 5 пересечение путей.
 import { parseArgs } from 'node:util'
-import { promises as fsp, existsSync, readFileSync, writeFileSync, mkdirSync, mkdtempSync, rmSync, readdirSync, statSync, appendFileSync } from 'node:fs'
+import { promises as fsp, existsSync, readFileSync, writeFileSync, mkdirSync, mkdtempSync, rmSync, readdirSync, statSync, appendFileSync, renameSync } from 'node:fs'
 import { createHash } from 'node:crypto'
 import { execFileSync, spawnSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
@@ -36,7 +36,26 @@ const MARKERS = () => path.join(S.state, 'markers')
 // --- утилиты --------------------------------------------------------------------------------------
 const sha256 = s => createHash('sha256').update(s).digest('hex')
 function readJson(f) { try { return JSON.parse(readFileSync(f, 'utf8')) } catch { return null } }
-function writeJson(f, o) { mkdirSync(path.dirname(f), { recursive: true }); writeFileSync(f, JSON.stringify(o, null, 2) + '\n') }
+// атомарная запись: tmp + rename — смерть процесса не оставляет усечённый JSON (ревью kimi, класс 4)
+function writeJson(f, o) {
+  mkdirSync(path.dirname(f), { recursive: true })
+  const tmp = f + '.tmp-' + process.pid
+  writeFileSync(tmp, JSON.stringify(o, null, 2) + '\n')
+  renameSync(tmp, f)
+}
+// лок от гонок read-modify-write (ревью codex+kimi, класс 5): mkdir атомарен на POSIX
+function withLock(name, fn) {
+  const dir = path.join(S.state, `.lock-${name}`)
+  mkdirSync(S.state, { recursive: true })
+  const deadline = Date.now() + 5000
+  for (;;) {
+    try { mkdirSync(dir); break } catch {
+      if (Date.now() > deadline) { console.error(`лок ${name} занят >5с — отказ (не гонка, а честный красный)`); return 2 }
+      spawnSync('/bin/sleep', ['0.05'])
+    }
+  }
+  try { return fn() } finally { rmSync(dir, { recursive: true, force: true }) }
+}
 function git(args, cwd = HOME) { return execFileSync('git', ['-C', cwd, ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).replace(/\n$/, '') }
 function gitSafe(args, cwd) { try { return git(args, cwd) } catch { return null } }
 const now = () => new Date().toISOString()
@@ -95,9 +114,15 @@ export function readMarker(id) {
   let d
   try { d = JSON.parse(readFileSync(f, 'utf8')) } catch { return { status: 'tampered', reason: 'нечитаемый json' } }
   if (d.written_by !== 'conveyor-gate') return { status: 'tampered', reason: 'нет written_by:"conveyor-gate"', data: d }
-  for (const k of ['task', 'base', 'head', 'sha_of_changed_files', 'exit_code', 'finished_at']) {
+  for (const k of ['task', 'base', 'head', 'sha_of_changed_files', 'finished_at']) {
     if (d[k] === undefined || d[k] === null || d[k] === '') return { status: 'tampered', reason: `нет поля целостности ${k}`, data: d }
   }
+  // ревью codex: маркер обязан быть привязан к СВОЕЙ задаче — копия чужого валидного маркера не проходит
+  if (d.task !== id) return { status: 'tampered', reason: `маркер от другой задачи (${d.task})`, data: d }
+  // ревью codex+kimi: exit_code проверяется на значение, не на наличие
+  if (d.exit_code !== 0) return { status: 'tampered', reason: `exit_code ${d.exit_code} ≠ 0`, data: d }
+  // ревью kimi: base===head даёт пустой diff с всем известным sha256("") — фордж без единой проверки
+  if (d.base === d.head) return { status: 'tampered', reason: 'base === head (пустой diff — не доказательство)', data: d }
   if (!gitSafe(['rev-parse', '--verify', d.head + '^{commit}']) || !gitSafe(['rev-parse', '--verify', d.base + '^{commit}'])) {
     return { status: 'tampered', reason: 'base/head не резолвятся в коммиты', data: d }
   }
@@ -107,7 +132,9 @@ export function readMarker(id) {
 function writeMarker(id, { checkCmd, executor, verifier, base }) {
   mkdirSync(MARKERS(), { recursive: true })
   const head = git(['rev-parse', 'HEAD'])
-  const baseSha = gitSafe(['rev-parse', base || `${head}~1`]) || head
+  const baseSha = gitSafe(['rev-parse', base || `${head}~1`])
+  // ревью kimi: молчаливый фолбэк на head легализовывал пустой diff — теперь честный отказ
+  if (!baseSha || baseSha === head) throw new Error(`маркер ${id}: base не резолвится или совпадает с head — сначала закоммить работу задачи`)
   const marker = {
     task: id, check_cmd: checkCmd || '', exit_code: 0,
     base: baseSha, head, sha_of_changed_files: changedFilesSha(baseSha, head),
@@ -120,10 +147,15 @@ function writeMarker(id, { checkCmd, executor, verifier, base }) {
 
 // --- running / STOP / heartbeat -------------------------------------------------------------------
 function readRunning() {
-  const j = readJson(path.join(S.state, 'running.json'))
-  return { running: j && Array.isArray(j.running) ? j.running : [] }
+  const f = path.join(S.state, 'running.json')
+  if (!existsSync(f)) return { running: [] }
+  const j = readJson(f)
+  // ревью codex+kimi: битый running.json раньше молча становился пустым (fail-open — слоты и
+  // пересечения отключались). Теперь это честный красный: чинить руками, не угадывать.
+  if (!j || !Array.isArray(j.running)) return { running: [], corrupt: true }
+  return { running: j.running }
 }
-const writeRunning = st => writeJson(path.join(S.state, 'running.json'), st)
+const writeRunning = st => writeJson(path.join(S.state, 'running.json'), { running: st.running })
 const stopFile = () => path.join(S.state, 'STOP')
 const stopped = () => existsSync(stopFile())
 
@@ -132,7 +164,9 @@ async function cmdReady(json) {
   if (stopped()) { console.error('STOP на диске — конвейер заморожен (снять: --go или «пуск» в Зевса)'); return 4 }
   const tasks = await loadTasks()
   if (!tasks.size) { console.error('очередь пуста — fail-closed'); return 2 }
-  const running = readRunning().running
+  const rst = readRunning()
+  if (rst.corrupt) { console.error('running.json нечитаем — fail-closed, почини или удали файл руками'); return 2 }
+  const running = rst.running
   const runningIds = new Set(running.map(r => r.task))
   const busyPaths = new Set(), busyCli = new Set()
   for (const r of running) {
@@ -171,28 +205,34 @@ async function cmdStart(id, executor) {
   const t = tasks.get(id)
   if (!t) { console.error(`задача ${id} не в очереди`); return 2 }
   if (!t.valid) { console.error(`задача ${id} без check_cmd — в конвейер не принимается`); return 2 }
-  const st = readRunning()
-  if (st.running.some(r => r.task === id)) { console.error(`${id} уже бежит`); return 1 }
-  // Непересечение файлов сторожит КОД до запуска, не договорённость.
-  for (const r of st.running) {
-    const rt = tasks.get(r.task)
-    const inter = rt ? t.paths.filter(p => rt.paths.includes(p)) : []
-    if (inter.length) { console.error(`ОТКАЗ: пересечение путей с ${r.task}: ${inter.join(', ')}`); return 5 }
-  }
-  const cli = executor || t.executor || null
-  if (cli && st.running.some(r => r.executor === cli)) { console.error(`ОТКАЗ: слот CLI ${cli} занят`); return 5 }
-  st.running.push({ task: id, executor: cli, started_at: now() })
-  writeRunning(st)
-  console.log(`start: бегут ${st.running.map(r => r.task).join(', ')}`)
-  return 0
+  return withLock('running', () => {
+    const st = readRunning()
+    if (st.corrupt) { console.error('running.json нечитаем — fail-closed'); return 2 }
+    if (st.running.some(r => r.task === id)) { console.error(`${id} уже бежит`); return 1 }
+    // Непересечение файлов сторожит КОД до запуска, не договорённость.
+    for (const r of st.running) {
+      const rt = tasks.get(r.task)
+      const inter = rt ? t.paths.filter(p => rt.paths.includes(p)) : []
+      if (inter.length) { console.error(`ОТКАЗ: пересечение путей с ${r.task}: ${inter.join(', ')}`); return 5 }
+    }
+    const cli = executor || t.executor || null
+    if (cli && st.running.some(r => r.executor === cli)) { console.error(`ОТКАЗ: слот CLI ${cli} занят`); return 5 }
+    st.running.push({ task: id, executor: cli, started_at: now() })
+    writeRunning(st)
+    console.log(`start: бегут ${st.running.map(r => r.task).join(', ')}`)
+    return 0
+  })
 }
 
 function cmdFinish(id) {
-  const st = readRunning()
-  st.running = st.running.filter(r => r.task !== id)
-  writeRunning(st)
-  console.log(`finish: бегут ${st.running.length ? st.running.map(r => r.task).join(', ') : '(никто)'}`)
-  return 0
+  return withLock('running', () => {
+    const st = readRunning()
+    if (st.corrupt) { console.error('running.json нечитаем — fail-closed'); return 2 }
+    st.running = st.running.filter(r => r.task !== id)
+    writeRunning(st)
+    console.log(`finish: бегут ${st.running.length ? st.running.map(r => r.task).join(', ') : '(никто)'}`)
+    return 0
+  })
 }
 
 async function cmdTask(id, opts) {
@@ -324,6 +364,11 @@ async function kimiSpend(since) {
 async function cmdBudget(json) {
   const b = readJson(path.join(S.state, 'budget.json'))
   if (!b) { console.error('budget.json отсутствует — потолок не подтверждён'); return 2 }
+  // ревью codex+kimi: раньше недоступность ВСЕХ источников логов давала расход 0 и зелёный при
+  // любом реальном перерасходе. С потолком и нулём читаемых источников — честный красный.
+  const roots = [claudeProjDir(), path.join(os.homedir(), '.codex', 'sessions'), path.join(os.homedir(), '.kimi-code', 'session_index.jsonl')]
+  const hasCeiling = (Number.isFinite(b.ceiling_tokens) && b.ceiling_tokens > 0) || (Number.isFinite(b.ceiling_usd) && b.ceiling_usd > 0)
+  if (hasCeiling && !roots.some(r => existsSync(r))) { console.error('расход неизвестен: ни один источник логов CLI не читается — fail-closed'); return 2 }
   const since = b.started_at && !Number.isNaN(Date.parse(b.started_at)) ? Date.parse(b.started_at) : new Date().setHours(0, 0, 0, 0)
   const [c, x, k] = await Promise.all([claudeSpend(since).catch(() => ({ tokens: 0, usd: 0 })), codexSpend(since).catch(() => ({ tokens: 0, usd: 0 })), kimiSpend(since).catch(() => ({ tokens: 0, usd: 0 }))])
   const tokens = c.tokens + x.tokens + k.tokens, usd = c.usd + x.usd + k.usd
@@ -337,6 +382,9 @@ async function cmdBudget(json) {
 // --- adopt: приём чужого ledger и развилок, идемпотентно, без потерь ------------------------------
 function cmdAdopt(dir) {
   if (!dir || !existsSync(dir)) { console.error('adopt: каталог не найден — fail-closed'); return 2 }
+  return withLock('adopt', () => cmdAdoptLocked(dir))
+}
+function cmdAdoptLocked(dir) {
   let addedLedger = 0, addedDil = 0, skipped = 0
   const ledgerFile = path.join(S.state, 'ledger.jsonl')
   mkdirSync(S.state, { recursive: true })
@@ -394,6 +442,10 @@ async function cmdSelftest() {
     writeFileSync(path.join(tmp, 'seed.txt'), 'seed\n')
     execFileSync('git', ['-C', tmp, 'add', '-A'])
     execFileSync('git', ['-C', tmp, '-c', 'user.email=g@c', '-c', 'user.name=gate', 'commit', '-qm', 'seed'])
+    // второй коммит: маркер требует base≠head с реальным diff (пустой diff = фордж, ревью kimi)
+    writeFileSync(path.join(tmp, 'seed.txt'), 'seed\nwork\n')
+    execFileSync('git', ['-C', tmp, 'add', '-A'])
+    execFileSync('git', ['-C', tmp, '-c', 'user.email=g@c', '-c', 'user.name=gate', 'commit', '-qm', 'work'])
 
     // пустая очередь → exit 2 (fail-closed)
     eq(run(['--ready']).status, 2, 'пустая очередь обязана давать 2')
@@ -437,6 +489,22 @@ async function cmdSelftest() {
     // повреждение содержимого: sha пересчитается и не совпадёт
     writeFileSync(af, JSON.stringify({ ...good, sha_of_changed_files: 'deadbeef' }) + '\n')
     eq(run(['--require', 'A']).status, 2, 'битый sha обязан быть tampered')
+    // ревью codex: копия чужого ВАЛИДНОГО маркера → tampered (маркер не привязан был к id)
+    writeFileSync(path.join(tmp, '.conveyor', 'state', 'markers', 'C.done.json'), JSON.stringify(good) + '\n')
+    eq(run(['--require', 'C']).status, 2, 'чужой валидный маркер копией обязан быть tampered')
+    // ревью codex+kimi: exit_code ≠ 0 → tampered
+    writeFileSync(af, JSON.stringify({ ...good, exit_code: 1 }) + '\n')
+    eq(run(['--require', 'A']).status, 2, 'exit_code 1 обязан быть tampered')
+    // ревью kimi: base === head (пустой diff, известный sha256("")) → tampered
+    writeFileSync(af, JSON.stringify({ ...good, base: good.head, sha_of_changed_files: sha256('') }) + '\n')
+    eq(run(['--require', 'A']).status, 2, 'base===head обязан быть tampered')
+    writeFileSync(af, JSON.stringify(good) + '\n')
+    eq(run(['--require', 'A']).status, 0, 'восстановленный честный маркер снова done')
+    // ревью codex+kimi: битый running.json → fail-closed, не пустой список
+    writeFileSync(path.join(tmp, '.conveyor', 'state', 'running.json'), '{')
+    eq(run(['--ready']).status, 2, 'битый running.json обязан давать fail-closed')
+    eq(run(['--start', 'C']).status, 2, 'старт при битом running.json запрещён')
+    rmSync(path.join(tmp, '.conveyor', 'state', 'running.json'))
 
     // requires: D ждёт маркер E
     mk('D', ['docs/d.md'], 'requires: [E]\n')

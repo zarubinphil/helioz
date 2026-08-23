@@ -1,0 +1,3968 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "conveyor-zeus.mjs",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L1",
+      "id": "scripts_conveyor_zeus_mjs",
+      "community": 1,
+      "norm_label": "conveyor-zeus.mjs"
+    },
+    {
+      "label": "CFG",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L21",
+      "id": "scripts_conveyor_zeus_cfg",
+      "community": 1,
+      "norm_label": "cfg"
+    },
+    {
+      "label": "STATE",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L22",
+      "id": "scripts_conveyor_zeus_state",
+      "community": 1,
+      "norm_label": "state"
+    },
+    {
+      "label": "OUTBOX",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L23",
+      "id": "scripts_conveyor_zeus_outbox",
+      "community": 1,
+      "norm_label": "outbox"
+    },
+    {
+      "label": "DILEMMAS",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L24",
+      "id": "scripts_conveyor_zeus_dilemmas",
+      "community": 1,
+      "norm_label": "dilemmas"
+    },
+    {
+      "label": "now()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L27",
+      "id": "scripts_conveyor_zeus_now",
+      "community": 1,
+      "norm_label": "now()"
+    },
+    {
+      "label": "readTg()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L30",
+      "id": "scripts_conveyor_zeus_readtg",
+      "community": 1,
+      "norm_label": "readtg()"
+    },
+    {
+      "label": "redact()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L42",
+      "id": "scripts_conveyor_zeus_redact",
+      "community": 1,
+      "norm_label": "redact()"
+    },
+    {
+      "label": "tg()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L44",
+      "id": "scripts_conveyor_zeus_tg",
+      "community": 1,
+      "norm_label": "tg()"
+    },
+    {
+      "label": "isQuietHours()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L54",
+      "id": "scripts_conveyor_zeus_isquiethours",
+      "community": 1,
+      "norm_label": "isquiethours()"
+    },
+    {
+      "label": "enqueue()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L61",
+      "id": "scripts_conveyor_zeus_enqueue",
+      "community": 1,
+      "norm_label": "enqueue()"
+    },
+    {
+      "label": "cmdFlush()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L67",
+      "id": "scripts_conveyor_zeus_cmdflush",
+      "community": 1,
+      "norm_label": "cmdflush()"
+    },
+    {
+      "label": "cmdSend()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L89",
+      "id": "scripts_conveyor_zeus_cmdsend",
+      "community": 1,
+      "norm_label": "cmdsend()"
+    },
+    {
+      "label": "readDilemma()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L96",
+      "id": "scripts_conveyor_zeus_readdilemma",
+      "community": 1,
+      "norm_label": "readdilemma()"
+    },
+    {
+      "label": "writeDilemma()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L100",
+      "id": "scripts_conveyor_zeus_writedilemma",
+      "community": 1,
+      "norm_label": "writedilemma()"
+    },
+    {
+      "label": "cmdAsk()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L102",
+      "id": "scripts_conveyor_zeus_cmdask",
+      "community": 1,
+      "norm_label": "cmdask()"
+    },
+    {
+      "label": "applyAnswer()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L116",
+      "id": "scripts_conveyor_zeus_applyanswer",
+      "community": 1,
+      "norm_label": "applyanswer()"
+    },
+    {
+      "label": "matchDilemma()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L126",
+      "id": "scripts_conveyor_zeus_matchdilemma",
+      "community": 1,
+      "norm_label": "matchdilemma()"
+    },
+    {
+      "label": "cmdPoll()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L134",
+      "id": "scripts_conveyor_zeus_cmdpoll",
+      "community": 1,
+      "norm_label": "cmdpoll()"
+    },
+    {
+      "label": "cmdSelftest()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L198",
+      "id": "scripts_conveyor_zeus_cmdselftest",
+      "community": 1,
+      "norm_label": "cmdselftest()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L301",
+      "id": "scripts_conveyor_zeus_main",
+      "community": 1,
+      "norm_label": "main()"
+    },
+    {
+      "label": "conveyor-exec.mjs",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L1",
+      "id": "scripts_conveyor_exec_mjs",
+      "community": 2,
+      "norm_label": "conveyor-exec.mjs"
+    },
+    {
+      "label": "CFG",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L22",
+      "id": "scripts_conveyor_exec_cfg",
+      "community": 2,
+      "norm_label": "cfg"
+    },
+    {
+      "label": "CLIS",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L23",
+      "id": "scripts_conveyor_exec_clis",
+      "community": 2,
+      "norm_label": "clis"
+    },
+    {
+      "label": "STATE",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L24",
+      "id": "scripts_conveyor_exec_state",
+      "community": 2,
+      "norm_label": "state"
+    },
+    {
+      "label": "HEALTH",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L25",
+      "id": "scripts_conveyor_exec_health",
+      "community": 2,
+      "norm_label": "health"
+    },
+    {
+      "label": "now()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L26",
+      "id": "scripts_conveyor_exec_now",
+      "community": 2,
+      "norm_label": "now()"
+    },
+    {
+      "label": "cliNames()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L27",
+      "id": "scripts_conveyor_exec_clinames",
+      "community": 2,
+      "norm_label": "clinames()"
+    },
+    {
+      "label": "invokeCli()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L30",
+      "id": "scripts_conveyor_exec_invokecli",
+      "community": 2,
+      "norm_label": "invokecli()"
+    },
+    {
+      "label": "readHealth()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L54",
+      "id": "scripts_conveyor_exec_readhealth",
+      "community": 2,
+      "norm_label": "readhealth()"
+    },
+    {
+      "label": "probeOne()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L55",
+      "id": "scripts_conveyor_exec_probeone",
+      "community": 2,
+      "norm_label": "probeone()"
+    },
+    {
+      "label": "cmdProbe()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L64",
+      "id": "scripts_conveyor_exec_cmdprobe",
+      "community": 2,
+      "norm_label": "cmdprobe()"
+    },
+    {
+      "label": "cmdPick()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L73",
+      "id": "scripts_conveyor_exec_cmdpick",
+      "community": 2,
+      "norm_label": "cmdpick()"
+    },
+    {
+      "label": "loadTask()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L90",
+      "id": "scripts_conveyor_exec_loadtask",
+      "community": 2,
+      "norm_label": "loadtask()"
+    },
+    {
+      "label": "cmdTask()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L98",
+      "id": "scripts_conveyor_exec_cmdtask",
+      "community": 2,
+      "norm_label": "cmdtask()"
+    },
+    {
+      "label": "cmdRun()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L134",
+      "id": "scripts_conveyor_exec_cmdrun",
+      "community": 2,
+      "norm_label": "cmdrun()"
+    },
+    {
+      "label": "cmdSelftest()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L143",
+      "id": "scripts_conveyor_exec_cmdselftest",
+      "community": 2,
+      "norm_label": "cmdselftest()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L212",
+      "id": "scripts_conveyor_exec_main",
+      "community": 2,
+      "norm_label": "main()"
+    },
+    {
+      "label": "lesson-check.mjs",
+      "file_type": "code",
+      "source_file": "scripts/lesson-check.mjs",
+      "source_location": "L1",
+      "id": "scripts_lesson_check_mjs",
+      "community": 9,
+      "norm_label": "lesson-check.mjs"
+    },
+    {
+      "label": "clis",
+      "file_type": "code",
+      "source_file": "scripts/lesson-check.mjs",
+      "source_location": "L16",
+      "id": "scripts_lesson_check_clis",
+      "community": 9,
+      "norm_label": "clis"
+    },
+    {
+      "label": "row",
+      "file_type": "code",
+      "source_file": "scripts/lesson-check.mjs",
+      "source_location": "L19",
+      "id": "scripts_lesson_check_row",
+      "community": 9,
+      "norm_label": "row"
+    },
+    {
+      "label": "conveyor-council.mjs",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L1",
+      "id": "scripts_conveyor_council_mjs",
+      "community": 3,
+      "norm_label": "conveyor-council.mjs"
+    },
+    {
+      "label": "CFG",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L21",
+      "id": "scripts_conveyor_council_cfg",
+      "community": 3,
+      "norm_label": "cfg"
+    },
+    {
+      "label": "STATE",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L22",
+      "id": "scripts_conveyor_council_state",
+      "community": 3,
+      "norm_label": "state"
+    },
+    {
+      "label": "DILEMMAS",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L23",
+      "id": "scripts_conveyor_council_dilemmas",
+      "community": 3,
+      "norm_label": "dilemmas"
+    },
+    {
+      "label": "EXEC",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L24",
+      "id": "scripts_conveyor_council_exec",
+      "community": 3,
+      "norm_label": "exec"
+    },
+    {
+      "label": "now()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L25",
+      "id": "scripts_conveyor_council_now",
+      "community": 3,
+      "norm_label": "now()"
+    },
+    {
+      "label": "FORBIDDEN",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L26",
+      "id": "scripts_conveyor_council_forbidden",
+      "community": 3,
+      "norm_label": "forbidden"
+    },
+    {
+      "label": "isQuiet()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L28",
+      "id": "scripts_conveyor_council_isquiet",
+      "community": 3,
+      "norm_label": "isquiet()"
+    },
+    {
+      "label": "ownerGoal()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L39",
+      "id": "scripts_conveyor_council_ownergoal",
+      "community": 3,
+      "norm_label": "ownergoal()"
+    },
+    {
+      "label": "advisorPrompt()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L53",
+      "id": "scripts_conveyor_council_advisorprompt",
+      "community": 3,
+      "norm_label": "advisorprompt()"
+    },
+    {
+      "label": "parseChoice()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L74",
+      "id": "scripts_conveyor_council_parsechoice",
+      "community": 3,
+      "norm_label": "parsechoice()"
+    },
+    {
+      "label": "cmdDecide()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L82",
+      "id": "scripts_conveyor_council_cmddecide",
+      "community": 3,
+      "norm_label": "cmddecide()"
+    },
+    {
+      "label": "cmdSelftest()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L194",
+      "id": "scripts_conveyor_council_cmdselftest",
+      "community": 3,
+      "norm_label": "cmdselftest()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L290",
+      "id": "scripts_conveyor_council_main",
+      "community": 3,
+      "norm_label": "main()"
+    },
+    {
+      "label": "conveyor-gate.mjs",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L1",
+      "id": "scripts_conveyor_gate_mjs",
+      "community": 0,
+      "norm_label": "conveyor-gate.mjs"
+    },
+    {
+      "label": "S",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L29",
+      "id": "scripts_conveyor_gate_s",
+      "community": 0,
+      "norm_label": "s"
+    },
+    {
+      "label": "MARKERS()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L34",
+      "id": "scripts_conveyor_gate_markers",
+      "community": 0,
+      "norm_label": "markers()"
+    },
+    {
+      "label": "sha256()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L37",
+      "id": "scripts_conveyor_gate_sha256",
+      "community": 0,
+      "norm_label": "sha256()"
+    },
+    {
+      "label": "readJson()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L38",
+      "id": "scripts_conveyor_gate_readjson",
+      "community": 0,
+      "norm_label": "readjson()"
+    },
+    {
+      "label": "writeJson()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L39",
+      "id": "scripts_conveyor_gate_writejson",
+      "community": 0,
+      "norm_label": "writejson()"
+    },
+    {
+      "label": "git()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L40",
+      "id": "scripts_conveyor_gate_git",
+      "community": 0,
+      "norm_label": "git()"
+    },
+    {
+      "label": "gitSafe()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L41",
+      "id": "scripts_conveyor_gate_gitsafe",
+      "community": 0,
+      "norm_label": "gitsafe()"
+    },
+    {
+      "label": "now()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L42",
+      "id": "scripts_conveyor_gate_now",
+      "community": 0,
+      "norm_label": "now()"
+    },
+    {
+      "label": "parseTask()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L45",
+      "id": "scripts_conveyor_gate_parsetask",
+      "community": 0,
+      "norm_label": "parsetask()"
+    },
+    {
+      "label": "loadTasks()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L73",
+      "id": "scripts_conveyor_gate_loadtasks",
+      "community": 0,
+      "norm_label": "loadtasks()"
+    },
+    {
+      "label": "markerFile()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L85",
+      "id": "scripts_conveyor_gate_markerfile",
+      "community": 0,
+      "norm_label": "markerfile()"
+    },
+    {
+      "label": "changedFilesSha()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L86",
+      "id": "scripts_conveyor_gate_changedfilessha",
+      "community": 0,
+      "norm_label": "changedfilessha()"
+    },
+    {
+      "label": "readMarker()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L92",
+      "id": "scripts_conveyor_gate_readmarker",
+      "community": 0,
+      "norm_label": "readmarker()"
+    },
+    {
+      "label": "writeMarker()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L107",
+      "id": "scripts_conveyor_gate_writemarker",
+      "community": 0,
+      "norm_label": "writemarker()"
+    },
+    {
+      "label": "readRunning()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L122",
+      "id": "scripts_conveyor_gate_readrunning",
+      "community": 0,
+      "norm_label": "readrunning()"
+    },
+    {
+      "label": "writeRunning()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L126",
+      "id": "scripts_conveyor_gate_writerunning",
+      "community": 0,
+      "norm_label": "writerunning()"
+    },
+    {
+      "label": "stopFile()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L127",
+      "id": "scripts_conveyor_gate_stopfile",
+      "community": 0,
+      "norm_label": "stopfile()"
+    },
+    {
+      "label": "stopped()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L128",
+      "id": "scripts_conveyor_gate_stopped",
+      "community": 0,
+      "norm_label": "stopped()"
+    },
+    {
+      "label": "cmdReady()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L131",
+      "id": "scripts_conveyor_gate_cmdready",
+      "community": 0,
+      "norm_label": "cmdready()"
+    },
+    {
+      "label": "cmdStart()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L168",
+      "id": "scripts_conveyor_gate_cmdstart",
+      "community": 0,
+      "norm_label": "cmdstart()"
+    },
+    {
+      "label": "cmdFinish()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L190",
+      "id": "scripts_conveyor_gate_cmdfinish",
+      "community": 0,
+      "norm_label": "cmdfinish()"
+    },
+    {
+      "label": "cmdTask()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L198",
+      "id": "scripts_conveyor_gate_cmdtask",
+      "community": 0,
+      "norm_label": "cmdtask()"
+    },
+    {
+      "label": "cmdRequire()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L215",
+      "id": "scripts_conveyor_gate_cmdrequire",
+      "community": 0,
+      "norm_label": "cmdrequire()"
+    },
+    {
+      "label": "cmdStatus()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L228",
+      "id": "scripts_conveyor_gate_cmdstatus",
+      "community": 0,
+      "norm_label": "cmdstatus()"
+    },
+    {
+      "label": "cmdBeat()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L251",
+      "id": "scripts_conveyor_gate_cmdbeat",
+      "community": 0,
+      "norm_label": "cmdbeat()"
+    },
+    {
+      "label": "CLAUDE_RATES",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L258",
+      "id": "scripts_conveyor_gate_claude_rates",
+      "community": 0,
+      "norm_label": "claude_rates"
+    },
+    {
+      "label": "claudeProjDir()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L260",
+      "id": "scripts_conveyor_gate_claudeprojdir",
+      "community": 0,
+      "norm_label": "claudeprojdir()"
+    },
+    {
+      "label": "claudeRate()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L261",
+      "id": "scripts_conveyor_gate_clauderate",
+      "community": 0,
+      "norm_label": "clauderate()"
+    },
+    {
+      "label": "claudeSpend()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L262",
+      "id": "scripts_conveyor_gate_claudespend",
+      "community": 0,
+      "norm_label": "claudespend()"
+    },
+    {
+      "label": "codexSpend()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L283",
+      "id": "scripts_conveyor_gate_codexspend",
+      "community": 0,
+      "norm_label": "codexspend()"
+    },
+    {
+      "label": "kimiSpend()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L301",
+      "id": "scripts_conveyor_gate_kimispend",
+      "community": 0,
+      "norm_label": "kimispend()"
+    },
+    {
+      "label": "cmdBudget()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L324",
+      "id": "scripts_conveyor_gate_cmdbudget",
+      "community": 0,
+      "norm_label": "cmdbudget()"
+    },
+    {
+      "label": "cmdAdopt()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L338",
+      "id": "scripts_conveyor_gate_cmdadopt",
+      "community": 0,
+      "norm_label": "cmdadopt()"
+    },
+    {
+      "label": "cmdSelftest()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L371",
+      "id": "scripts_conveyor_gate_cmdselftest",
+      "community": 0,
+      "norm_label": "cmdselftest()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L474",
+      "id": "scripts_conveyor_gate_main",
+      "community": 0,
+      "norm_label": "main()"
+    },
+    {
+      "label": "conveyor-probes.mjs",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L1",
+      "id": "scripts_conveyor_probes_mjs",
+      "community": 6,
+      "norm_label": "conveyor-probes.mjs"
+    },
+    {
+      "label": "SCRIPTS",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L13",
+      "id": "scripts_conveyor_probes_scripts",
+      "community": 6,
+      "norm_label": "scripts"
+    },
+    {
+      "label": "now()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L15",
+      "id": "scripts_conveyor_probes_now",
+      "community": 6,
+      "norm_label": "now()"
+    },
+    {
+      "label": "results",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L16",
+      "id": "scripts_conveyor_probes_results",
+      "community": 6,
+      "norm_label": "results"
+    },
+    {
+      "label": "probe()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L17",
+      "id": "scripts_conveyor_probes_probe",
+      "community": 6,
+      "norm_label": "probe()"
+    },
+    {
+      "label": "mkHome()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L22",
+      "id": "scripts_conveyor_probes_mkhome",
+      "community": 6,
+      "norm_label": "mkhome()"
+    },
+    {
+      "label": "task()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L41",
+      "id": "scripts_conveyor_probes_task",
+      "community": 6,
+      "norm_label": "task()"
+    },
+    {
+      "label": "gate()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L42",
+      "id": "scripts_conveyor_probes_gate",
+      "community": 6,
+      "norm_label": "gate()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L44",
+      "id": "scripts_conveyor_probes_main",
+      "community": 6,
+      "norm_label": "main()"
+    },
+    {
+      "label": "ORCHESTRATOR.md",
+      "file_type": "document",
+      "source_file": "ORCHESTRATOR.md",
+      "source_location": "L1",
+      "id": "orchestrator_md",
+      "community": 5,
+      "norm_label": "orchestrator.md"
+    },
+    {
+      "label": "\u041f\u0420\u041e\u041c\u0422 \u041e\u0420\u041a\u0415\u0421\u0422\u0420\u0410\u0422\u041e\u0420\u0410 \u041a\u041e\u041d\u0412\u0415\u0419\u0415\u0420\u0410 \u2014 \u0437\u0430\u043c\u043e\u0440\u043e\u0436\u0435\u043d, \u0438\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u044f \u0442\u043e\u043b\u044c\u043a\u043e \u0440\u0435\u0448\u0435\u043d\u0438\u0435\u043c \u0432\u043b\u0430\u0434\u0435\u043b\u044c\u0446\u0430",
+      "file_type": "document",
+      "source_file": "ORCHESTRATOR.md",
+      "source_location": "L1",
+      "id": "conveyor_orchestrator",
+      "community": 5,
+      "norm_label": "\u043f\u0440\u043e\u043c\u0442 \u043e\u0440\u043a\u0435\u0441\u0442\u0440\u0430\u0442\u043e\u0440\u0430 \u043a\u043e\u043d\u0432\u0435\u0438\u0435\u0440\u0430 \u2014 \u0437\u0430\u043c\u043e\u0440\u043e\u0436\u0435\u043d, \u0438\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u044f \u0442\u043e\u043b\u044c\u043a\u043e \u0440\u0435\u0448\u0435\u043d\u0438\u0435\u043c \u0432\u043b\u0430\u0434\u0435\u043b\u044c\u0446\u0430"
+    },
+    {
+      "label": "\u0420\u043e\u043b\u044c",
+      "file_type": "document",
+      "source_file": "ORCHESTRATOR.md",
+      "source_location": "L7",
+      "id": "conveyor_orchestrator_7",
+      "community": 5,
+      "norm_label": "\u0440\u043e\u043b\u044c"
+    },
+    {
+      "label": "\u041f\u0440\u0438\u0431\u043e\u0440\u044b (\u0442\u043e\u043b\u044c\u043a\u043e \u043e\u043d\u0438 \u043f\u0438\u0448\u0443\u0442 \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435)",
+      "file_type": "document",
+      "source_file": "ORCHESTRATOR.md",
+      "source_location": "L12",
+      "id": "conveyor_orchestrator_12",
+      "community": 5,
+      "norm_label": "\u043f\u0440\u0438\u0431\u043e\u0440\u044b (\u0442\u043e\u043b\u044c\u043a\u043e \u043e\u043d\u0438 \u043f\u0438\u0448\u0443\u0442 \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435)"
+    },
+    {
+      "label": "\u041f\u043e\u0441\u0442\u0430\u043d\u043e\u0432\u043a\u0430 \u0440\u0430\u0431\u043e\u0442\u044b (\u043d\u0430\u0447\u0430\u043b\u043e \u043a\u0430\u0436\u0434\u043e\u0439 \u043c\u0438\u0441\u0441\u0438\u0438)",
+      "file_type": "document",
+      "source_file": "ORCHESTRATOR.md",
+      "source_location": "L18",
+      "id": "conveyor_orchestrator_18",
+      "community": 5,
+      "norm_label": "\u043f\u043e\u0441\u0442\u0430\u043d\u043e\u0432\u043a\u0430 \u0440\u0430\u0431\u043e\u0442\u044b (\u043d\u0430\u0447\u0430\u043b\u043e \u043a\u0430\u0436\u0434\u043e\u0438 \u043c\u0438\u0441\u0441\u0438\u0438)"
+    },
+    {
+      "label": "\u0422\u0430\u043a\u0442 (\u043f\u043e\u0432\u0442\u043e\u0440\u044f\u0439 \u0431\u0435\u0441\u043a\u043e\u043d\u0435\u0447\u043d\u043e)",
+      "file_type": "document",
+      "source_file": "ORCHESTRATOR.md",
+      "source_location": "L28",
+      "id": "conveyor_orchestrator_28",
+      "community": 5,
+      "norm_label": "\u0442\u0430\u043a\u0442 (\u043f\u043e\u0432\u0442\u043e\u0440\u044f\u0438 \u0431\u0435\u0441\u043a\u043e\u043d\u0435\u0447\u043d\u043e)"
+    },
+    {
+      "label": "\u0420\u0430\u0437\u0432\u0438\u043b\u043a\u0438",
+      "file_type": "document",
+      "source_file": "ORCHESTRATOR.md",
+      "source_location": "L44",
+      "id": "conveyor_orchestrator_44",
+      "community": 5,
+      "norm_label": "\u0440\u0430\u0437\u0432\u0438\u043b\u043a\u0438"
+    },
+    {
+      "label": "\u041a\u043e\u043d\u0442\u0435\u043a\u0441\u0442 \u043d\u0430 \u0438\u0441\u0445\u043e\u0434\u0435",
+      "file_type": "document",
+      "source_file": "ORCHESTRATOR.md",
+      "source_location": "L54",
+      "id": "conveyor_orchestrator_54",
+      "community": 5,
+      "norm_label": "\u043a\u043e\u043d\u0442\u0435\u043a\u0441\u0442 \u043d\u0430 \u0438\u0441\u0445\u043e\u0434\u0435"
+    },
+    {
+      "label": "\u0417\u0430\u043f\u0440\u0435\u0442\u044b (\u0436\u0451\u0441\u0442\u043a\u043e)",
+      "file_type": "document",
+      "source_file": "ORCHESTRATOR.md",
+      "source_location": "L60",
+      "id": "conveyor_orchestrator_60",
+      "community": 5,
+      "norm_label": "\u0437\u0430\u043f\u0440\u0435\u0442\u044b (\u0436\u0435\u0441\u0442\u043a\u043e)"
+    },
+    {
+      "label": "\u0424\u0438\u043d\u0430\u043b \u043c\u0438\u0441\u0441\u0438\u0438",
+      "file_type": "document",
+      "source_file": "ORCHESTRATOR.md",
+      "source_location": "L66",
+      "id": "conveyor_orchestrator_66",
+      "community": 5,
+      "norm_label": "\u0444\u0438\u043d\u0430\u043b \u043c\u0438\u0441\u0441\u0438\u0438"
+    },
+    {
+      "label": "README.md",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L1",
+      "id": "readme_md",
+      "community": 7,
+      "norm_label": "readme.md"
+    },
+    {
+      "label": "\u041a\u043e\u043d\u0432\u0435\u0439\u0435\u0440 \u043d\u0435\u043f\u0440\u0435\u0440\u044b\u0432\u043d\u043e\u0439 \u0440\u0430\u0431\u043e\u0442\u044b (24/7)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L1",
+      "id": "conveyor_readme_24_7",
+      "community": 7,
+      "norm_label": "\u043a\u043e\u043d\u0432\u0435\u0438\u0435\u0440 \u043d\u0435\u043f\u0440\u0435\u0440\u044b\u0432\u043d\u043e\u0438 \u0440\u0430\u0431\u043e\u0442\u044b (24/7)"
+    },
+    {
+      "label": "\u0417\u0430\u043f\u0443\u0441\u043a \u043e\u0434\u043d\u043e\u0439 \u0441\u0442\u0440\u043e\u043a\u043e\u0439",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L8",
+      "id": "conveyor_readme",
+      "community": 7,
+      "norm_label": "\u0437\u0430\u043f\u0443\u0441\u043a \u043e\u0434\u043d\u043e\u0438 \u0441\u0442\u0440\u043e\u043a\u043e\u0438"
+    },
+    {
+      "label": "code:bash (cd ~/\u041f\u0440\u043e\u0435\u043a\u0442\u044b/conveyor && bash scripts/conveyor-start.sh)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L10",
+      "id": "conveyor_readme_codeblock_1",
+      "community": 7,
+      "norm_label": "code:bash (cd ~/\u043f\u0440\u043e\u0435\u043a\u0442\u044b/conveyor && bash scripts/conveyor-start.sh)"
+    },
+    {
+      "label": "\u041f\u0440\u0438\u0431\u043e\u0440\u044b",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L16",
+      "id": "conveyor_readme_16",
+      "community": 7,
+      "norm_label": "\u043f\u0440\u0438\u0431\u043e\u0440\u044b"
+    },
+    {
+      "label": "\u041a\u0430\u043a \u0441\u043f\u0443\u0441\u0442\u0438\u0442\u044c \u0437\u0430\u0434\u0430\u0447\u0443",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L27",
+      "id": "conveyor_readme_27",
+      "community": 7,
+      "norm_label": "\u043a\u0430\u043a \u0441\u043f\u0443\u0441\u0442\u0438\u0442\u044c \u0437\u0430\u0434\u0430\u0447\u0443"
+    },
+    {
+      "label": "\u0423\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u0438\u0437 Telegram",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L34",
+      "id": "conveyor_readme_telegram",
+      "community": 7,
+      "norm_label": "\u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u0438\u0437 telegram"
+    },
+    {
+      "label": "\u0427\u0442\u043e \u0432\u043b\u0430\u0434\u0435\u043b\u044c\u0446\u0443 \u0441\u0434\u0435\u043b\u0430\u0442\u044c \u0440\u0443\u043a\u0430\u043c\u0438 (\u043e\u0434\u0438\u043d \u0440\u0430\u0437)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L39",
+      "id": "conveyor_readme_39",
+      "community": 7,
+      "norm_label": "\u0447\u0442\u043e \u0432\u043b\u0430\u0434\u0435\u043b\u044c\u0446\u0443 \u0441\u0434\u0435\u043b\u0430\u0442\u044c \u0440\u0443\u043a\u0430\u043c\u0438 (\u043e\u0434\u0438\u043d \u0440\u0430\u0437)"
+    },
+    {
+      "label": "PLAN.md",
+      "file_type": "document",
+      "source_file": "PLAN.md",
+      "source_location": "L1",
+      "id": "plan_md",
+      "community": 10,
+      "norm_label": "plan.md"
+    },
+    {
+      "label": "\u041a\u043e\u043d\u0432\u0435\u0439\u0435\u0440 \u043d\u0435\u043f\u0440\u0435\u0440\u044b\u0432\u043d\u043e\u0439 \u0440\u0430\u0431\u043e\u0442\u044b \u2014 \u043f\u043b\u0430\u043d \u0441\u0442\u0440\u043e\u0439\u043a\u0438",
+      "file_type": "document",
+      "source_file": "PLAN.md",
+      "source_location": "L1",
+      "id": "conveyor_plan",
+      "community": 10,
+      "norm_label": "\u043a\u043e\u043d\u0432\u0435\u0438\u0435\u0440 \u043d\u0435\u043f\u0440\u0435\u0440\u044b\u0432\u043d\u043e\u0438 \u0440\u0430\u0431\u043e\u0442\u044b \u2014 \u043f\u043b\u0430\u043d \u0441\u0442\u0440\u043e\u0438\u043a\u0438"
+    },
+    {
+      "label": "\u0424\u0430\u0437\u044b",
+      "file_type": "document",
+      "source_file": "PLAN.md",
+      "source_location": "L12",
+      "id": "conveyor_plan_12",
+      "community": 10,
+      "norm_label": "\u0444\u0430\u0437\u044b"
+    },
+    {
+      "label": "CONTRACTS.md",
+      "file_type": "document",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L1",
+      "id": "docs_contracts_md",
+      "community": 4,
+      "norm_label": "contracts.md"
+    },
+    {
+      "label": "\u041a\u043e\u043d\u0442\u0440\u0430\u043a\u0442\u044b \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u044f \u2014 \u0432\u0441\u0451 \u043d\u0430 \u0434\u0438\u0441\u043a\u0435, \u043d\u0438\u0447\u0435\u0433\u043e \u0432 \u043f\u0430\u043c\u044f\u0442\u0438 \u0430\u0433\u0435\u043d\u0442\u0430",
+      "file_type": "document",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L1",
+      "id": "docs_contracts",
+      "community": 4,
+      "norm_label": "\u043a\u043e\u043d\u0442\u0440\u0430\u043a\u0442\u044b \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u044f \u2014 \u0432\u0441\u0435 \u043d\u0430 \u0434\u0438\u0441\u043a\u0435, \u043d\u0438\u0447\u0435\u0433\u043e \u0432 \u043f\u0430\u043c\u044f\u0442\u0438 \u0430\u0433\u0435\u043d\u0442\u0430"
+    },
+    {
+      "label": "\u0417\u0430\u0434\u0430\u0447\u0430 \u2014 `queue/tasks/<ID>.task.md`",
+      "file_type": "document",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L6",
+      "id": "docs_contracts_queue_tasks_id_task_md",
+      "community": 4,
+      "norm_label": "\u0437\u0430\u0434\u0430\u0447\u0430 \u2014 `queue/tasks/<id>.task.md`"
+    },
+    {
+      "label": "code:markdown (---)",
+      "file_type": "document",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L8",
+      "id": "docs_contracts_codeblock_1",
+      "community": 4,
+      "norm_label": "code:markdown (---)"
+    },
+    {
+      "label": "\u041c\u0430\u0440\u043a\u0435\u0440 \u2014 `.conveyor/state/markers/<ID>.done.json`",
+      "file_type": "document",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L32",
+      "id": "docs_contracts_conveyor_state_markers_id_done_json",
+      "community": 4,
+      "norm_label": "\u043c\u0430\u0440\u043a\u0435\u0440 \u2014 `.conveyor/state/markers/<id>.done.json`"
+    },
+    {
+      "label": "\u0420\u0430\u0437\u0432\u0438\u043b\u043a\u0430 \u2014 `queue/dilemmas/<DID>.json`",
+      "file_type": "document",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L39",
+      "id": "docs_contracts_queue_dilemmas_did_json",
+      "community": 4,
+      "norm_label": "\u0440\u0430\u0437\u0432\u0438\u043b\u043a\u0430 \u2014 `queue/dilemmas/<did>.json`"
+    },
+    {
+      "label": "code:json ({)",
+      "file_type": "document",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L41",
+      "id": "docs_contracts_codeblock_2",
+      "community": 4,
+      "norm_label": "code:json ({)"
+    },
+    {
+      "label": "\u041e\u0442\u0431\u0438\u0432\u043a\u0430 \u2014 `.conveyor/state/outbox/<ts>-<n>.json`",
+      "file_type": "document",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L57",
+      "id": "docs_contracts_conveyor_state_outbox_ts_n_json",
+      "community": 4,
+      "norm_label": "\u043e\u0442\u0431\u0438\u0432\u043a\u0430 \u2014 `.conveyor/state/outbox/<ts>-<n>.json`"
+    },
+    {
+      "label": "Ledger \u2014 `.conveyor/state/ledger.jsonl` (append-only)",
+      "file_type": "document",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L62",
+      "id": "docs_contracts_ledger_conveyor_state_ledger_jsonl_append_only",
+      "community": 4,
+      "norm_label": "ledger \u2014 `.conveyor/state/ledger.jsonl` (append-only)"
+    },
+    {
+      "label": "\u041f\u0440\u043e\u0447\u0435\u0435 \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435",
+      "file_type": "document",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L68",
+      "id": "docs_contracts_68",
+      "community": 4,
+      "norm_label": "\u043f\u0440\u043e\u0447\u0435\u0435 \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435"
+    },
+    {
+      "label": "\u041f\u0440\u0438\u0451\u043c \u0447\u0443\u0436\u043e\u0439 \u0440\u0430\u0431\u043e\u0442\u044b \u2014 `--adopt <dir>`",
+      "file_type": "document",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L77",
+      "id": "docs_contracts_adopt_dir",
+      "community": 4,
+      "norm_label": "\u043f\u0440\u0438\u0435\u043c \u0447\u0443\u0436\u043e\u0438 \u0440\u0430\u0431\u043e\u0442\u044b \u2014 `--adopt <dir>`"
+    },
+    {
+      "label": "\u0421\u0435\u043a\u0440\u0435\u0442\u044b",
+      "file_type": "document",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L83",
+      "id": "docs_contracts_83",
+      "community": 4,
+      "norm_label": "\u0441\u0435\u043a\u0440\u0435\u0442\u044b"
+    },
+    {
+      "label": "LESSON-1.md",
+      "file_type": "document",
+      "source_file": "docs/LESSON-1.md",
+      "source_location": "L1",
+      "id": "docs_lesson_1_md",
+      "community": 12,
+      "norm_label": "lesson-1.md"
+    },
+    {
+      "label": "CLI \u043a\u043e\u043d\u0432\u0435\u0439\u0435\u0440\u0430",
+      "file_type": "document",
+      "source_file": "docs/LESSON-1.md",
+      "source_location": "L1",
+      "id": "docs_lesson_1_cli",
+      "community": 12,
+      "norm_label": "cli \u043a\u043e\u043d\u0432\u0435\u0438\u0435\u0440\u0430"
+    },
+    {
+      "label": "HANDOFF.md",
+      "file_type": "document",
+      "source_file": "docs/HANDOFF.md",
+      "source_location": "L1",
+      "id": "docs_handoff_md",
+      "community": 8,
+      "norm_label": "handoff.md"
+    },
+    {
+      "label": "\u0425\u044d\u043d\u0434\u043e\u0444\u0444 \u043e\u0440\u043a\u0435\u0441\u0442\u0440\u0430\u0442\u043e\u0440\u0430 \u043a\u043e\u043d\u0432\u0435\u0439\u0435\u0440\u0430",
+      "file_type": "document",
+      "source_file": "docs/HANDOFF.md",
+      "source_location": "L1",
+      "id": "docs_handoff",
+      "community": 8,
+      "norm_label": "\u0445\u044d\u043d\u0434\u043e\u0444\u0444 \u043e\u0440\u043a\u0435\u0441\u0442\u0440\u0430\u0442\u043e\u0440\u0430 \u043a\u043e\u043d\u0432\u0435\u0438\u0435\u0440\u0430"
+    },
+    {
+      "label": "\u0427\u0442\u043e \u0441\u0434\u0435\u043b\u0430\u043d\u043e",
+      "file_type": "document",
+      "source_file": "docs/HANDOFF.md",
+      "source_location": "L5",
+      "id": "docs_handoff_5",
+      "community": 8,
+      "norm_label": "\u0447\u0442\u043e \u0441\u0434\u0435\u043b\u0430\u043d\u043e"
+    },
+    {
+      "label": "\u0427\u0442\u043e \u0434\u0430\u043b\u044c\u0448\u0435 (1\u20133 \u0448\u0430\u0433\u0430)",
+      "file_type": "document",
+      "source_file": "docs/HANDOFF.md",
+      "source_location": "L12",
+      "id": "docs_handoff_1_3",
+      "community": 8,
+      "norm_label": "\u0447\u0442\u043e \u0434\u0430\u043b\u044c\u0448\u0435 (1\u20133 \u0448\u0430\u0433\u0430)"
+    },
+    {
+      "label": "\u041a\u043b\u044e\u0447\u0435\u0432\u043e\u0435 \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435",
+      "file_type": "document",
+      "source_file": "docs/HANDOFF.md",
+      "source_location": "L18",
+      "id": "docs_handoff_18",
+      "community": 8,
+      "norm_label": "\u043a\u043b\u044e\u0447\u0435\u0432\u043e\u0435 \u0441\u043e\u0441\u0442\u043e\u044f\u043d\u0438\u0435"
+    },
+    {
+      "label": "GOAL.md",
+      "file_type": "document",
+      "source_file": "queue/GOAL.md",
+      "source_location": "L1",
+      "id": "queue_goal_md",
+      "community": 13,
+      "norm_label": "goal.md"
+    },
+    {
+      "label": "\u041a\u043e\u043d\u0435\u0447\u043d\u0430\u044f \u0446\u0435\u043b\u044c \u0432\u043b\u0430\u0434\u0435\u043b\u044c\u0446\u0430 (\u043c\u0438\u0441\u0441\u0438\u044f: \u0432\u0435\u0440\u0442\u0438\u043a\u0430\u043b\u044c\u043d\u044b\u0439 \u0441\u0440\u0435\u0437 \u043a\u043e\u043d\u0432\u0435\u0439\u0435\u0440\u0430)",
+      "file_type": "document",
+      "source_file": "queue/GOAL.md",
+      "source_location": "L1",
+      "id": "queue_goal",
+      "community": 13,
+      "norm_label": "\u043a\u043e\u043d\u0435\u0447\u043d\u0430\u044f \u0446\u0435\u043b\u044c \u0432\u043b\u0430\u0434\u0435\u043b\u044c\u0446\u0430 (\u043c\u0438\u0441\u0441\u0438\u044f: \u0432\u0435\u0440\u0442\u0438\u043a\u0430\u043b\u044c\u043d\u044b\u0438 \u0441\u0440\u0435\u0437 \u043a\u043e\u043d\u0432\u0435\u0438\u0435\u0440\u0430)"
+    },
+    {
+      "label": "T001.task.md",
+      "file_type": "document",
+      "source_file": "queue/tasks/T001.task.md",
+      "source_location": "L1",
+      "id": "queue_tasks_t001_task_md",
+      "community": 11,
+      "norm_label": "t001.task.md"
+    },
+    {
+      "label": "\u041f\u0440\u043e\u043c\u0442 \u0438\u0441\u043f\u043e\u043b\u043d\u0438\u0442\u0435\u043b\u044f",
+      "file_type": "document",
+      "source_file": "queue/tasks/T001.task.md",
+      "source_location": "L16",
+      "id": "tasks_t001_task",
+      "community": 11,
+      "norm_label": "\u043f\u0440\u043e\u043c\u0442 \u0438\u0441\u043f\u043e\u043b\u043d\u0438\u0442\u0435\u043b\u044f"
+    },
+    {
+      "label": "\u041f\u0440\u043e\u043c\u0442 \u043f\u0440\u043e\u0432\u0435\u0440\u044f\u044e\u0449\u0435\u0433\u043e",
+      "file_type": "document",
+      "source_file": "queue/tasks/T001.task.md",
+      "source_location": "L30",
+      "id": "tasks_t001_task_30",
+      "community": 11,
+      "norm_label": "\u043f\u0440\u043e\u043c\u0442 \u043f\u0440\u043e\u0432\u0435\u0440\u044f\u044e\u0449\u0435\u0433\u043e"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_mjs",
+      "target": "scripts_conveyor_zeus_cfg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_mjs",
+      "target": "scripts_conveyor_zeus_state",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_mjs",
+      "target": "scripts_conveyor_zeus_outbox",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_mjs",
+      "target": "scripts_conveyor_zeus_dilemmas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_mjs",
+      "target": "scripts_conveyor_zeus_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_mjs",
+      "target": "scripts_conveyor_zeus_readtg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_mjs",
+      "target": "scripts_conveyor_zeus_redact",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_mjs",
+      "target": "scripts_conveyor_zeus_tg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_mjs",
+      "target": "scripts_conveyor_zeus_isquiethours",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L61",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_mjs",
+      "target": "scripts_conveyor_zeus_enqueue",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L67",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_mjs",
+      "target": "scripts_conveyor_zeus_cmdflush",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L89",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_mjs",
+      "target": "scripts_conveyor_zeus_cmdsend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L96",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_mjs",
+      "target": "scripts_conveyor_zeus_readdilemma",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L100",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_mjs",
+      "target": "scripts_conveyor_zeus_writedilemma",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L102",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_mjs",
+      "target": "scripts_conveyor_zeus_cmdask",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L116",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_mjs",
+      "target": "scripts_conveyor_zeus_applyanswer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L126",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_mjs",
+      "target": "scripts_conveyor_zeus_matchdilemma",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L134",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_mjs",
+      "target": "scripts_conveyor_zeus_cmdpoll",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L198",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_mjs",
+      "target": "scripts_conveyor_zeus_cmdselftest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L301",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_mjs",
+      "target": "scripts_conveyor_zeus_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L63",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_enqueue",
+      "target": "scripts_conveyor_zeus_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L81",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdflush",
+      "target": "scripts_conveyor_zeus_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L111",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdask",
+      "target": "scripts_conveyor_zeus_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L120",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_applyanswer",
+      "target": "scripts_conveyor_zeus_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L170",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdpoll",
+      "target": "scripts_conveyor_zeus_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L274",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdselftest",
+      "target": "scripts_conveyor_zeus_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L68",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdflush",
+      "target": "scripts_conveyor_zeus_readtg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L135",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdpoll",
+      "target": "scripts_conveyor_zeus_readtg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L82",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdflush",
+      "target": "scripts_conveyor_zeus_redact",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L142",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdpoll",
+      "target": "scripts_conveyor_zeus_redact",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L80",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdflush",
+      "target": "scripts_conveyor_zeus_tg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L141",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdpoll",
+      "target": "scripts_conveyor_zeus_tg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L91",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdsend",
+      "target": "scripts_conveyor_zeus_isquiethours",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L110",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdask",
+      "target": "scripts_conveyor_zeus_isquiethours",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L163",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdpoll",
+      "target": "scripts_conveyor_zeus_isquiethours",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L290",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdselftest",
+      "target": "scripts_conveyor_zeus_isquiethours",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L91",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdsend",
+      "target": "scripts_conveyor_zeus_enqueue",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L110",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdask",
+      "target": "scripts_conveyor_zeus_enqueue",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L163",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdpoll",
+      "target": "scripts_conveyor_zeus_enqueue",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L92",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdsend",
+      "target": "scripts_conveyor_zeus_cmdflush",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L112",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdask",
+      "target": "scripts_conveyor_zeus_cmdflush",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L192",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdpoll",
+      "target": "scripts_conveyor_zeus_cmdflush",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L314",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_main",
+      "target": "scripts_conveyor_zeus_cmdflush",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L312",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_main",
+      "target": "scripts_conveyor_zeus_cmdsend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L103",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdask",
+      "target": "scripts_conveyor_zeus_readdilemma",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L111",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdask",
+      "target": "scripts_conveyor_zeus_writedilemma",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L123",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_applyanswer",
+      "target": "scripts_conveyor_zeus_writedilemma",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L313",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_main",
+      "target": "scripts_conveyor_zeus_cmdask",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L160",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdpoll",
+      "target": "scripts_conveyor_zeus_applyanswer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L156",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_cmdpoll",
+      "target": "scripts_conveyor_zeus_matchdilemma",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L315",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_main",
+      "target": "scripts_conveyor_zeus_cmdpoll",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-zeus.mjs",
+      "source_location": "L310",
+      "weight": 1.0,
+      "source": "scripts_conveyor_zeus_main",
+      "target": "scripts_conveyor_zeus_cmdselftest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_mjs",
+      "target": "scripts_conveyor_exec_cfg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_mjs",
+      "target": "scripts_conveyor_exec_clis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_mjs",
+      "target": "scripts_conveyor_exec_state",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_mjs",
+      "target": "scripts_conveyor_exec_health",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_mjs",
+      "target": "scripts_conveyor_exec_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_mjs",
+      "target": "scripts_conveyor_exec_clinames",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_mjs",
+      "target": "scripts_conveyor_exec_invokecli",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_mjs",
+      "target": "scripts_conveyor_exec_readhealth",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_mjs",
+      "target": "scripts_conveyor_exec_probeone",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L64",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_mjs",
+      "target": "scripts_conveyor_exec_cmdprobe",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_mjs",
+      "target": "scripts_conveyor_exec_cmdpick",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L90",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_mjs",
+      "target": "scripts_conveyor_exec_loadtask",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L98",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_mjs",
+      "target": "scripts_conveyor_exec_cmdtask",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L134",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_mjs",
+      "target": "scripts_conveyor_exec_cmdrun",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L143",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_mjs",
+      "target": "scripts_conveyor_exec_cmdselftest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L212",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_mjs",
+      "target": "scripts_conveyor_exec_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_invokecli",
+      "target": "scripts_conveyor_exec_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_probeone",
+      "target": "scripts_conveyor_exec_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L126",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_cmdtask",
+      "target": "scripts_conveyor_exec_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L65",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_cmdprobe",
+      "target": "scripts_conveyor_exec_clinames",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L77",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_cmdpick",
+      "target": "scripts_conveyor_exec_clinames",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_probeone",
+      "target": "scripts_conveyor_exec_invokecli",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L123",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_cmdtask",
+      "target": "scripts_conveyor_exec_invokecli",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L136",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_cmdrun",
+      "target": "scripts_conveyor_exec_invokecli",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L57",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_probeone",
+      "target": "scripts_conveyor_exec_readhealth",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L79",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_cmdpick",
+      "target": "scripts_conveyor_exec_readhealth",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L68",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_cmdprobe",
+      "target": "scripts_conveyor_exec_probeone",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L82",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_cmdpick",
+      "target": "scripts_conveyor_exec_probeone",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L224",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_main",
+      "target": "scripts_conveyor_exec_cmdprobe",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L225",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_main",
+      "target": "scripts_conveyor_exec_cmdpick",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L99",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_cmdtask",
+      "target": "scripts_conveyor_exec_loadtask",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L226",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_main",
+      "target": "scripts_conveyor_exec_cmdtask",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L227",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_main",
+      "target": "scripts_conveyor_exec_cmdrun",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-exec.mjs",
+      "source_location": "L222",
+      "weight": 1.0,
+      "source": "scripts_conveyor_exec_main",
+      "target": "scripts_conveyor_exec_cmdselftest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lesson-check.mjs",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "scripts_lesson_check_mjs",
+      "target": "scripts_lesson_check_clis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/lesson-check.mjs",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "scripts_lesson_check_mjs",
+      "target": "scripts_lesson_check_row",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "scripts_conveyor_council_mjs",
+      "target": "scripts_conveyor_council_cfg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "scripts_conveyor_council_mjs",
+      "target": "scripts_conveyor_council_state",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "scripts_conveyor_council_mjs",
+      "target": "scripts_conveyor_council_dilemmas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "scripts_conveyor_council_mjs",
+      "target": "scripts_conveyor_council_exec",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "scripts_conveyor_council_mjs",
+      "target": "scripts_conveyor_council_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "scripts_conveyor_council_mjs",
+      "target": "scripts_conveyor_council_forbidden",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "scripts_conveyor_council_mjs",
+      "target": "scripts_conveyor_council_isquiet",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "scripts_conveyor_council_mjs",
+      "target": "scripts_conveyor_council_ownergoal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "scripts_conveyor_council_mjs",
+      "target": "scripts_conveyor_council_advisorprompt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L74",
+      "weight": 1.0,
+      "source": "scripts_conveyor_council_mjs",
+      "target": "scripts_conveyor_council_parsechoice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L82",
+      "weight": 1.0,
+      "source": "scripts_conveyor_council_mjs",
+      "target": "scripts_conveyor_council_cmddecide",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L194",
+      "weight": 1.0,
+      "source": "scripts_conveyor_council_mjs",
+      "target": "scripts_conveyor_council_cmdselftest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L290",
+      "weight": 1.0,
+      "source": "scripts_conveyor_council_mjs",
+      "target": "scripts_conveyor_council_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L110",
+      "weight": 1.0,
+      "source": "scripts_conveyor_council_cmddecide",
+      "target": "scripts_conveyor_council_exec",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L129",
+      "weight": 1.0,
+      "source": "scripts_conveyor_council_cmddecide",
+      "target": "scripts_conveyor_council_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L93",
+      "weight": 1.0,
+      "source": "scripts_conveyor_council_cmddecide",
+      "target": "scripts_conveyor_council_isquiet",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L96",
+      "weight": 1.0,
+      "source": "scripts_conveyor_council_cmddecide",
+      "target": "scripts_conveyor_council_ownergoal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L114",
+      "weight": 1.0,
+      "source": "scripts_conveyor_council_cmddecide",
+      "target": "scripts_conveyor_council_advisorprompt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L118",
+      "weight": 1.0,
+      "source": "scripts_conveyor_council_cmddecide",
+      "target": "scripts_conveyor_council_parsechoice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L296",
+      "weight": 1.0,
+      "source": "scripts_conveyor_council_main",
+      "target": "scripts_conveyor_council_cmddecide",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-council.mjs",
+      "source_location": "L295",
+      "weight": 1.0,
+      "source": "scripts_conveyor_council_main",
+      "target": "scripts_conveyor_council_cmdselftest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_s",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_markers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_sha256",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_readjson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_writejson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_git",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_gitsafe",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_parsetask",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_loadtasks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L85",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_markerfile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L86",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_changedfilessha",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L92",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_readmarker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L107",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_writemarker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L122",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_readrunning",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L126",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_writerunning",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L127",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_stopfile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L128",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_stopped",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L131",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_cmdready",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L168",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_cmdstart",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L190",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_cmdfinish",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L198",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_cmdtask",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L215",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_cmdrequire",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L228",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_cmdstatus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L251",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_cmdbeat",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L258",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_claude_rates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L260",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_claudeprojdir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L261",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_clauderate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L262",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_claudespend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L283",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_codexspend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L301",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_kimispend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L324",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_cmdbudget",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L338",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_cmdadopt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L371",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_cmdselftest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L474",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_mjs",
+      "target": "scripts_conveyor_gate_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L85",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_markerfile",
+      "target": "scripts_conveyor_gate_markers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L108",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_writemarker",
+      "target": "scripts_conveyor_gate_markers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L90",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_changedfilessha",
+      "target": "scripts_conveyor_gate_sha256",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L347",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdadopt",
+      "target": "scripts_conveyor_gate_sha256",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L123",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_readrunning",
+      "target": "scripts_conveyor_gate_readjson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L325",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdbudget",
+      "target": "scripts_conveyor_gate_readjson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L126",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_writerunning",
+      "target": "scripts_conveyor_gate_writejson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L252",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdbeat",
+      "target": "scripts_conveyor_gate_writejson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L362",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdadopt",
+      "target": "scripts_conveyor_gate_writejson",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_gitsafe",
+      "target": "scripts_conveyor_gate_git",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L109",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_writemarker",
+      "target": "scripts_conveyor_gate_git",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L87",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_changedfilessha",
+      "target": "scripts_conveyor_gate_gitsafe",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L101",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_readmarker",
+      "target": "scripts_conveyor_gate_gitsafe",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L110",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_writemarker",
+      "target": "scripts_conveyor_gate_gitsafe",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L115",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_writemarker",
+      "target": "scripts_conveyor_gate_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L184",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdstart",
+      "target": "scripts_conveyor_gate_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L252",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdbeat",
+      "target": "scripts_conveyor_gate_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L428",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdselftest",
+      "target": "scripts_conveyor_gate_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L499",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_main",
+      "target": "scripts_conveyor_gate_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L78",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_loadtasks",
+      "target": "scripts_conveyor_gate_parsetask",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L378",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdselftest",
+      "target": "scripts_conveyor_gate_parsetask",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L133",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdready",
+      "target": "scripts_conveyor_gate_loadtasks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L170",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdstart",
+      "target": "scripts_conveyor_gate_loadtasks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L199",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdtask",
+      "target": "scripts_conveyor_gate_loadtasks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L229",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdstatus",
+      "target": "scripts_conveyor_gate_loadtasks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L93",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_readmarker",
+      "target": "scripts_conveyor_gate_markerfile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L117",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_writemarker",
+      "target": "scripts_conveyor_gate_markerfile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_readmarker",
+      "target": "scripts_conveyor_gate_changedfilessha",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L113",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_writemarker",
+      "target": "scripts_conveyor_gate_changedfilessha",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L146",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdready",
+      "target": "scripts_conveyor_gate_readmarker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L220",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdrequire",
+      "target": "scripts_conveyor_gate_readmarker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L233",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdstatus",
+      "target": "scripts_conveyor_gate_readmarker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L210",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdtask",
+      "target": "scripts_conveyor_gate_writemarker",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L135",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdready",
+      "target": "scripts_conveyor_gate_readrunning",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L174",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdstart",
+      "target": "scripts_conveyor_gate_readrunning",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L191",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdfinish",
+      "target": "scripts_conveyor_gate_readrunning",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L230",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdstatus",
+      "target": "scripts_conveyor_gate_readrunning",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L185",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdstart",
+      "target": "scripts_conveyor_gate_writerunning",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L193",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdfinish",
+      "target": "scripts_conveyor_gate_writerunning",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L128",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_stopped",
+      "target": "scripts_conveyor_gate_stopfile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L499",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_main",
+      "target": "scripts_conveyor_gate_stopfile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L132",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdready",
+      "target": "scripts_conveyor_gate_stopped",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L169",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdstart",
+      "target": "scripts_conveyor_gate_stopped",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L241",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdstatus",
+      "target": "scripts_conveyor_gate_stopped",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L491",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_main",
+      "target": "scripts_conveyor_gate_cmdready",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L493",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_main",
+      "target": "scripts_conveyor_gate_cmdstart",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L494",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_main",
+      "target": "scripts_conveyor_gate_cmdfinish",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L495",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_main",
+      "target": "scripts_conveyor_gate_cmdtask",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L496",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_main",
+      "target": "scripts_conveyor_gate_cmdrequire",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L492",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_main",
+      "target": "scripts_conveyor_gate_cmdstatus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L497",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_main",
+      "target": "scripts_conveyor_gate_cmdbeat",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L264",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_claudespend",
+      "target": "scripts_conveyor_gate_claudeprojdir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L275",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_claudespend",
+      "target": "scripts_conveyor_gate_clauderate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L328",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdbudget",
+      "target": "scripts_conveyor_gate_claudespend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L328",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdbudget",
+      "target": "scripts_conveyor_gate_codexspend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L328",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_cmdbudget",
+      "target": "scripts_conveyor_gate_kimispend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L498",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_main",
+      "target": "scripts_conveyor_gate_cmdbudget",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L501",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_main",
+      "target": "scripts_conveyor_gate_cmdadopt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-gate.mjs",
+      "source_location": "L490",
+      "weight": 1.0,
+      "source": "scripts_conveyor_gate_main",
+      "target": "scripts_conveyor_gate_cmdselftest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "scripts_conveyor_probes_mjs",
+      "target": "scripts_conveyor_probes_scripts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "scripts_conveyor_probes_mjs",
+      "target": "scripts_conveyor_probes_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "scripts_conveyor_probes_mjs",
+      "target": "scripts_conveyor_probes_results",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "scripts_conveyor_probes_mjs",
+      "target": "scripts_conveyor_probes_probe",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "scripts_conveyor_probes_mjs",
+      "target": "scripts_conveyor_probes_mkhome",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "scripts_conveyor_probes_mjs",
+      "target": "scripts_conveyor_probes_task",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "scripts_conveyor_probes_mjs",
+      "target": "scripts_conveyor_probes_gate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "scripts_conveyor_probes_mjs",
+      "target": "scripts_conveyor_probes_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L74",
+      "weight": 1.0,
+      "source": "scripts_conveyor_probes_main",
+      "target": "scripts_conveyor_probes_now",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L61",
+      "weight": 1.0,
+      "source": "scripts_conveyor_probes_main",
+      "target": "scripts_conveyor_probes_probe",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "scripts_conveyor_probes_main",
+      "target": "scripts_conveyor_probes_mkhome",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "scripts_conveyor_probes_main",
+      "target": "scripts_conveyor_probes_task",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/conveyor-probes.mjs",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "scripts_conveyor_probes_main",
+      "target": "scripts_conveyor_probes_gate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ORCHESTRATOR.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "orchestrator_md",
+      "target": "conveyor_orchestrator",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ORCHESTRATOR.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "conveyor_orchestrator",
+      "target": "conveyor_orchestrator_7",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ORCHESTRATOR.md",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "conveyor_orchestrator",
+      "target": "conveyor_orchestrator_12",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ORCHESTRATOR.md",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "conveyor_orchestrator",
+      "target": "conveyor_orchestrator_18",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ORCHESTRATOR.md",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "conveyor_orchestrator",
+      "target": "conveyor_orchestrator_28",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ORCHESTRATOR.md",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "conveyor_orchestrator",
+      "target": "conveyor_orchestrator_44",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ORCHESTRATOR.md",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "conveyor_orchestrator",
+      "target": "conveyor_orchestrator_54",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ORCHESTRATOR.md",
+      "source_location": "L60",
+      "weight": 1.0,
+      "source": "conveyor_orchestrator",
+      "target": "conveyor_orchestrator_60",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ORCHESTRATOR.md",
+      "source_location": "L66",
+      "weight": 1.0,
+      "source": "conveyor_orchestrator",
+      "target": "conveyor_orchestrator_66",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "readme_md",
+      "target": "conveyor_readme_24_7",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "conveyor_readme_24_7",
+      "target": "conveyor_readme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "conveyor_readme_24_7",
+      "target": "conveyor_readme_16",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "conveyor_readme_24_7",
+      "target": "conveyor_readme_27",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "conveyor_readme_24_7",
+      "target": "conveyor_readme_telegram",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "conveyor_readme_24_7",
+      "target": "conveyor_readme_39",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "conveyor_readme",
+      "target": "conveyor_readme_codeblock_1",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "PLAN.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "plan_md",
+      "target": "conveyor_plan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "PLAN.md",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "conveyor_plan",
+      "target": "conveyor_plan_12",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_contracts_md",
+      "target": "docs_contracts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "docs_contracts",
+      "target": "docs_contracts_queue_tasks_id_task_md",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "docs_contracts",
+      "target": "docs_contracts_conveyor_state_markers_id_done_json",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "docs_contracts",
+      "target": "docs_contracts_queue_dilemmas_did_json",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L57",
+      "weight": 1.0,
+      "source": "docs_contracts",
+      "target": "docs_contracts_conveyor_state_outbox_ts_n_json",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L62",
+      "weight": 1.0,
+      "source": "docs_contracts",
+      "target": "docs_contracts_ledger_conveyor_state_ledger_jsonl_append_only",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L68",
+      "weight": 1.0,
+      "source": "docs_contracts",
+      "target": "docs_contracts_68",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L77",
+      "weight": 1.0,
+      "source": "docs_contracts",
+      "target": "docs_contracts_adopt_dir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L83",
+      "weight": 1.0,
+      "source": "docs_contracts",
+      "target": "docs_contracts_83",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "docs_contracts_queue_tasks_id_task_md",
+      "target": "docs_contracts_codeblock_1",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/CONTRACTS.md",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "docs_contracts_queue_dilemmas_did_json",
+      "target": "docs_contracts_codeblock_2",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/LESSON-1.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_lesson_1_md",
+      "target": "docs_lesson_1_cli",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/HANDOFF.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "docs_handoff_md",
+      "target": "docs_handoff",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/HANDOFF.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "docs_handoff",
+      "target": "docs_handoff_5",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/HANDOFF.md",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "docs_handoff",
+      "target": "docs_handoff_1_3",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/HANDOFF.md",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "docs_handoff",
+      "target": "docs_handoff_18",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "queue/GOAL.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "queue_goal_md",
+      "target": "queue_goal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "queue/tasks/T001.task.md",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "queue_tasks_t001_task_md",
+      "target": "tasks_t001_task",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "queue/tasks/T001.task.md",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "queue_tasks_t001_task_md",
+      "target": "tasks_t001_task_30",
+      "confidence_score": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "d2621a8091131469673c4688b73bb9e62451f25e"
+}
