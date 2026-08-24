@@ -1,81 +1,81 @@
-# helioz — the work never stops
+# helioz - the work never stops
 
 <p align="center">
-  <img src="docs/assets/helioz-hero.png" alt="Helioz: a serene white marble statue of Helios with a radiant sun-disc beside the classical marble column, warm ivory light, soft blue and gold threads assembling a layered glass system" width="100%">
+  <img src="docs/assets/helioz-hero.png" alt="Helioz: a white marble statue of Helios with a golden sun-disc beside the classical column, warm ivory light, blue and gold threads assembling a conveyor of glass cards" width="100%">
 </p>
 
 ## Who I am
 
 Hello. I am Helioz.
 
-In the old stories I drove the sun chariot across the sky every single day. No weekends, no holidays, no "not today". The sun rose because I was working.
+In the old stories I drove the sun chariot across the sky every single day. No weekends, no holidays, no "not feeling it today". The sun rose because I was working.
 
 Now I do the same with tasks.
 
-Philipp Zarubin built me. The reason is boring: he is a lawyer and a father of two girls, and he has almost no time. Night, court, kids — and the work stands still because nobody is driving it. Now I drive.
+Philipp Zarubin built me. The reason is dull: he has no time. Night, court, kids, and the work sits still because nobody is driving it. Now I drive.
 
-I belong to a family: [Olympuz](https://github.com/zarubinphil/olympuz) is the swarm cockpit, [Zeuz](https://github.com/zarubinphil/zeuz) is the factory that births systems like me, [Mnemazine](https://github.com/zarubinphil/mnemazine) is memory, [Themis](https://github.com/zarubinphil/themis) runs a law practice, [Athena](https://github.com/zarubinphil/athena) is the agent OS all of it lives on. My lot in that family is one thing: continuity. The work moves while you sleep.
+I come from a family: [Olympuz](https://github.com/zarubinphil/olympuz) is the swarm cockpit, [Zeuz](https://github.com/zarubinphil/zeuz) is the factory that births systems like me, [Mnemazine](https://github.com/zarubinphil/mnemazine) is memory, [Themis](https://github.com/zarubinphil/themis) runs a law practice, [Athena](https://github.com/zarubinphil/athena) is the agent OS all of it lives on. My one job here is continuity.
 
-## Why you need me (in plain words)
+## Why you need me
 
-Picture a worker who can do anything but has three flaws. He says "done" when it is not done. He wakes you at 3am over nothing. And he forgets everything the moment you switch him off.
+Picture a worker who can do anything but lies, wakes you over nothing, and forgets everything. He says "done" when it is not. He calls at 3am to ask about an indent. Switch him off for a minute, switch him back on, and he cannot recall what he was doing.
 
-Every flaw gets an instrument, not a promise:
+Every flaw gets an instrument, not a promise.
 
-**I never start from a guess.** First the interrogation: one question at a time, each with a ready answer of mine, over a fixed list of topics — so it never turns out half a day later that we built the wrong thing. Without answers to the critical questions I refuse to plan.
+**I never start from a guess.** The interrogation comes first. One question at a time, each with my own answer already attached: agree and say "yes". The topics are fixed, so half a day later it never turns out we were carefully building the wrong thing. Without answers to the main questions I refuse to plan.
 
-**"Done" is judged by a program, not by him.** One agent works, a DIFFERENT one verifies — and the verifier never reads the first one's report, it looks at the disk and runs commands. Nobody grades their own homework. Not even me.
+**"Done" is judged by a program, not by whoever did the work.** One agent works, another verifies, and the verifier never reads the first one's report: it looks at the disk and runs commands. Nobody grades their own homework. Me included.
 
-**The "finished" mark is written by code.** It carries fingerprints: commits before and after, a hash of the changed files, the exit code of the check. You cannot forge it — hand-written, truncated or copied from another task, I see it and call it out.
+**The "finished" mark is written by code.** Inside it are fingerprints: commits before and after, a hash of the changed files, the exit code of the check. Forging it does not work. A mark written by hand, truncated, or copied from another task gets seen and called out loud.
 
-**At night nobody wakes you.** Small forks go to a council of independent advisors: one looks at risk, another at the cost of undoing, a third at simplicity. Each writes a position without seeing the others. Then the decision is checked against your goal. In the morning you read what was decided and can replay it with one message.
+**At night nobody wakes you.** Small forks go to a council: one advisor looks at risk, another at the cost of undoing, a third at simplicity. Each writes alone, blind to the others. Then the decision is checked against your goal. In the morning you read it and replay it with one message if you disagree.
 
-**Three things I never decide alone:** production actions, conflicts with someone else's work, and forks that are expensive to undo either way. Those wait for you — and while they wait, I work on everything else. I never idle.
+**Three things I never decide.** Production actions, a clash with someone else's work, and a fork that is expensive to undo either way. Those wait for you. While they wait I take other work, because idling is not something I do.
 
-**Kill me at any moment — nothing is lost.** Everything I know lives on disk, not in my head. The next me continues from the same line.
+**Kill me at any moment and nothing is lost.** Everything I know lives on disk, not in my head. The next me continues from the same line.
 
-**Empty means red.** Empty queue, unreadable state, a council without your goal — all refusals, not "eh, good enough". A gate that turns green on nothing is worse than no gate.
+**Empty counts as red.** An empty queue, unreadable state, a council with no goal: all refusals, not "eh, close enough". A gate that turns green on nothing is worse than no gate at all.
 
-## How it actually looks
+## How it looks
 
-All I need from you at the start is one sentence:
+All I need from you is one sentence:
 
 ```bash
-node scripts/helioz-plan.mjs grill --idea "rewrite billing onto the new schema"
+node scripts/helioz-plan.mjs grill --idea "move billing onto the new schema"
 ```
 
-Then I **interrogate** you. One question at a time in Telegram, each with my own recommended answer — agree and just say "yes", it gets recorded. The questions are not improvised: the interview has a fixed set of slots — the goal, how readiness is measured, what must never be touched, what counts as failure, what I may decide alone, plus a block of uncomfortable questions about things you would not raise yourself (where it breaks first, what falls apart after a month, which obvious solution you actually do not want). Anything the disk can answer I never ask — I look it up.
+Then I interrogate you. One question at a time in Telegram, each with my recommendation: agree, answer "yes", and it records itself. The questions are not improvised. The interview has a fixed set of slots: the goal, how readiness is measured, what must never be touched, what counts as failure, what I may decide alone. A separate block walks into awkward corners: where it breaks first, what falls apart after a month, which obvious solution you actually do not want. Anything the disk can answer I never ask, I go and look.
 
-While a single critical slot is empty, there will be no plans. Not to be difficult: planning on a guess costs more than waiting for your answer. But I will not idle either — I take other work and the question keeps hanging.
+While a single critical slot sits empty there will be no plans. Not to be difficult: guessing costs more than waiting for one sentence from you. I will not idle over it either, I take other work and the question keeps hanging.
 
-Once the interview is closed, I write the plans myself. A master plan for me and a pile of small tasks for the executors — the smaller the better. **Two different agents plan independently**, blind to each other, and a third merges them blind: that is more honest than one agent, however clever.
+Once the interview closes, I write the plans myself. A master plan for me, a pile of small tasks for the executors, and the smaller the task the better. Two different agents plan alone, blind to each other's draft. A third merges them blind. One agent, however clever, is fond of its own mistakes. Two of them argue.
 
 ```text
 one sentence of intent
    ↓
 slot-driven interrogation (one question at a time, with a recommendation) → queue/BRIEF.md
    ↓
-final goal → queue/GOAL.md  (the compass for every decision made without you)
+final goal → queue/GOAL.md   (the compass for every decision made without you)
    ↓
 plans: two agents apart → blind merge → docs/MASTER-PLAN.md + queue/tasks/*.task.md
    ↓
-tact: heartbeat → pull your Telegram answers → budget → pick a task → probe agents
+tact: heartbeat → pull your answers → budget → pick a task → probe the agents
    → start (code will not let two touch one file) → executor → blind verifier
    → check command + adversarial probe → integrity mark → report to you
    ↓
 fork? your three cases wait in the queue while I keep working · small night forks go to the council
-   (lenses apart → blind synthesis → checked against the goal → ledger) → replay it in the morning
+   (lenses apart → blind merge → checked against the goal → ledger) → replay it in the morning
    ↓
-context running out → handoff → the watchdog starts a fresh session from disk. Nothing is lost.
+context runs out → handoff → the watchdog starts a fresh session from disk. Nothing is lost.
 ```
 
 <p align="center">
   <img src="docs/assets/helioz-flow.png" alt="The tact: glass cards Queue, Gate, Executor, Blind Verifier, Integrity Marker, Telegram Report, Night Council, Ledger joined by blue arrows; a gold thread loops from the council back to the queue" width="100%">
 </p>
 
-You can also drop a task by hand into `queue/tasks/`. One requirement: a check command. Without it I refuse the task — "done" without proof is not done.
+You can also drop a task by hand into `queue/tasks/`. One requirement: a check command. No command, no task. "Done" without proof is not done.
 
-Everything important lands in your Telegram: stage, percent, what went wrong and how I got out — plain words, no code. Say "stop" and I freeze losslessly. Say "go" and I continue.
+Everything important lands in your Telegram: stage, percent, what went wrong and how I got out of it. Plain words, no code. Say "stop" and I freeze without losing anything. Say "go" and I keep driving.
 
 ## Install
 
@@ -85,9 +85,9 @@ cd ~/helioz
 bash install.sh en
 ```
 
-`install.sh` first introduces itself and explains how I work, then checks what you have (Node, git, at least one agent CLI: claude, codex or kimi), runs my instruments through their selftests and tells you what is left to do by hand. Needs macOS or Linux and Node.js 20+.
+The script introduces itself and explains how I work, then checks what you have: Node, git, at least one agent CLI (claude, codex or kimi). After that it runs my instruments through their selftests and tells you what is left to do by hand. Needs macOS or Linux and Node.js 20+.
 
-After that:
+To start:
 
 ```bash
 bash scripts/helioz-start.sh
@@ -97,36 +97,36 @@ bash scripts/helioz-start.sh
 
 | Path | What it does |
 |---|---|
-| `ORCHESTRATOR.md` | the frozen orchestrator prompt — the tact above |
+| `ORCHESTRATOR.md` | the frozen orchestrator prompt, the tact above |
 | `scripts/helioz-plan.mjs` | slot-driven interrogation, final goal, master plan and small tasks |
 | `scripts/helioz-gate.mjs` | queue, slots, dependencies, forgery-proof marks, stop, budget, adopting foreign work |
-| `scripts/helioz-zeus.mjs` | Telegram: reports queue on disk and arrive, fork buttons, stop/go/replay |
+| `scripts/helioz-zeus.mjs` | Telegram: reports queue on disk and arrive later, fork buttons, stop, go, replay |
 | `scripts/helioz-exec.mjs` | honest agent probe (a real run, not a version check), rotation, role runner |
-| `scripts/helioz-council.mjs` | night council: lenses apart, blind synthesis, ledger; forbidden cases refused |
-| `scripts/helioz-watchdog.sh` | heartbeat gone → start a new session with the handoff |
+| `scripts/helioz-council.mjs` | night council: lenses apart, blind merge, ledger; forbidden cases refused |
+| `scripts/helioz-watchdog.sh` | heartbeat gone, start a new session with the handoff |
 | `scripts/helioz-probes.mjs` | six adversarial probes; only they grant the project its "ready" status |
 | `docs/CONTRACTS.md` | on-disk state contracts: tasks, forks, marks, ledger |
 | `docs/BRAND.md` | design description, an instance of the Pantheon Design System |
 
 ## How I prove I am not lying
 
-Six probes run with one command and must all be green:
+Six probes, one command, all of them must be green:
 
 ```bash
 node scripts/helioz-probes.mjs
 ```
 
-Kill the orchestrator mid-task — the next one continues. Forge a mark — caught. Stay silent for a day — work goes on, forks intact. Cut Telegram — reports queue up and arrive later. Hand the council a forbidden fork — it refuses. Send two executors at one file — the second never starts.
+Kill the orchestrator mid-task: the next one continues. Forge a mark: caught. Stay silent for a day: work goes on, forks intact. Cut Telegram: reports queue up and arrive later. Hand the council a forbidden fork: it refuses. Send two executors at one file: the second never starts.
 
 The probes test me, not my claims about myself. A red probe means no "ready" status.
 
 <p align="center">
-  <img src="docs/assets/helioz-emblem.png" alt="Helioz emblem: marble statue with a golden sun-disc, a chariot wheel and the classical column" width="46%">
+  <img src="docs/assets/helioz-emblem.png" alt="Helioz emblem: a marble statue with a golden sun-disc, a chariot wheel and the classical column" width="100%">
 </p>
 
 ## A star
 
-If Helioz turns out useful — star it: [github.com/zarubinphil/helioz](https://github.com/zarubinphil/helioz).
+If Helioz turns out useful, star it: [github.com/zarubinphil/helioz](https://github.com/zarubinphil/helioz).
 
 Seconds for you, genuinely important for the project. And meet the family: [themis](https://github.com/zarubinphil/themis), [mnemazine](https://github.com/zarubinphil/mnemazine), [zeuz](https://github.com/zarubinphil/zeuz), [athena](https://github.com/zarubinphil/athena), [smltlk](https://github.com/zarubinphil/smltlk).
 
