@@ -18,13 +18,13 @@ import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import os from 'node:os'
 
-const HOME = process.env.CONVEYOR_HOME || path.dirname(path.dirname(fileURLToPath(import.meta.url)))
-const CFG = (() => { try { return JSON.parse(readFileSync(path.join(HOME, 'config', 'conveyor.json'), 'utf8')) } catch { return {} } })()
-const STATE = path.join(HOME, '.conveyor', 'state')
+const HOME = process.env.HELIOZ_HOME || path.dirname(path.dirname(fileURLToPath(import.meta.url)))
+const CFG = (() => { try { return JSON.parse(readFileSync(path.join(HOME, 'config', 'helioz.json'), 'utf8')) } catch { return {} } })()
+const STATE = path.join(HOME, '.helioz', 'state')
 const OUTBOX = path.join(STATE, 'outbox')
 const DILEMMAS = path.join(HOME, 'queue', 'dilemmas')
-const API = process.env.CONVEYOR_TG_API || 'https://api.telegram.org'
-const SECRETS = process.env.CONVEYOR_TG_ENV || (CFG.secrets_env || '~/.secrets/olympuz-telegram.env').replace(/^~/, os.homedir())
+const API = process.env.HELIOZ_TG_API || 'https://api.telegram.org'
+const SECRETS = process.env.HELIOZ_TG_ENV || (CFG.secrets_env || '~/.secrets/olympuz-telegram.env').replace(/^~/, os.homedir())
 const now = () => new Date().toISOString()
 
 // --- секреты: читаются в момент вызова, не кэшируются в env, в вывод не попадают ------------------
@@ -237,10 +237,10 @@ async function cmdSelftest() {
   const { createServer } = await import('node:http')
   const { mkdtempSync } = await import('node:fs')
   const { spawn } = await import('node:child_process')
-  const tmp = mkdtempSync(path.join(os.tmpdir(), 'conveyor-zeus-'))
+  const tmp = mkdtempSync(path.join(os.tmpdir(), 'helioz-zeus-'))
   try {
     mkdirSync(path.join(tmp, 'queue', 'dilemmas'), { recursive: true })
-    mkdirSync(path.join(tmp, '.conveyor', 'state'), { recursive: true })
+    mkdirSync(path.join(tmp, '.helioz', 'state'), { recursive: true })
     writeFileSync(path.join(tmp, 'tg.env'), 'OLYMPUZ_TELEGRAM_TOKEN=TESTTOKEN123\nOLYMPUZ_TELEGRAM_CHAT=42\n')
 
     // стаб-сервер Telegram
@@ -260,7 +260,7 @@ async function cmdSelftest() {
     await new Promise(r => srv.listen(0, '127.0.0.1', r))
     const port = srv.address().port
     const self = fileURLToPath(import.meta.url)
-    const env = (api) => ({ ...process.env, CONVEYOR_HOME: tmp, CONVEYOR_TG_ENV: path.join(tmp, 'tg.env'), CONVEYOR_TG_API: api })
+    const env = (api) => ({ ...process.env, HELIOZ_HOME: tmp, HELIOZ_TG_ENV: path.join(tmp, 'tg.env'), HELIOZ_TG_API: api })
     // spawn (не spawnSync): сервер-стаб живёт в этом же процессе, блокировать event loop нельзя
     const run = (args, api = `http://127.0.0.1:${port}`) => new Promise(resolve => {
       const p = spawn(process.execPath, [self, ...args], { env: env(api) })
@@ -281,7 +281,7 @@ async function cmdSelftest() {
     // 3. Telegram мёртв → отбивка КОПИТСЯ (exit 0, конвейер не падает), затем flush дошлёт.
     const r2 = await run(['send', '--text', 'офлайн-отбивка'], 'http://127.0.0.1:1')
     eq(r2.status, 0, 'мёртвый Telegram не роняет конвейер')
-    const box = () => readdirSync(path.join(tmp, '.conveyor', 'state', 'outbox')).map(f => JSON.parse(readFileSync(path.join(tmp, '.conveyor', 'state', 'outbox', f), 'utf8')))
+    const box = () => readdirSync(path.join(tmp, '.helioz', 'state', 'outbox')).map(f => JSON.parse(readFileSync(path.join(tmp, '.helioz', 'state', 'outbox', f), 'utf8')))
     ok(box().some(m => m.text === 'офлайн-отбивка' && !m.delivered_at), 'недоставленное лежит в outbox')
     eq((await run(['flush'])).status, 0)
     ok(box().every(m => m.delivered_at), 'flush дослал всё')
@@ -318,10 +318,10 @@ async function cmdSelftest() {
     // 7. «стоп» из Telegram → STOP на диске; «пуск» → снят.
     updates = [{ update_id: 4, message: { from: { id: 42 }, text: 'стоп' } }]
     eq((await run(['poll'])).status, 0)
-    ok(existsSync(path.join(tmp, '.conveyor', 'state', 'STOP')), 'STOP поставлен')
+    ok(existsSync(path.join(tmp, '.helioz', 'state', 'STOP')), 'STOP поставлен')
     updates = [{ update_id: 5, message: { from: { id: 42 }, text: 'пуск' } }]
     eq((await run(['poll'])).status, 0)
-    ok(!existsSync(path.join(tmp, '.conveyor', 'state', 'STOP')), 'STOP снят')
+    ok(!existsSync(path.join(tmp, '.helioz', 'state', 'STOP')), 'STOP снят')
 
     // 8. Тихие часы: пересечение полуночи.
     ok(isQuietHours(new Date('2026-01-01T23:30:00'), { start: '23:00', end: '09:00' }))
@@ -350,7 +350,7 @@ async function main() {
   if (cmd === 'ask') return cmdAsk(v.dilemma)
   if (cmd === 'flush') return cmdFlush()
   if (cmd === 'poll') return cmdPoll(Number(v.timeout) || 0)
-  console.log('conveyor-zeus: send --text|ask --dilemma|flush|poll [--timeout N] | --selftest')
+  console.log('helioz-zeus: send --text|ask --dilemma|flush|poll [--timeout N] | --selftest')
   return 0
 }
 main().then(c => process.exit(c)).catch(e => { console.error(String(e && e.message || e)); process.exit(1) })

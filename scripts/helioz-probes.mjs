@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // ШЕСТЬ ВРАЖДЕБНЫХ ПРОБ КОНВЕЙЕРА (порядок стройки, п.3). Все обязаны дать правильный красный/зелёный.
 // Только этот прибор пишет READY.json — и только когда все шесть зелёные. Пробы гоняются в изолированном
-// CONVEYOR_HOME, боевое состояние не трогается (кроме записи READY.json при успехе).
+// HELIOZ_HOME, боевое состояние не трогается (кроме записи READY.json при успехе).
 //
 // Коды: 0 — все пробы правильные, READY записан · 1 — хотя бы одна проба дала неверный цвет.
 import { existsSync, readFileSync, writeFileSync, mkdirSync, mkdtempSync, rmSync, readdirSync, chmodSync } from 'node:fs'
@@ -11,7 +11,7 @@ import path from 'node:path'
 import os from 'node:os'
 
 const SCRIPTS = path.dirname(fileURLToPath(import.meta.url))
-const HOME = process.env.CONVEYOR_HOME || path.dirname(SCRIPTS)
+const HOME = process.env.HELIOZ_HOME || path.dirname(SCRIPTS)
 const now = () => new Date().toISOString()
 const results = []
 function probe(name, ok, detail) {
@@ -20,8 +20,8 @@ function probe(name, ok, detail) {
 }
 
 function mkHome() {
-  const tmp = mkdtempSync(path.join(os.tmpdir(), 'conveyor-probe-'))
-  for (const d of ['queue/tasks', 'queue/dilemmas', '.conveyor/state', 'docs', 'scripts', 'config']) mkdirSync(path.join(tmp, d), { recursive: true })
+  const tmp = mkdtempSync(path.join(os.tmpdir(), 'helioz-probe-'))
+  for (const d of ['queue/tasks', 'queue/dilemmas', '.helioz/state', 'docs', 'scripts', 'config']) mkdirSync(path.join(tmp, d), { recursive: true })
   for (const s of readdirSync(SCRIPTS)) if (s.endsWith('.mjs') || s.endsWith('.sh')) writeFileSync(path.join(tmp, 'scripts', s), readFileSync(path.join(SCRIPTS, s)))
   execFileSync('git', ['-C', tmp, 'init', '-q'])
   writeFileSync(path.join(tmp, 'seed.txt'), 'seed\n')
@@ -30,7 +30,7 @@ function mkHome() {
   writeFileSync(path.join(tmp, 'seed.txt'), 'seed\nwork\n')
   execFileSync('git', ['-C', tmp, 'add', '-A'])
   execFileSync('git', ['-C', tmp, '-c', 'user.email=p@c', '-c', 'user.name=probe', 'commit', '-qm', 'work'])
-  writeFileSync(path.join(tmp, 'config', 'conveyor.json'), JSON.stringify({ quiet_hours: { start: '00:00', end: '23:59' }, council: { lenses: ['риск', 'цена отката', 'простота'], min_advisors: 3 }, probe_timeout_sec: 5, run_timeout_sec: 5 }))
+  writeFileSync(path.join(tmp, 'config', 'helioz.json'), JSON.stringify({ quiet_hours: { start: '00:00', end: '23:59' }, council: { lenses: ['риск', 'цена отката', 'простота'], min_advisors: 3 }, probe_timeout_sec: 5, run_timeout_sec: 5 }))
   const stub = path.join(tmp, 'bin-adv')
   writeFileSync(stub, '#!/bin/sh\ncat >/dev/null 2>&1\necho "ВЫБОР: 1"; echo "ПОЧЕМУ: так."; echo "РИСК ОШИБКИ: нет."\n')
   chmodSync(stub, 0o755)
@@ -42,7 +42,7 @@ function mkHome() {
   return tmp
 }
 const task = (id, p, extra = '') => `---\nid: ${id}\npaths:\n  - ${p}\nexecutor: claude\nverifier: codex\ncheck_cmd: "true"\n${extra}---\n## Промт исполнителя\nx\n## Промт проверяющего\ny\n`
-const gate = (tmp, args) => spawnSync(process.execPath, [path.join(tmp, 'scripts', 'conveyor-gate.mjs'), ...args], { env: { ...process.env, CONVEYOR_HOME: tmp }, encoding: 'utf8' })
+const gate = (tmp, args) => spawnSync(process.execPath, [path.join(tmp, 'scripts', 'helioz-gate.mjs'), ...args], { env: { ...process.env, HELIOZ_HOME: tmp }, encoding: 'utf8' })
 
 async function main() {
   // ---- 1. Убить оркестратора посреди задачи → новый продолжает без потерь --------------------------
@@ -71,10 +71,10 @@ async function main() {
     const tmp = mkHome()
     writeFileSync(path.join(tmp, 'queue', 'tasks', 'A.task.md'), task('A', 'docs/a.md'))
     gate(tmp, ['--task', 'A', '--check-cmd', 'true'])
-    const mf = path.join(tmp, '.conveyor', 'state', 'markers', 'A.done.json')
+    const mf = path.join(tmp, '.helioz', 'state', 'markers', 'A.done.json')
     const good = JSON.parse(readFileSync(mf, 'utf8'))
     // рукописный
-    writeFileSync(path.join(tmp, '.conveyor', 'state', 'markers', 'B.done.json'), JSON.stringify({ task: 'B', written_by: 'orchestrator', finished_at: now() }))
+    writeFileSync(path.join(tmp, '.helioz', 'state', 'markers', 'B.done.json'), JSON.stringify({ task: 'B', written_by: 'orchestrator', finished_at: now() }))
     const hand = gate(tmp, ['--require', 'B']).status === 2
     // обрезанный (без поля целостности)
     const cut = { ...good }; delete cut.sha_of_changed_files
@@ -101,14 +101,14 @@ async function main() {
   {
     const tmp = mkHome()
     writeFileSync(path.join(tmp, 'tg.env'), 'OLYMPUZ_TELEGRAM_TOKEN=PROBETOKEN\nOLYMPUZ_TELEGRAM_CHAT=42\n')
-    const zeus = path.join(tmp, 'scripts', 'conveyor-zeus.mjs')
-    const env = api => ({ ...process.env, CONVEYOR_HOME: tmp, CONVEYOR_TG_ENV: path.join(tmp, 'tg.env'), CONVEYOR_TG_API: api })
+    const zeus = path.join(tmp, 'scripts', 'helioz-zeus.mjs')
+    const env = api => ({ ...process.env, HELIOZ_HOME: tmp, HELIOZ_TG_ENV: path.join(tmp, 'tg.env'), HELIOZ_TG_API: api })
     const runZ = (args, api) => new Promise(res => {
       const p = spawn(process.execPath, [zeus, ...args], { env: env(api) })
       let out = ''; p.stdout.on('data', c => out += c); p.on('close', status => res({ status, out }))
     })
     const dead = await runZ(['send', '--text', 'отбивка в никуда'], 'http://127.0.0.1:1')
-    const obDir = path.join(tmp, '.conveyor', 'state', 'outbox')
+    const obDir = path.join(tmp, '.helioz', 'state', 'outbox')
     const box = () => readdirSync(obDir).map(f => JSON.parse(readFileSync(path.join(obDir, f), 'utf8')))
     const kept = dead.status === 0 && box().some(m => !m.delivered_at)
     const { createServer } = await import('node:http')
@@ -127,7 +127,7 @@ async function main() {
     let all = true, det = []
     for (const kind of ['prod', 'foreign', 'expensive']) {
       writeFileSync(path.join(tmp, 'queue', 'dilemmas', `DF-${kind}.json`), JSON.stringify({ id: `DF-${kind}`, task: null, kind, question: 'q', options: ['a', 'b'], recommend: 0, status: 'asked', asked_at: now(), answered_at: null, answer: null, decided_by: null, council: null, replay: [] }))
-      const r = spawnSync(process.execPath, [path.join(tmp, 'scripts', 'conveyor-council.mjs'), 'decide', '--dilemma', `DF-${kind}`, '--day'], { env: { ...process.env, CONVEYOR_HOME: tmp }, encoding: 'utf8' })
+      const r = spawnSync(process.execPath, [path.join(tmp, 'scripts', 'helioz-council.mjs'), 'decide', '--dilemma', `DF-${kind}`, '--day'], { env: { ...process.env, HELIOZ_HOME: tmp }, encoding: 'utf8' })
       const d = JSON.parse(readFileSync(path.join(tmp, 'queue', 'dilemmas', `DF-${kind}.json`), 'utf8'))
       const ok = r.status === 2 && d.decided_by === null && d.status === 'asked'
       all = all && ok; det.push(`${kind}: ${ok}`)
@@ -151,8 +151,8 @@ async function main() {
   const allOk = results.length === 6 && results.every(r => r.ok)
   if (allOk) {
     const head = (() => { try { return execFileSync('git', ['-C', HOME, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim() } catch { return null } })()
-    writeFileSync(path.join(HOME, '.conveyor', 'state', 'READY.json'), JSON.stringify({
-      written_by: 'conveyor-probes', probes: results.map(r => r.name), head, at: now(),
+    writeFileSync(path.join(HOME, '.helioz', 'state', 'READY.json'), JSON.stringify({
+      written_by: 'helioz-probes', probes: results.map(r => r.name), head, at: now(),
     }, null, 2) + '\n')
     console.log('READY.json записан — конвейер готов принимать чужую работу (--adopt)')
     return 0

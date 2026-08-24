@@ -24,10 +24,10 @@ import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import os from 'node:os'
 
-const HOME = process.env.CONVEYOR_HOME || path.dirname(path.dirname(fileURLToPath(import.meta.url)))
-const CFG = readJson(path.join(HOME, 'config', 'conveyor.json')) || {}
+const HOME = process.env.HELIOZ_HOME || path.dirname(path.dirname(fileURLToPath(import.meta.url)))
+const CFG = readJson(path.join(HOME, 'config', 'helioz.json')) || {}
 const S = {
-  state: path.join(HOME, '.conveyor', 'state'),
+  state: path.join(HOME, '.helioz', 'state'),
   tasks: path.join(HOME, 'queue', 'tasks'),
   dilemmas: path.join(HOME, 'queue', 'dilemmas'),
 }
@@ -113,7 +113,7 @@ export function readMarker(id) {
   if (!existsSync(f)) return { status: 'missing' }
   let d
   try { d = JSON.parse(readFileSync(f, 'utf8')) } catch { return { status: 'tampered', reason: 'нечитаемый json' } }
-  if (d.written_by !== 'conveyor-gate') return { status: 'tampered', reason: 'нет written_by:"conveyor-gate"', data: d }
+  if (d.written_by !== 'helioz-gate') return { status: 'tampered', reason: 'нет written_by:"helioz-gate"', data: d }
   for (const k of ['task', 'base', 'head', 'sha_of_changed_files', 'finished_at']) {
     if (d[k] === undefined || d[k] === null || d[k] === '') return { status: 'tampered', reason: `нет поля целостности ${k}`, data: d }
   }
@@ -139,7 +139,7 @@ function writeMarker(id, { checkCmd, executor, verifier, base }) {
     task: id, check_cmd: checkCmd || '', exit_code: 0,
     base: baseSha, head, sha_of_changed_files: changedFilesSha(baseSha, head),
     executor_cli: executor || null, verifier_cli: verifier || null,
-    finished_at: now(), written_by: 'conveyor-gate',
+    finished_at: now(), written_by: 'helioz-gate',
   }
   writeFileSync(markerFile(id), JSON.stringify(marker, null, 2) + '\n')
   return marker
@@ -430,9 +430,9 @@ async function cmdSelftest() {
   eq(noCheck.valid, false, 'задача без check_cmd обязана быть invalid')
 
   // 2–7. Изолированное состояние в tmp git-репо.
-  const tmp = mkdtempSync(path.join(os.tmpdir(), 'conveyor-selftest-'))
+  const tmp = mkdtempSync(path.join(os.tmpdir(), 'helioz-selftest-'))
   try {
-    const env = { ...process.env, CONVEYOR_HOME: tmp }
+    const env = { ...process.env, HELIOZ_HOME: tmp }
     const self = fileURLToPath(import.meta.url)
     const run = (args) => spawnSync(process.execPath, [self, ...args], { env, encoding: 'utf8' })
     mkdirSync(path.join(tmp, 'queue', 'tasks'), { recursive: true })
@@ -472,15 +472,15 @@ async function cmdSelftest() {
 
     // маркер: пишется только при exit 0, ловит подделку
     eq(run(['--task', 'A', '--check-cmd', 'false']).status, 1, 'красная проверка не пишет маркер')
-    ok(!existsSync(path.join(tmp, '.conveyor', 'state', 'markers', 'A.done.json')))
+    ok(!existsSync(path.join(tmp, '.helioz', 'state', 'markers', 'A.done.json')))
     eq(run(['--task', 'A', '--check-cmd', 'true', '--executor', 'kimi', '--verifier', 'codex']).status, 0)
     eq(run(['--require', 'A']).status, 0)
     // подделка руками → tampered
-    const mf = path.join(tmp, '.conveyor', 'state', 'markers', 'B.done.json')
+    const mf = path.join(tmp, '.helioz', 'state', 'markers', 'B.done.json')
     writeFileSync(mf, JSON.stringify({ task: 'B', written_by: 'orchestrator', finished_at: now() }))
     eq(run(['--require', 'B']).status, 2, 'рукописный маркер обязан быть tampered')
     // обрезание полей у настоящего маркера → tampered
-    const af = path.join(tmp, '.conveyor', 'state', 'markers', 'A.done.json')
+    const af = path.join(tmp, '.helioz', 'state', 'markers', 'A.done.json')
     const good = JSON.parse(readFileSync(af, 'utf8'))
     const cut = { ...good }; delete cut.sha_of_changed_files
     writeFileSync(af, JSON.stringify(cut))
@@ -490,7 +490,7 @@ async function cmdSelftest() {
     writeFileSync(af, JSON.stringify({ ...good, sha_of_changed_files: 'deadbeef' }) + '\n')
     eq(run(['--require', 'A']).status, 2, 'битый sha обязан быть tampered')
     // ревью codex: копия чужого ВАЛИДНОГО маркера → tampered (маркер не привязан был к id)
-    writeFileSync(path.join(tmp, '.conveyor', 'state', 'markers', 'C.done.json'), JSON.stringify(good) + '\n')
+    writeFileSync(path.join(tmp, '.helioz', 'state', 'markers', 'C.done.json'), JSON.stringify(good) + '\n')
     eq(run(['--require', 'C']).status, 2, 'чужой валидный маркер копией обязан быть tampered')
     // ревью codex+kimi: exit_code ≠ 0 → tampered
     writeFileSync(af, JSON.stringify({ ...good, exit_code: 1 }) + '\n')
@@ -501,10 +501,10 @@ async function cmdSelftest() {
     writeFileSync(af, JSON.stringify(good) + '\n')
     eq(run(['--require', 'A']).status, 0, 'восстановленный честный маркер снова done')
     // ревью codex+kimi: битый running.json → fail-closed, не пустой список
-    writeFileSync(path.join(tmp, '.conveyor', 'state', 'running.json'), '{')
+    writeFileSync(path.join(tmp, '.helioz', 'state', 'running.json'), '{')
     eq(run(['--ready']).status, 2, 'битый running.json обязан давать fail-closed')
     eq(run(['--start', 'C']).status, 2, 'старт при битом running.json запрещён')
-    rmSync(path.join(tmp, '.conveyor', 'state', 'running.json'))
+    rmSync(path.join(tmp, '.helioz', 'state', 'running.json'))
 
     // requires: D ждёт маркер E
     mk('D', ['docs/d.md'], 'requires: [E]\n')
@@ -512,9 +512,9 @@ async function cmdSelftest() {
     ok(rd.stdout.includes('ждёт маркер E'), 'зависимость без маркера блокирует')
 
     // STOP → ready/start exit 4
-    writeFileSync(path.join(tmp, '.conveyor', 'state', 'STOP'), now())
+    writeFileSync(path.join(tmp, '.helioz', 'state', 'STOP'), now())
     eq(run(['--ready']).status, 4); eq(run(['--start', 'C']).status, 4)
-    rmSync(path.join(tmp, '.conveyor', 'state', 'STOP'))
+    rmSync(path.join(tmp, '.helioz', 'state', 'STOP'))
 
     // adopt: идемпотентно, без потерь
     const ext = path.join(tmp, 'ext'); mkdirSync(path.join(ext, 'dilemmas'), { recursive: true })
@@ -522,13 +522,13 @@ async function cmdSelftest() {
     writeFileSync(path.join(ext, 'dilemmas', 'DX.json'), JSON.stringify({ id: 'DX', kind: 'default', status: 'open', question: 'q', options: ['a'], recommend: 0 }))
     eq(run(['--adopt', ext]).status, 0)
     eq(run(['--adopt', ext]).status, 0)
-    const led = readFileSync(path.join(tmp, '.conveyor', 'state', 'ledger.jsonl'), 'utf8').split('\n').filter(Boolean)
+    const led = readFileSync(path.join(tmp, '.helioz', 'state', 'ledger.jsonl'), 'utf8').split('\n').filter(Boolean)
     eq(led.length, 1, 'adopt дважды не дублирует ledger')
     ok(existsSync(path.join(tmp, 'queue', 'dilemmas', 'DX.json')))
 
     // beat
     eq(run(['--beat', 'selftest']).status, 0)
-    ok(existsSync(path.join(tmp, '.conveyor', 'state', 'heartbeat.json')))
+    ok(existsSync(path.join(tmp, '.helioz', 'state', 'heartbeat.json')))
 
     // бюджет: нет budget.json → 2; с потолком 1 токен и нулевым расходом (пустые каталоги) → 0
     eq(run(['--budget']).status, 2, 'нет budget.json — потолок не подтверждён')
@@ -567,7 +567,7 @@ async function main() {
   if (v.stop) { writeFileSync(stopFile(), now()); console.log('STOP поставлен'); return 0 }
   if (v.go) { rmSync(stopFile(), { force: true }); console.log('STOP снят'); return 0 }
   if (v.adopt) return cmdAdopt(v.adopt)
-  console.log('conveyor-gate: --ready --start --finish --task --check-cmd --require --status --beat --budget --stop --go --adopt --selftest --json')
+  console.log('helioz-gate: --ready --start --finish --task --check-cmd --require --status --beat --budget --stop --go --adopt --selftest --json')
   return 0
 }
 main().then(c => process.exit(c)).catch(e => { console.error(e && e.message || e); process.exit(1) })

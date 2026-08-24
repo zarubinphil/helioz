@@ -17,11 +17,11 @@ import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import os from 'node:os'
 
-const HOME = process.env.CONVEYOR_HOME || path.dirname(path.dirname(fileURLToPath(import.meta.url)))
-const CFG = (() => { try { return JSON.parse(readFileSync(path.join(HOME, 'config', 'conveyor.json'), 'utf8')) } catch { return {} } })()
-const STATE = path.join(HOME, '.conveyor', 'state')
+const HOME = process.env.HELIOZ_HOME || path.dirname(path.dirname(fileURLToPath(import.meta.url)))
+const CFG = (() => { try { return JSON.parse(readFileSync(path.join(HOME, 'config', 'helioz.json'), 'utf8')) } catch { return {} } })()
+const STATE = path.join(HOME, '.helioz', 'state')
 const DILEMMAS = path.join(HOME, 'queue', 'dilemmas')
-const EXEC = path.join(path.dirname(fileURLToPath(import.meta.url)), 'conveyor-exec.mjs')
+const EXEC = path.join(path.dirname(fileURLToPath(import.meta.url)), 'helioz-exec.mjs')
 const now = () => new Date().toISOString()
 const FORBIDDEN = ['prod', 'foreign', 'expensive']
 
@@ -127,7 +127,7 @@ async function cmdDecide(id, day) {
   const noneVotes = positions.filter(p => p.choice === 'none').length
   if (noneVotes * 2 >= positions.length) {
     appendFileSync(path.join(STATE, 'ledger.jsonl'), JSON.stringify({ ts: now(), kind: 'council-abstain', dilemma: id, why: `ни один вариант не служит цели владельца (${noneVotes}/${positions.length} голосов)` }) + '\n')
-    const zeusA = path.join(path.dirname(EXEC), 'conveyor-zeus.mjs')
+    const zeusA = path.join(path.dirname(EXEC), 'helioz-zeus.mjs')
     spawnSync(process.execPath, [zeusA, 'send', '--text', `🌙 Совет ВОЗДЕРЖАЛСЯ по развилке ${id}: большинство линз считает, что ни один вариант не служит твоей цели. Развилка ждёт тебя: «${id} <номер>».`, '--quiet'], { encoding: 'utf8', env: process.env })
     console.error(`совет воздержался: ни один вариант не служит цели (${noneVotes}/${positions.length})`)
     return 1
@@ -162,7 +162,7 @@ async function cmdDecide(id, day) {
   const decision = sr.status === 0 ? parseChoice(stext.replace(/РЕШЕНИЕ/i, 'ВЫБОР'), d.options.length) : null
   if (decision === 'none') {
     appendFileSync(path.join(STATE, 'ledger.jsonl'), JSON.stringify({ ts: now(), kind: 'council-abstain', dilemma: id, why: 'синтез: ни один вариант не служит цели владельца' }) + '\n')
-    const zeusB = path.join(path.dirname(EXEC), 'conveyor-zeus.mjs')
+    const zeusB = path.join(path.dirname(EXEC), 'helioz-zeus.mjs')
     spawnSync(process.execPath, [zeusB, 'send', '--text', `🌙 Совет ВОЗДЕРЖАЛСЯ по развилке ${id}: синтез счёл, что ни один вариант не служит твоей цели. Ждёт тебя: «${id} <номер>».`, '--quiet'], { encoding: 'utf8', env: process.env })
     console.error('синтез: ни один вариант не служит цели — воздержание')
     return 1
@@ -182,7 +182,7 @@ async function cmdDecide(id, day) {
     lenses: positions.map(p => ({ lens: p.lens, cli: p.cli, choice: p.choice, position_file: p.file })),
     synthesis_cli: scli, rationale,
   }) + '\n')
-  const zeus = path.join(path.dirname(EXEC), 'conveyor-zeus.mjs')
+  const zeus = path.join(path.dirname(EXEC), 'helioz-zeus.mjs')
   spawnSync(process.execPath, [zeus, 'send', '--text',
     `🌙 Совет решил развилку ${id}: вариант ${finalChoice + 1} (${d.options[finalChoice]}).\n${rationale.slice(0, 500)}\nПереиграть: ответь «${id} <номер>».`,
     '--quiet'], { encoding: 'utf8', env: process.env })
@@ -193,7 +193,7 @@ async function cmdDecide(id, day) {
 // --- selftest: стаб-советники ---------------------------------------------------------------------
 async function cmdSelftest() {
   const { strictEqual: eq, ok } = await import('node:assert')
-  const tmp = mkdtempSync(path.join(os.tmpdir(), 'conveyor-council-'))
+  const tmp = mkdtempSync(path.join(os.tmpdir(), 'helioz-council-'))
   try {
     const bin = path.join(tmp, 'bin'); mkdirSync(bin, { recursive: true })
     // стаб: читает промт со stdin, голосует за вариант 2; синтез отвечает РЕШЕНИЕ: 2
@@ -201,7 +201,7 @@ async function cmdSelftest() {
     writeFileSync(adv, '#!/bin/sh\ninput=$(cat)\ncase "$input" in *"синтез ночного совета"*) echo "РЕШЕНИЕ: 2"; echo "ОБОСНОВАНИЕ: так надёжнее по всем линзам."; echo "РАЗНОГЛАСИЯ: не было.";; *) echo "ВЫБОР: 2"; echo "ПОЧЕМУ: линза велит."; echo "РИСК ОШИБКИ: небольшой.";; esac\n')
     chmodSync(adv, 0o755)
     for (const sub of ['config', 'queue/dilemmas', 'scripts']) mkdirSync(path.join(tmp, sub), { recursive: true })
-    writeFileSync(path.join(tmp, 'config', 'conveyor.json'), JSON.stringify({
+    writeFileSync(path.join(tmp, 'config', 'helioz.json'), JSON.stringify({
       quiet_hours: { start: '00:00', end: '23:59' }, // «всегда ночь» для теста
       council: { lenses: ['риск', 'цена отката', 'простота'], min_advisors: 3, synthesis_order: ['claude'] },
       probe_timeout_sec: 5, run_timeout_sec: 5,
@@ -215,7 +215,7 @@ async function cmdSelftest() {
       status: 'asked', asked_at: now(), answered_at: null, answer: null, decided_by: null, council: null, replay: [],
     }))
     const self = fileURLToPath(import.meta.url)
-    const run = (args) => spawnSync(process.execPath, [self, ...args], { env: { ...process.env, CONVEYOR_HOME: tmp }, encoding: 'utf8' })
+    const run = (args) => spawnSync(process.execPath, [self, ...args], { env: { ...process.env, HELIOZ_HOME: tmp }, encoding: 'utf8' })
 
     // 0а. Без конечной цели владельца совет решать НЕ ВПРАВЕ (exit 2).
     mkDil('DNoGoal', 'default')
@@ -242,21 +242,21 @@ async function cmdSelftest() {
     const d2 = JSON.parse(readFileSync(path.join(tmp, 'queue', 'dilemmas', 'DOK.json'), 'utf8'))
     eq(d2.decided_by, 'council'); eq(d2.answer, 1, 'советники выбрали вариант 2 → индекс 1')
     eq(d2.council.lenses.length, 3)
-    const led = readFileSync(path.join(tmp, '.conveyor', 'state', 'ledger.jsonl'), 'utf8').trim().split('\n').map(JSON.parse)
+    const led = readFileSync(path.join(tmp, '.helioz', 'state', 'ledger.jsonl'), 'utf8').trim().split('\n').map(JSON.parse)
     const ce = led.find(l => l.kind === 'council' && l.dilemma === 'DOK')
     ok(ce && ce.rationale && ce.lenses.length === 3, 'ledger несёт решение с обоснованием и позициями')
     // позиции советников лежат файлами (изоляция: каждый писал в свой)
-    const cdir = readdirSync(path.join(tmp, '.conveyor', 'state', 'council', 'DOK'))
+    const cdir = readdirSync(path.join(tmp, '.helioz', 'state', 'council', 'DOK'))
     ok(cdir.filter(f => f.startsWith('advisor-')).length === 3, 'три файла позиций')
     // отбивка легла в outbox (Telegram-стаба нет — недоставленная, но durable)
-    const obox = readdirSync(path.join(tmp, '.conveyor', 'state', 'outbox'))
+    const obox = readdirSync(path.join(tmp, '.helioz', 'state', 'outbox'))
     ok(obox.length >= 1, 'отбивка о решении в outbox')
 
     // 3. Мало голосов (лимит 3, живой CLI один и его роль advise убрана) → совет не собрался, exit 1.
     writeFileSync(path.join(tmp, 'config', 'clis.json'), JSON.stringify({
       claude: { invoke_read: [adv], invoke_write: [adv], stdin_prompt: true, roles: ['synthesize'] },
     }))
-    rmSync(path.join(tmp, '.conveyor', 'state', 'cli-health.json'), { force: true })
+    rmSync(path.join(tmp, '.helioz', 'state', 'cli-health.json'), { force: true })
     mkDil('DThin', 'default')
     eq(run(['decide', '--dilemma', 'DThin']).status, 1, 'нет советников → совет не решает')
 
@@ -264,7 +264,7 @@ async function cmdSelftest() {
     eq(run(['decide', '--dilemma', 'DOK']).status, 2)
 
     // 5. Цель в промте каждого советника; советники голосуют «0 = ни один не служит цели» → воздержание.
-    const p0 = readFileSync(path.join(tmp, '.conveyor', 'state', 'council', 'DOK', 'prompt-0.txt'), 'utf8')
+    const p0 = readFileSync(path.join(tmp, '.helioz', 'state', 'council', 'DOK', 'prompt-0.txt'), 'utf8')
     ok(p0.includes('КОНЕЧНАЯ ЦЕЛЬ ВЛАДЕЛЬЦА') && p0.includes('24/7 без потерь'), 'цель владельца в промте советника')
     const advNone = path.join(bin, 'advnone')
     writeFileSync(advNone, '#!/bin/sh\ncat >/dev/null\necho "ВЫБОР: 0"; echo "ПОЧЕМУ: ни один вариант не служит цели."; echo "РИСК ОШИБКИ: нет."\n')
@@ -273,13 +273,13 @@ async function cmdSelftest() {
       claude: { invoke_read: [advNone], invoke_write: [advNone], stdin_prompt: true, roles: ['execute', 'verify', 'advise', 'synthesize'] },
       codex: { invoke_read: [advNone], invoke_write: [advNone], stdin_prompt: true, roles: ['execute', 'verify', 'advise', 'synthesize'] },
     }))
-    rmSync(path.join(tmp, '.conveyor', 'state', 'cli-health.json'), { force: true })
+    rmSync(path.join(tmp, '.helioz', 'state', 'cli-health.json'), { force: true })
     mkDil('DNone', 'default')
     const rn = run(['decide', '--dilemma', 'DNone'])
     eq(rn.status, 1, 'все за 0 → совет воздержался')
     const dn = JSON.parse(readFileSync(path.join(tmp, 'queue', 'dilemmas', 'DNone.json'), 'utf8'))
     eq(dn.status, 'asked', 'развилка осталась владельцу')
-    const led2 = readFileSync(path.join(tmp, '.conveyor', 'state', 'ledger.jsonl'), 'utf8').trim().split('\n').map(JSON.parse)
+    const led2 = readFileSync(path.join(tmp, '.helioz', 'state', 'ledger.jsonl'), 'utf8').trim().split('\n').map(JSON.parse)
     ok(led2.some(l => l.kind === 'council-abstain' && l.dilemma === 'DNone'), 'воздержание записано в ledger')
 
     console.log('selftest ok — без цели не решает, запретные отложены, default решён по цели, воздержание при «ни один», тонкий совет не решает')
@@ -294,7 +294,7 @@ async function main() {
   })
   if (v.selftest) return cmdSelftest()
   if (positionals[0] === 'decide') return cmdDecide(v.dilemma, v.day)
-  console.log('conveyor-council: decide --dilemma <DID> [--day] | --selftest')
+  console.log('helioz-council: decide --dilemma <DID> [--day] | --selftest')
   return 0
 }
 main().then(c => process.exit(c)).catch(e => { console.error(String(e && e.message || e)); process.exit(1) })

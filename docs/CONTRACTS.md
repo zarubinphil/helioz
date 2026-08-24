@@ -29,11 +29,11 @@ kind: default                 # default | prod | foreign | expensive — кла�
 
 Задача без `check_cmd` в конвейер НЕ принимается (`--ready` её не отдаёт, помечает `invalid`).
 
-## Маркер — `.conveyor/state/markers/<ID>.done.json`
+## Маркер — `.helioz/state/markers/<ID>.done.json`
 
-Пишет ТОЛЬКО `conveyor-gate.mjs --task <ID> --check-cmd …` при exit 0.
+Пишет ТОЛЬКО `helioz-gate.mjs --task <ID> --check-cmd …` при exit 0.
 Поля целостности (все обязательны, отсутствие любого = tampered):
-`task, check_cmd, exit_code, base, head, sha_of_changed_files, executor_cli, verifier_cli, finished_at, written_by:"conveyor-gate"`.
+`task, check_cmd, exit_code, base, head, sha_of_changed_files, executor_cli, verifier_cli, finished_at, written_by:"helioz-gate"`.
 `sha_of_changed_files` пересчитывается по base..head при каждом чтении — несовпадение = tampered.
 
 ## Развилка — `queue/dilemmas/<DID>.json`
@@ -54,12 +54,12 @@ kind: default                 # default | prod | foreign | expensive — кла�
 `kind` из {prod, foreign, expensive} — совет решать НЕ вправе (exit 2), ждёт владельца.
 `kind=default` — днём дефолтом решает оркестратор (фиксация в ledger), ночью — совет.
 
-## Отбивка — `.conveyor/state/outbox/<ts>-<n>.json`
+## Отбивка — `.helioz/state/outbox/<ts>-<n>.json`
 
 `{"text": "…", "quiet": true|false, "buttons": [[{"text","callback_data"}]] , "delivered_at": null, "attempts": 0}`
 Durable-запись ПЕРВОЙ, отправка best-effort. `flush` дошлёт недоставленное. Пустых отбивок без данных не бывает.
 
-## Ledger — `.conveyor/state/ledger.jsonl` (append-only)
+## Ledger — `.helioz/state/ledger.jsonl` (append-only)
 
 Урок: `{"ts","kind":"lesson","cause","fix","rule","enforced_by"}`
 Решение совета: `{"ts","kind":"council","dilemma","decision","lenses":[{lens,cli,position_file}],"rationale"}`
@@ -72,7 +72,7 @@ Durable-запись ПЕРВОЙ, отправка best-effort. `flush` дош�
 - `STOP` — файл-флаг. Есть → `--ready`/`--start` отказывают (exit 4), watchdog молчит. Ставится по «стоп» из Telegram или `--stop`; снимается «пуск»/`--go`.
 - `budget.json` — `{"started_at","ceiling_usd","ceiling_tokens"}`; `--budget` меряет факт по jsonl трёх CLI, превышение → exit 3.
 - `telegram-offset.json` — оффсет getUpdates.
-- `READY.json` — пишет ТОЛЬКО `--probes` при всех шести зелёных: `{"written_by":"conveyor-gate","probes":6,"head","at"}`.
+- `READY.json` — пишет ТОЛЬКО `--probes` при всех шести зелёных: `{"written_by":"helioz-gate","probes":6,"head","at"}`.
 
 ## Приём чужой работы — `--adopt <dir>`
 

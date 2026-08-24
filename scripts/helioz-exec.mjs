@@ -18,10 +18,10 @@ import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import os from 'node:os'
 
-const HOME = process.env.CONVEYOR_HOME || path.dirname(path.dirname(fileURLToPath(import.meta.url)))
-const CFG = (() => { try { return JSON.parse(readFileSync(path.join(HOME, 'config', 'conveyor.json'), 'utf8')) } catch { return {} } })()
+const HOME = process.env.HELIOZ_HOME || path.dirname(path.dirname(fileURLToPath(import.meta.url)))
+const CFG = (() => { try { return JSON.parse(readFileSync(path.join(HOME, 'config', 'helioz.json'), 'utf8')) } catch { return {} } })()
 const CLIS = (() => { try { return JSON.parse(readFileSync(path.join(HOME, 'config', 'clis.json'), 'utf8')) } catch { return {} } })()
-const STATE = path.join(HOME, '.conveyor', 'state')
+const STATE = path.join(HOME, '.helioz', 'state')
 const HEALTH = path.join(STATE, 'cli-health.json')
 const now = () => new Date().toISOString()
 const cliNames = () => Object.keys(CLIS).filter(k => !k.startsWith('_'))
@@ -142,7 +142,7 @@ function cmdRun(cli, promptFile, write, timeoutSec, log) {
 // --- selftest: стаб-бинари ------------------------------------------------------------------------
 async function cmdSelftest() {
   const { strictEqual: eq, ok } = await import('node:assert')
-  const tmp = mkdtempSync(path.join(os.tmpdir(), 'conveyor-exec-'))
+  const tmp = mkdtempSync(path.join(os.tmpdir(), 'helioz-exec-'))
   try {
     const bin = path.join(tmp, 'bin'); mkdirSync(bin, { recursive: true })
     const mkbin = (name, script) => { const f = path.join(bin, name); writeFileSync(f, '#!/bin/sh\n' + script + '\n'); chmodSync(f, 0o755); return f }
@@ -153,7 +153,7 @@ async function cmdSelftest() {
     const empty = mkbin('empty', 'exit 0')
     mkdirSync(path.join(tmp, 'config'), { recursive: true })
     mkdirSync(path.join(tmp, 'queue', 'tasks'), { recursive: true })
-    writeFileSync(path.join(tmp, 'config', 'conveyor.json'), JSON.stringify({ probe_timeout_sec: 5, run_timeout_sec: 5 }))
+    writeFileSync(path.join(tmp, 'config', 'helioz.json'), JSON.stringify({ probe_timeout_sec: 5, run_timeout_sec: 5 }))
     const clis = {
       claude: { invoke_read: [alive, '-p'], invoke_write: [alive, '-p', '--w'], stdin_prompt: true, roles: ['execute', 'verify', 'advise', 'synthesize'] },
       codex: { invoke_read: [broken, 'exec'], invoke_write: [broken, 'exec'], stdin_prompt: true, roles: ['execute', 'verify', 'advise'] },
@@ -161,7 +161,7 @@ async function cmdSelftest() {
     }
     writeFileSync(path.join(tmp, 'config', 'clis.json'), JSON.stringify(clis))
     const self = fileURLToPath(import.meta.url)
-    const run = (args) => spawnSync(process.execPath, [self, ...args], { env: { ...process.env, CONVEYOR_HOME: tmp }, encoding: 'utf8' })
+    const run = (args) => spawnSync(process.execPath, [self, ...args], { env: { ...process.env, HELIOZ_HOME: tmp }, encoding: 'utf8' })
 
     // 1. Зонд: живой зелёный, сломанный вызов КРАСНЫЙ (не «provider list зелёный»), пустой ответ КРАСНЫЙ.
     eq(run(['probe', '--cli', 'claude']).status, 0)
@@ -189,14 +189,14 @@ async function cmdSelftest() {
     ].join('\n'))
     const e1 = run(['task', '--id', 'T9', '--role', 'executor'])
     eq(e1.status, 0)
-    const rec = JSON.parse(readFileSync(path.join(tmp, '.conveyor', 'state', 'exec', 'T9.json'), 'utf8'))
+    const rec = JSON.parse(readFileSync(path.join(tmp, '.helioz', 'state', 'exec', 'T9.json'), 'utf8'))
     eq(rec.executor_used, 'claude')
     ok(existsSync(path.join(tmp, rec.executor_log)), 'лог исполнителя на диске')
     const v1 = run(['task', '--id', 'T9', '--role', 'verifier', '--cli', 'claude'])
     eq(v1.status, 2, 'проверяющий = исполнитель → отказ (генератор не судит себя)')
     const v2 = run(['task', '--id', 'T9', '--role', 'verifier'])
     eq(v2.status, 0)
-    const rec2 = JSON.parse(readFileSync(path.join(tmp, '.conveyor', 'state', 'exec', 'T9.json'), 'utf8'))
+    const rec2 = JSON.parse(readFileSync(path.join(tmp, '.helioz', 'state', 'exec', 'T9.json'), 'utf8'))
     ok(rec2.verifier_used && rec2.verifier_used !== 'claude', 'ротация выбрала другой CLI')
 
     // 5. Роль без промта → 2.
@@ -225,7 +225,7 @@ async function main() {
   if (cmd === 'pick') return cmdPick(v.role, v.exclude, v.prefer)
   if (cmd === 'task') return cmdTask(v.id, v.role, v.cli)
   if (cmd === 'run') return cmdRun(v.cli, v['prompt-file'], v.write, Number(v.timeout) || 0, v.log)
-  console.log('conveyor-exec: probe --cli|--all · pick --role [--exclude,--prefer] · task --id --role [--cli] · run --cli --prompt-file [--write] | --selftest')
+  console.log('helioz-exec: probe --cli|--all · pick --role [--exclude,--prefer] · task --id --role [--cli] · run --cli --prompt-file [--write] | --selftest')
   return 0
 }
 main().then(c => process.exit(c)).catch(e => { console.error(String(e && e.message || e)); process.exit(1) })

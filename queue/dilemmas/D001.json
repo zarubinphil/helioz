@@ -16,32 +16,32 @@
   "council": {
     "decision": 1,
     "at": "2026-08-23T21:23:38.999Z",
-    "synthesis": ".conveyor/state/council/D001/synthesis-codex.md",
+    "synthesis": ".helioz/state/council/D001/synthesis-codex.md",
     "synthesis_cli": "codex",
     "lenses": [
       {
         "lens": "риск",
         "cli": "claude",
         "choice": 1,
-        "file": ".conveyor/state/council/D001/advisor-0-риск-claude.md"
+        "file": ".helioz/state/council/D001/advisor-0-риск-claude.md"
       },
       {
         "lens": "цена отката",
         "cli": "codex",
         "choice": 0,
-        "file": ".conveyor/state/council/D001/advisor-1-цена_отката-codex.md"
+        "file": ".helioz/state/council/D001/advisor-1-цена_отката-codex.md"
       },
       {
         "lens": "соответствие контракту владельца",
         "cli": "claude",
         "choice": 1,
-        "file": ".conveyor/state/council/D001/advisor-2-соответствие_контракту_владельца-claude.md"
+        "file": ".helioz/state/council/D001/advisor-2-соответствие_контракту_владельца-claude.md"
       },
       {
         "lens": "простота",
         "cli": "codex",
         "choice": 0,
-        "file": ".conveyor/state/council/D001/advisor-3-простота-codex.md"
+        "file": ".helioz/state/council/D001/advisor-3-простота-codex.md"
       }
     ]
   },
