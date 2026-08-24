@@ -16,7 +16,21 @@
 Палитра, свет, материал, CSS-токены — строго §2, §3, §5 канона (ivory `#F3EFE8`, мрамор,
 мягкий дневной свет сверху-слева, frosted-glass карты, НИКОГДА тёмный фон и чистый чёрный).
 
-## Промпты генерации (Higgsfield `nano_banana_pro`, якорь — `emblems/style-anchor.png` как role:image)
+## Как генерятся визуалы
+
+Рабочий путь на этой машине — codex CLI с инструментом `image_gen.imagegen`; якорь стиля прикладывается
+флагом `-i`:
+
+```bash
+codex --ask-for-approval never exec --skip-git-repo-check -s workspace-write --ephemeral \
+  -i "~/Desktop/Desktop Archive/Projects/pantheon-design-system/emblems/style-anchor.png" \
+  "<бриф из промптов ниже>"
+```
+
+Альтернатива при доступе к Higgsfield — `nano_banana_pro`, тот же якорь как `medias role:image`.
+Промпты ниже одинаково годятся обоим.
+
+## Промпты генерации
 
 **Эмблема (1:1, 2k):**
 ```

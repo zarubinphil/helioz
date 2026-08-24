@@ -7,7 +7,8 @@ cd "$HOME_DIR"
 
 echo "== Проверка приборов (selftests) =="
 fail=0
-for t in "node scripts/helioz-gate.mjs --selftest" \
+for t in "node scripts/helioz-plan.mjs --selftest" \
+         "node scripts/helioz-gate.mjs --selftest" \
          "node scripts/helioz-zeus.mjs --selftest" \
          "node scripts/helioz-exec.mjs --selftest" \
          "node scripts/helioz-council.mjs --selftest" \
@@ -29,5 +30,10 @@ if ! launchctl print "gui/$(id -u)/com.helioz.watchdog" >/dev/null 2>&1; then
 fi
 if [ ! -f .helioz/state/budget.json ]; then
   echo "⚠️ Нет .helioz/state/budget.json — задай потолок: {\"started_at\":\"$(date -u +%FT%TZ)\",\"ceiling_usd\":N}"
+fi
+if [ ! -f queue/GOAL.md ]; then
+  echo "⚠️ Цели нет. Конвейер начинается с допроса:"
+  echo "  node scripts/helioz-plan.mjs grill --idea \"твоя идея одной фразой\""
+  echo "  дальше отвечай боту по одному вопросу, затем: plan goal && plan plan"
 fi
 echo "Оркестратор поднимет сторож при протухшем heartbeat, либо вручную: сессия Claude Code в этой папке с промтом ORCHESTRATOR.md"

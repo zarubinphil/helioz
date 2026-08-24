@@ -22,6 +22,8 @@ Picture a worker who can do anything but has three flaws. He says "done" when it
 
 Every flaw gets an instrument, not a promise:
 
+**I never start from a guess.** First the interrogation: one question at a time, each with a ready answer of mine, over a fixed list of topics — so it never turns out half a day later that we built the wrong thing. Without answers to the critical questions I refuse to plan.
+
 **"Done" is judged by a program, not by him.** One agent works, a DIFFERENT one verifies — and the verifier never reads the first one's report, it looks at the disk and runs commands. Nobody grades their own homework. Not even me.
 
 **The "finished" mark is written by code.** It carries fingerprints: commits before and after, a hash of the changed files, the exit code of the check. You cannot forge it — hand-written, truncated or copied from another task, I see it and call it out.
@@ -36,14 +38,26 @@ Every flaw gets an instrument, not a promise:
 
 ## How it actually looks
 
-You give me a goal in one file, `queue/GOAL.md`. That is my compass: every decision I make without you gets checked against it.
+All I need from you at the start is one sentence:
 
-Tasks go into `queue/tasks/`. Each one must carry a check command. No command, no task: "done" without proof is not done.
+```bash
+node scripts/helioz-plan.mjs grill --idea "rewrite billing onto the new schema"
+```
 
-Then I drive:
+Then I **interrogate** you. One question at a time in Telegram, each with my own recommended answer — agree and just say "yes", it gets recorded. The questions are not improvised: the interview has a fixed set of slots — the goal, how readiness is measured, what must never be touched, what counts as failure, what I may decide alone, plus a block of uncomfortable questions about things you would not raise yourself (where it breaks first, what falls apart after a month, which obvious solution you actually do not want). Anything the disk can answer I never ask — I look it up.
+
+While a single critical slot is empty, there will be no plans. Not to be difficult: planning on a guess costs more than waiting for your answer. But I will not idle either — I take other work and the question keeps hanging.
+
+Once the interview is closed, I write the plans myself. A master plan for me and a pile of small tasks for the executors — the smaller the better. **Two different agents plan independently**, blind to each other, and a third merges them blind: that is more honest than one agent, however clever.
 
 ```text
-goal → queue/GOAL.md · tasks → queue/tasks/*.task.md (no check command, not accepted)
+one sentence of intent
+   ↓
+slot-driven interrogation (one question at a time, with a recommendation) → queue/BRIEF.md
+   ↓
+final goal → queue/GOAL.md  (the compass for every decision made without you)
+   ↓
+plans: two agents apart → blind merge → docs/MASTER-PLAN.md + queue/tasks/*.task.md
    ↓
 tact: heartbeat → pull your Telegram answers → budget → pick a task → probe agents
    → start (code will not let two touch one file) → executor → blind verifier
@@ -54,6 +68,8 @@ fork? your three cases wait in the queue while I keep working · small night for
    ↓
 context running out → handoff → the watchdog starts a fresh session from disk. Nothing is lost.
 ```
+
+You can also drop a task by hand into `queue/tasks/`. One requirement: a check command. Without it I refuse the task — "done" without proof is not done.
 
 Everything important lands in your Telegram: stage, percent, what went wrong and how I got out — plain words, no code. Say "stop" and I freeze losslessly. Say "go" and I continue.
 
@@ -78,6 +94,7 @@ bash scripts/helioz-start.sh
 | Path | What it does |
 |---|---|
 | `ORCHESTRATOR.md` | the frozen orchestrator prompt — the tact above |
+| `scripts/helioz-plan.mjs` | slot-driven interrogation, final goal, master plan and small tasks |
 | `scripts/helioz-gate.mjs` | queue, slots, dependencies, forgery-proof marks, stop, budget, adopting foreign work |
 | `scripts/helioz-zeus.mjs` | Telegram: reports queue on disk and arrive, fork buttons, stop/go/replay |
 | `scripts/helioz-exec.mjs` | honest agent probe (a real run, not a version check), rotation, role runner |

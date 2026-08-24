@@ -216,14 +216,30 @@ async function cmdPollLocked(timeoutSec) {
       return
     }
     const m = text.match(/^\/?(?:replay\s+)?([A-Za-zА-Яа-я0-9_-]+)\s+(\d+)$/)
-    if (m) {
+    if (m && matchDilemma(m[1])) {
       const d = matchDilemma(m[1])
       const idx = Number(m[2]) - 1
       let reply = 'Развилка не найдена.'
-      if (d && d !== 'ambiguous' && idx >= 0 && idx < d.options.length) { reply = applyAnswer(d, idx, 'text'); events.push({ kind: 'answer', dilemma: d.id, answer: idx }) }
+      if (d !== 'ambiguous' && idx >= 0 && idx < d.options.length) { reply = applyAnswer(d, idx, 'text'); events.push({ kind: 'answer', dilemma: d.id, answer: idx }) }
       else if (d === 'ambiguous') reply = 'Несколько совпадений — уточни id.'
       enqueue({ text: reply, quiet: isQuietHours() })
+      return
     }
+    // Идёт допрос и вопрос открыт — свободный текст владельца это ОТВЕТ на него.
+    // Так конвейер начинается прямо с телефона: владелец отвечает по одному, прибор пишет и спрашивает дальше.
+    const gs = path.join(HOME, 'queue', 'GRILL-STATE.json')
+    if (existsSync(gs)) {
+      let cur = null
+      try { cur = JSON.parse(readFileSync(gs, 'utf8')).current } catch { }
+      if (cur) {
+        const plan = path.join(path.dirname(fileURLToPath(import.meta.url)), 'helioz-plan.mjs')
+        const r = spawnSyncLock(process.execPath, [plan, 'answer', '--slot', cur, '--text', text], { encoding: 'utf8', env: process.env })
+        events.push({ kind: 'grill-answer', slot: cur, ok: r.status === 0 })
+        if (r.status !== 0) enqueue({ text: 'Ответ не записался — загляни в queue/BRIEF.md.', quiet: isQuietHours() })
+        return
+      }
+    }
+    if (m) enqueue({ text: 'Развилка не найдена.', quiet: isQuietHours() })
   }
   writeFileSync(offFile, JSON.stringify({ offset }) + '\n')
   await cmdFlush()

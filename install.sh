@@ -28,11 +28,16 @@ if [ "$LANG_CHOICE" = "ru" ]; then
 
   Вот как это устроено, совсем просто:
 
-  1. Ты пишешь мне цель — одним файлом: queue/GOAL.md. Это мой компас.
-     Каждое решение, которое я приму без тебя, я сверяю с этой целью.
-  2. Ты кладёшь задачи в queue/tasks/. У каждой задачи обязана быть
-     команда проверки. Без неё я задачу не возьму: «сделано» без
-     доказательства — это не сделано.
+  1. Ты говоришь мне идею одной фразой. Дальше я тебя ДОПРАШИВАЮ: по одному
+     вопросу в Telegram, к каждому сразу даю свой рекомендованный ответ —
+     согласен, отвечай «да». Что можно узнать с диска, я не спрашиваю, смотрю сам.
+     Из ответов рождается конечная цель: мой компас, по которому я потом
+     сверяю каждое решение, принятое без тебя.
+  2. Потом я сам пишу планы: мастер-план для себя и кучу мелких задач для
+     исполнителей — чем мельче, тем лучше. Планируют независимо два разных
+     агента, третий сводит их вслепую. У каждой задачи обязана быть команда
+     проверки. Без неё задача не принимается: «сделано» без доказательства —
+     это не сделано.
   3. Дальше я еду сам. Один агент исполняет, ДРУГОЙ проверяет — и
      проверяющий не читает отчёт исполнителя, только смотрит на диск.
      Никто не проверяет сам себя. Даже я.
@@ -81,10 +86,15 @@ else
 
   Here is how it works, in plain words:
 
-  1. You write me a goal — one file: queue/GOAL.md. That is my compass.
-     Every decision I make without you gets checked against it.
-  2. You drop tasks into queue/tasks/. Every task must carry a check
-     command. Without one I refuse it: "done" without proof is not done.
+  1. You tell me the idea in one sentence. Then I INTERROGATE you: one
+     question at a time in Telegram, each with my own recommended answer —
+     agree and just say "yes". Anything the disk can answer I never ask, I
+     look it up myself. Out of your answers comes the final goal: my compass
+     for every decision I later make without you.
+  2. Then I write the plans myself: a master plan for me and a pile of small
+     tasks for the executors — the smaller the better. Two different agents
+     plan independently, a third merges them blind. Every task must carry a
+     check command. Without one it is refused: "done" without proof is not done.
   3. Then I drive. One agent executes, a DIFFERENT one verifies — and the
      verifier never reads the executor's report, only the disk. Nobody
      grades their own homework. Not even me.
@@ -135,7 +145,7 @@ for c in claude codex kimi; do command -v "$c" >/dev/null && { echo "  ✓ CLI $
 
 echo ""
 echo "  Проверяю свои приборы (selftests)…"
-for t in helioz-gate helioz-zeus helioz-exec helioz-council; do
+for t in helioz-plan helioz-gate helioz-zeus helioz-exec helioz-council; do
   if node "scripts/$t.mjs" --selftest >/dev/null 2>&1; then echo "  ✓ $t"; else echo "  ✗ $t — красный, установка прервана"; exit 2; fi
 done
 bash scripts/helioz-watchdog.sh --selftest >/dev/null 2>&1 && echo "  ✓ helioz-watchdog" || { echo "  ✗ helioz-watchdog"; exit 2; }
@@ -149,6 +159,10 @@ echo "     OLYMPUZ_TELEGRAM_TOKEN=<токен бота> и OLYMPUZ_TELEGRAM_CHAT
 echo "  2. Сторож (автоперезапуск): cp launchd/com.helioz.watchdog.plist ~/Library/LaunchAgents/"
 echo "     && launchctl bootstrap gui/\$(id -u) ~/Library/LaunchAgents/com.helioz.watchdog.plist"
 echo "  3. Потолок расходов: .helioz/state/budget.json → {\"started_at\":\"…\",\"ceiling_usd\":N}"
+echo ""
+echo "  Первый шаг после запуска — расскажи мне идею одной фразой:"
+echo "    node scripts/helioz-plan.mjs grill --idea \"что нужно сделать\""
+echo "  Дальше я допрошу тебя по одному вопросу в Telegram, соберу цель и планы сам."
 echo ""
 echo "  Запуск: bash scripts/helioz-start.sh"
 echo "  Полное чтение: README.ru.md · контракты: docs/CONTRACTS.md"
