@@ -373,7 +373,17 @@ async function cmdBudget(json) {
   const [c, x, k] = await Promise.all([claudeSpend(since).catch(() => ({ tokens: 0, usd: 0 })), codexSpend(since).catch(() => ({ tokens: 0, usd: 0 })), kimiSpend(since).catch(() => ({ tokens: 0, usd: 0 }))])
   const tokens = c.tokens + x.tokens + k.tokens, usd = c.usd + x.usd + k.usd
   const over = (Number.isFinite(b.ceiling_tokens) && b.ceiling_tokens > 0 && tokens > b.ceiling_tokens) || (Number.isFinite(b.ceiling_usd) && b.ceiling_usd > 0 && usd > b.ceiling_usd)
-  const rep = { ok: !over, since: new Date(since).toISOString(), spend_tokens: tokens, spend_usd: Number(usd.toFixed(2)), by_cli: { claude: c, codex: x, kimi: k }, ceiling_usd: b.ceiling_usd ?? null, ceiling_tokens: b.ceiling_tokens ?? null }
+  // Слепой замер: прогоны в окне были, а расход вышел нулевой - значит журналы CLI не читаются.
+  // Молчать нельзя: потолок, который всегда зелен, хуже отсутствующего (fail-closed).
+  let runsInWindow = 0
+  for (const dir of [path.join(S.state, 'exec'), path.join(S.state, 'logs')]) {
+    try { for (const f of readdirSync(dir)) { if (statSync(path.join(dir, f)).mtimeMs >= since) runsInWindow++ } } catch { }
+  }
+  if (hasCeiling && tokens === 0 && runsInWindow > 0) {
+    console.error(`расход неизвестен: в окне было ${runsInWindow} прогонов, а журналы CLI дали 0 токенов - замер слеп, потолок не подтверждён`)
+    return 2
+  }
+  const rep = { ok: !over, since: new Date(since).toISOString(), spend_tokens: tokens, spend_usd: Number(usd.toFixed(2)), by_cli: { claude: c, codex: x, kimi: k }, ceiling_usd: b.ceiling_usd ?? null, ceiling_tokens: b.ceiling_tokens ?? null, runs_in_window: runsInWindow }
   if (json) console.log(JSON.stringify(rep, null, 2))
   else console.log(`бюджет с ${rep.since}: ${tokens.toLocaleString()} ток · ≈$${rep.spend_usd}${over ? ' - ПРЕВЫШЕНИЕ, останов' : ' - в пределах'}`)
   return over ? 3 : 0

@@ -113,6 +113,7 @@ bash scripts/helioz-start.sh
 | `scripts/helioz-council.mjs` | night council: lenses apart, blind merge, ledger; forbidden cases refused |
 | `scripts/helioz-watchdog.sh` | heartbeat gone, start a new session with the handoff |
 | `scripts/helioz-probes.mjs` | six adversarial probes; only they grant the project its "ready" status |
+| `scripts/helioz-budget-reset.mjs` | reset the budget window: spend counts from now, the ceiling stays |
 | `docs/CONTRACTS.md` | on-disk state contracts: tasks, forks, marks, ledger |
 | `docs/BRAND.md` | design description, an instance of the Pantheon Design System |
 

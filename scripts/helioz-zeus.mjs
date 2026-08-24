@@ -57,10 +57,12 @@ async function withLock(name, fn) {
   try { return await fn() } finally { rmSync(dir, { recursive: true, force: true }) }
 }
 
-async function tg(method, body, tgc) {
+// timeoutMs шире, чем long-poll: getUpdates держит соединение timeout секунд, и обрыв на 15с
+// съедал бы каждый ответ владельца, пришедший через сторожа (поймано живым прогоном launchd).
+async function tg(method, body, tgc, timeoutMs = 15000) {
   const res = await fetch(`${API}/bot${tgc.token}/${method}`, {
     method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body),
-    signal: AbortSignal.timeout(15000),
+    signal: AbortSignal.timeout(timeoutMs),
   })
   const j = await res.json().catch(() => ({ ok: false, status: res.status }))
   return { http: res.status, ...j }
@@ -167,7 +169,7 @@ async function cmdPollLocked(timeoutSec) {
   let offset = 0
   try { offset = JSON.parse(readFileSync(offFile, 'utf8')).offset || 0 } catch { }
   let r
-  try { r = await tg('getUpdates', { offset, timeout: timeoutSec || 0, allowed_updates: ['message', 'callback_query'] }, tgc) } catch (e) {
+  try { r = await tg('getUpdates', { offset, timeout: timeoutSec || 0, allowed_updates: ['message', 'callback_query'] }, tgc, (timeoutSec || 0) * 1000 + 15000) } catch (e) {
     console.error('poll: сеть недоступна (' + redact(e.message || e, tgc.token) + ') - конвейер работает дальше')
     return 0
   }

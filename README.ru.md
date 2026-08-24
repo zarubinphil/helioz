@@ -113,6 +113,7 @@ bash scripts/helioz-start.sh
 | `scripts/helioz-council.mjs` | ночной совет: линзы врозь, слепой свод, журнал; запретные случаи отклоняет |
 | `scripts/helioz-watchdog.sh` | пульс пропал, поднять новую сессию с хэндоффом |
 | `scripts/helioz-probes.mjs` | шесть враждебных проб; только они дают проекту статус «готов» |
+| `scripts/helioz-budget-reset.mjs` | сброс окна бюджета: отсчёт расхода с этой минуты, потолок не трогает |
 | `docs/CONTRACTS.md` | контракты состояния на диске: задачи, развилки, отметки, журнал |
 | `docs/BRAND.md` | дизайн-описание, инстанс Pantheon Design System |
 
