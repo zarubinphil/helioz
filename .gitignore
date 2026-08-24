@@ -1,3 +1,8 @@
 .conveyor/state/
 node_modules/
 graphify-out/
+
+# Рантайм-состояние и бэкапы: след того, как конвейером пользуется владелец.
+# В публичную сборку не идёт.
+.helioz/state/
+.helioz/backup/

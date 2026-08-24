@@ -13,7 +13,7 @@
   <key>StandardErrorPath</key><string>__HELIOZ_HOME__/.helioz/state/logs/launchd-watchdog.log</string>
   <key>EnvironmentVariables</key>
   <dict>
-    <key>PATH</key><string>__USER_HOME__/.local/bin:__USER_HOME__/.npm-global/bin:__USER_HOME__/.kimi-code/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    <key>PATH</key><string>__USER_HOME__/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
   </dict>
 </dict>
 </plist>
