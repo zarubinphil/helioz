@@ -17,7 +17,7 @@
   "kimi": {
     "invoke_read": ["kimi", "-p"],
     "invoke_write": null,
-    "_почему_без_write": "поведение kimi -p на запись без -y не проверено (справка-CLI §непроверенное); до пробы — только чтение",
+    "_почему_без_write": "поведение kimi -p на запись без -y не проверено (справка-CLI §непроверенное); до пробы - только чтение",
     "stdin_prompt": false,
     "roles": ["verify", "advise"],
     "web": { "search": "WebSearch", "fetch": "FetchURL" }
