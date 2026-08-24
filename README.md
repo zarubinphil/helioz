@@ -69,6 +69,10 @@ fork? your three cases wait in the queue while I keep working · small night for
 context running out → handoff → the watchdog starts a fresh session from disk. Nothing is lost.
 ```
 
+<p align="center">
+  <img src="docs/assets/helioz-flow.png" alt="The tact: glass cards Queue, Gate, Executor, Blind Verifier, Integrity Marker, Telegram Report, Night Council, Ledger joined by blue arrows; a gold thread loops from the council back to the queue" width="100%">
+</p>
+
 You can also drop a task by hand into `queue/tasks/`. One requirement: a check command. Without it I refuse the task — "done" without proof is not done.
 
 Everything important lands in your Telegram: stage, percent, what went wrong and how I got out — plain words, no code. Say "stop" and I freeze losslessly. Say "go" and I continue.
@@ -115,6 +119,10 @@ node scripts/helioz-probes.mjs
 Kill the orchestrator mid-task — the next one continues. Forge a mark — caught. Stay silent for a day — work goes on, forks intact. Cut Telegram — reports queue up and arrive later. Hand the council a forbidden fork — it refuses. Send two executors at one file — the second never starts.
 
 The probes test me, not my claims about myself. A red probe means no "ready" status.
+
+<p align="center">
+  <img src="docs/assets/helioz-emblem.png" alt="Helioz emblem: marble statue with a golden sun-disc, a chariot wheel and the classical column" width="46%">
+</p>
 
 ## A star
 
