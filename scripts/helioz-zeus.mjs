@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-// КАНАЛ «ЗЕВС» (@ZeusKaifBot) — отбивки владельцу и решения владельца.
+// КАНАЛ «ЗЕВС» (@ZeusKaifBot) - отбивки владельцу и решения владельца.
 // Паттерны взяты из olympuz (notify-telegram.ts / telegram-inbound.ts, проверены боем):
-//   durable-запись в outbox ПЕРВОЙ, Telegram — best-effort; токен из ~/.secrets, никогда в env
+//   durable-запись в outbox ПЕРВОЙ, Telegram - best-effort; токен из ~/.secrets, никогда в env
 //   потомков/argv/логи; чужой chat id → ТИШИНА; callback ≤64 байт, матч по префиксу id; fail-closed.
 //
 //   send --text "…" [--quiet]        отбивка (в outbox → попытка доставки)
@@ -10,7 +10,7 @@
 //   poll [--timeout N]               забрать ответы: кнопки, «стоп»/«пуск», «DID N», /replay
 //   --selftest                       стаб-HTTP, ни одного живого запроса
 //
-// Коды: 0 ok (даже если сеть легла — durable цел) · 2 fail-closed (нет секретов/развилки).
+// Коды: 0 ok (даже если сеть легла - durable цел) · 2 fail-closed (нет секретов/развилки).
 import { parseArgs } from 'node:util'
 import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync, renameSync } from 'node:fs'
 import { spawnSync as spawnSyncLock } from 'node:child_process'
@@ -50,7 +50,7 @@ async function withLock(name, fn) {
   const deadline = Date.now() + 5000
   for (;;) {
     try { mkdirSync(dir); break } catch {
-      if (Date.now() > deadline) { console.error(`лок ${name} занят >5с — второй экземпляр не начинает`); return 2 }
+      if (Date.now() > deadline) { console.error(`лок ${name} занят >5с - второй экземпляр не начинает`); return 2 }
       spawnSyncLock('/bin/sleep', ['0.05'])
     }
   }
@@ -90,7 +90,7 @@ async function cmdFlushLocked() {
     const full = path.join(OUTBOX, f)
     let m
     try { m = JSON.parse(readFileSync(full, 'utf8')) } catch {
-      // ревью codex: битый outbox-файл раньше молча выпадал из доставки навсегда — теперь виден
+      // ревью codex: битый outbox-файл раньше молча выпадал из доставки навсегда - теперь виден
       renameSync(full, full.replace(/\.json$/, '.corrupt.json'))
       console.error(`flush: битый файл ${f} → помечен .corrupt.json, разберись руками`)
       continue
@@ -106,11 +106,11 @@ async function cmdFlushLocked() {
     writeFileSync(full, JSON.stringify(m, null, 2) + '\n')
   }
   console.log(`flush: доставлено ${sent}, в очереди ${pending}`)
-  return 0 // сеть легла — не провал: durable цел, доедет следующим flush
+  return 0 // сеть легла - не провал: durable цел, доедет следующим flush
 }
 
 async function cmdSend(text, quiet) {
-  if (!text || !text.trim()) { console.error('пустая отбивка запрещена — каждое сообщение несёт данные'); return 2 }
+  if (!text || !text.trim()) { console.error('пустая отбивка запрещена - каждое сообщение несёт данные'); return 2 }
   enqueue({ text, quiet: quiet || isQuietHours() })
   return cmdFlush()
 }
@@ -127,7 +127,7 @@ async function cmdAsk(id) {
   if (!d) { console.error(`развилка ${id} не найдена`); return 2 }
   const lines = [`❓ Развилка ${d.id} [${d.kind}]${d.task ? ' · задача ' + d.task : ''}`, d.question, '']
   d.options.forEach((o, i) => lines.push(`${i + 1}. ${o}${i === d.recommend ? '  ← рекомендую' : ''}`))
-  lines.push('', d.council ? 'Совет уже решил ночью — ответ переиграет его решение.' : 'Кнопкой или текстом: «' + d.id + ' номер». Конвейер не ждёт — работает дальше.')
+  lines.push('', d.council ? 'Совет уже решил ночью - ответ переиграет его решение.' : 'Кнопкой или текстом: «' + d.id + ' номер». Конвейер не ждёт - работает дальше.')
   const idp = d.id.slice(0, 8)
   const buttons = [d.options.map((_, i) => ({ text: String(i + 1), callback_data: `d:${idp}:${i}` }))]
   enqueue({ text: lines.join('\n'), quiet: isQuietHours(), buttons })
@@ -137,9 +137,9 @@ async function cmdAsk(id) {
 
 // --- poll: единственная дверь решений владельца ---------------------------------------------------
 function applyAnswer(d, idx, via) {
-  if (!Array.isArray(d.replay)) d.replay = [] // ревью kimi: развилка от внешнего писателя без replay — не повод падать
+  if (!Array.isArray(d.replay)) d.replay = [] // ревью kimi: развилка от внешнего писателя без replay - не повод падать
   const prev = d.answer
-  if (d.status === 'answered' && d.answer === idx) return 'повтор — уже так решено'
+  if (d.status === 'answered' && d.answer === idx) return 'повтор - уже так решено'
   if (d.decided_by === 'council' || d.status === 'answered') {
     d.replay.push({ at: now(), from: prev ?? (d.council ? d.council.decision : null), to: idx, by: 'owner', via })
   }
@@ -152,8 +152,8 @@ function matchDilemma(prefix) {
   try { files = readdirSync(DILEMMAS).filter(f => f.endsWith('.json')) } catch { }
   const hits = []
   for (const f of files) {
-    // ревью kimi: один битый JSON в каталоге раньше убивал весь poll — включая канал «стоп»
-    let d; try { d = JSON.parse(readFileSync(path.join(DILEMMAS, f), 'utf8')) } catch { console.error(`битая развилка ${f} — пропущена`); continue }
+    // ревью kimi: один битый JSON в каталоге раньше убивал весь poll - включая канал «стоп»
+    let d; try { d = JSON.parse(readFileSync(path.join(DILEMMAS, f), 'utf8')) } catch { console.error(`битая развилка ${f} - пропущена`); continue }
     if (d && d.id && d.id.startsWith(prefix) && ['asked', 'answered', 'council'].includes(d.status)) hits.push(d)
   }
   return hits.length === 1 ? hits[0] : (hits.length ? 'ambiguous' : null)
@@ -162,13 +162,13 @@ function matchDilemma(prefix) {
 async function cmdPoll(timeoutSec) { return withLock('poll', () => cmdPollLocked(timeoutSec)) }
 async function cmdPollLocked(timeoutSec) {
   const tgc = readTg()
-  if (!tgc) { console.error('нет секретов Telegram — poll невозможен'); return 2 }
+  if (!tgc) { console.error('нет секретов Telegram - poll невозможен'); return 2 }
   const offFile = path.join(STATE, 'telegram-offset.json')
   let offset = 0
   try { offset = JSON.parse(readFileSync(offFile, 'utf8')).offset || 0 } catch { }
   let r
   try { r = await tg('getUpdates', { offset, timeout: timeoutSec || 0, allowed_updates: ['message', 'callback_query'] }, tgc) } catch (e) {
-    console.error('poll: сеть недоступна (' + redact(e.message || e, tgc.token) + ') — конвейер работает дальше')
+    console.error('poll: сеть недоступна (' + redact(e.message || e, tgc.token) + ') - конвейер работает дальше')
     return 0
   }
   if (!r.ok || !Array.isArray(r.result)) { console.error(`poll: HTTP ${r.http}`); return 0 }
@@ -176,7 +176,7 @@ async function cmdPollLocked(timeoutSec) {
   for (const u of r.result) {
     offset = Math.max(offset, u.update_id + 1)
     // poison-update не смеет заблокировать канал (ревью kimi): ошибка одного update логируется,
-    // offset всё равно продвигается — «стоп» доедет следующим сообщением
+    // offset всё равно продвигается - «стоп» доедет следующим сообщением
     try {
       await handleUpdate(u)
     } catch (e) { console.error(`update ${u.update_id}: ${redact(e.message || e, tgc.token)}`) }
@@ -191,7 +191,7 @@ async function cmdPollLocked(timeoutSec) {
       let reply = 'Не понял кнопку.'
       if (p.length === 3 && p[0] === 'd' && /^\d+$/.test(p[2])) {
         const d = matchDilemma(p[1])
-        if (d === 'ambiguous') reply = 'Совпало несколько развилок — ответь текстом: полный id + номер.'
+        if (d === 'ambiguous') reply = 'Совпало несколько развилок - ответь текстом: полный id + номер.'
         else if (!d) reply = 'Развилка не найдена или уже закрыта.'
         else if (Number(p[2]) >= d.options.length) reply = 'Нет такого варианта.'
         else { reply = applyAnswer(d, Number(p[2]), 'button'); events.push({ kind: 'answer', dilemma: d.id, answer: Number(p[2]) }) }
@@ -221,11 +221,11 @@ async function cmdPollLocked(timeoutSec) {
       const idx = Number(m[2]) - 1
       let reply = 'Развилка не найдена.'
       if (d !== 'ambiguous' && idx >= 0 && idx < d.options.length) { reply = applyAnswer(d, idx, 'text'); events.push({ kind: 'answer', dilemma: d.id, answer: idx }) }
-      else if (d === 'ambiguous') reply = 'Несколько совпадений — уточни id.'
+      else if (d === 'ambiguous') reply = 'Несколько совпадений - уточни id.'
       enqueue({ text: reply, quiet: isQuietHours() })
       return
     }
-    // Идёт допрос и вопрос открыт — свободный текст владельца это ОТВЕТ на него.
+    // Идёт допрос и вопрос открыт - свободный текст владельца это ОТВЕТ на него.
     // Так конвейер начинается прямо с телефона: владелец отвечает по одному, прибор пишет и спрашивает дальше.
     const gs = path.join(HOME, 'queue', 'GRILL-STATE.json')
     if (existsSync(gs)) {
@@ -235,7 +235,7 @@ async function cmdPollLocked(timeoutSec) {
         const plan = path.join(path.dirname(fileURLToPath(import.meta.url)), 'helioz-plan.mjs')
         const r = spawnSyncLock(process.execPath, [plan, 'answer', '--slot', cur, '--text', text], { encoding: 'utf8', env: process.env })
         events.push({ kind: 'grill-answer', slot: cur, ok: r.status === 0 })
-        if (r.status !== 0) enqueue({ text: 'Ответ не записался — загляни в queue/BRIEF.md.', quiet: isQuietHours() })
+        if (r.status !== 0) enqueue({ text: 'Ответ не записался - загляни в queue/BRIEF.md.', quiet: isQuietHours() })
         return
       }
     }
@@ -321,7 +321,7 @@ async function cmdSelftest() {
     eq(rp.status, 0)
     const d2 = JSON.parse(readFileSync(path.join(tmp, 'queue', 'dilemmas', 'D001.json'), 'utf8'))
     eq(d2.status, 'answered'); eq(d2.answer, 0); eq(d2.decided_by, 'owner')
-    ok(!calls.some(c => c.method === 'answerCallbackQuery' && c.body.callback_query_id === 'x1'), 'чужаку — тишина')
+    ok(!calls.some(c => c.method === 'answerCallbackQuery' && c.body.callback_query_id === 'x1'), 'чужаку - тишина')
 
     // 6. «переиграть»: развилку решил совет → владелец отвечает → replay записан.
     const dc = { ...dil, id: 'D002', status: 'council', decided_by: 'council', answer: 1, council: { decision: 1, at: now() } }
@@ -345,7 +345,7 @@ async function cmdSelftest() {
     ok(!isQuietHours(new Date('2026-01-01T12:00:00'), { start: '23:00', end: '09:00' }))
 
     srv.close()
-    console.log('selftest ok — durable outbox, мёртвый Telegram не роняет, кнопки/переиграть/стоп, чужим тишина, токен не течёт')
+    console.log('selftest ok - durable outbox, мёртвый Telegram не роняет, кнопки/переиграть/стоп, чужим тишина, токен не течёт')
     return 0
   } finally { rmSync(tmp, { recursive: true, force: true }) }
 }

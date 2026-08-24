@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-// ИСПОЛНИТЕЛЬНЫЙ ПРИБОР — зонд CLI настоящим прогоном, ротация без простоя, запуск ролей.
-// Уроки П26: зонд «provider list» лжёт (зелёный при мёртвом вызове) — зондируем НАСТОЯЩИМ прогоном.
-// Контракт C: исполнитель и проверяющий — разные CLI; проверяющий слеп к отчёту исполнителя
-// (получает ТОЛЬКО свой промт из задачи — отчёт исполнителя сюда физически не передаётся).
+// ИСПОЛНИТЕЛЬНЫЙ ПРИБОР - зонд CLI настоящим прогоном, ротация без простоя, запуск ролей.
+// Уроки П26: зонд «provider list» лжёт (зелёный при мёртвом вызове) - зондируем НАСТОЯЩИМ прогоном.
+// Контракт C: исполнитель и проверяющий - разные CLI; проверяющий слеп к отчёту исполнителя
+// (получает ТОЛЬКО свой промт из задачи - отчёт исполнителя сюда физически не передаётся).
 //
 //   probe [--cli X | --all] [--force]   живой прогон «скажи одно слово: жив» → cli-health.json
 //   pick --role execute|verify|advise [--exclude a,b] [--prefer X]   выбор живого CLI ротацией
@@ -100,8 +100,8 @@ function cmdTask(id, role, forcedCli) {
   if (!t) { console.error(`задача ${id} не найдена`); return 2 }
   const isExec = role === 'executor'
   const prompt = isExec ? t.executor_prompt : t.verifier_prompt
-  if (!prompt) { console.error(`у задачи ${id} нет промта роли ${role} — fail-closed`); return 2 }
-  // выбор CLI: исполнителю — предпочтение задачи; проверяющему — исключить ФАКТИЧЕСКОГО исполнителя
+  if (!prompt) { console.error(`у задачи ${id} нет промта роли ${role} - fail-closed`); return 2 }
+  // выбор CLI: исполнителю - предпочтение задачи; проверяющему - исключить ФАКТИЧЕСКОГО исполнителя
   const execRec = (() => { try { return JSON.parse(readFileSync(path.join(STATE, 'exec', `${id}.json`), 'utf8')) } catch { return {} } })()
   let cli = forcedCli
   if (!cli) {
@@ -116,10 +116,10 @@ function cmdTask(id, role, forcedCli) {
     cli = pick.stdout.trim().split('\n').pop()
   }
   if (!isExec && execRec.executor_used && cli === execRec.executor_used) {
-    console.error(`ОТКАЗ: проверяющий ${cli} совпал с исполнителем — генератор не судит себя`); return 2
+    console.error(`ОТКАЗ: проверяющий ${cli} совпал с исполнителем - генератор не судит себя`); return 2
   }
   const header = `Рабочий каталог: ${HOME}. Задача ${id}, роль: ${isExec ? 'исполнитель' : 'проверяющий'}.\n` +
-    (isExec ? '' : 'Ты проверяешь ТОЛЬКО по диску и командам — никаких отчётов исполнителя не существует.\n')
+    (isExec ? '' : 'Ты проверяешь ТОЛЬКО по диску и командам - никаких отчётов исполнителя не существует.\n')
   const r = invokeCli(cli, header + '\n' + prompt, { write: isExec })
   mkdirSync(path.join(STATE, 'logs'), { recursive: true })
   const log = path.join(STATE, 'logs', `${id}-${role}-${cli}.log`)
@@ -176,7 +176,7 @@ async function cmdSelftest() {
     const p1 = run(['pick', '--role', 'execute', '--prefer', 'codex'])
     eq(p1.status, 0); eq(p1.stdout.trim().split('\n').pop(), 'claude', 'мёртвый codex заменён живым claude')
     const p2 = run(['pick', '--role', 'execute', '--exclude', 'claude,codex'])
-    eq(p2.status, 2, 'нет живых для роли — fail-closed (kimi не execute)')
+    eq(p2.status, 2, 'нет живых для роли - fail-closed (kimi не execute)')
 
     // 3. Промт аргументом для не-stdin CLI (kimi-стиль).
     const pv = run(['pick', '--role', 'verify', '--exclude', 'claude,codex'])
@@ -203,7 +203,7 @@ async function cmdSelftest() {
     writeFileSync(path.join(tmp, 'queue', 'tasks', 'T10.task.md'), '---\nid: T10\ncheck_cmd: "true"\n---\n## Промт исполнителя\nx\n')
     eq(run(['task', '--id', 'T10', '--role', 'verifier']).status, 2)
 
-    console.log('selftest ok — честный зонд (сломанный/пустой = красный), ротация, kimi-аргумент, generator≠verifier, логи')
+    console.log('selftest ok - честный зонд (сломанный/пустой = красный), ротация, kimi-аргумент, generator≠verifier, логи')
     return 0
   } finally { rmSync(tmp, { recursive: true, force: true }) }
 }

@@ -44,7 +44,15 @@ All I need from you is one sentence:
 node scripts/helioz-plan.mjs grill --idea "move billing onto the new schema"
 ```
 
-Then I interrogate you. One question at a time in Telegram, each with my recommendation: agree, answer "yes", and it records itself. The questions are not improvised. The interview has a fixed set of slots: the goal, how readiness is measured, what must never be touched, what counts as failure, what I may decide alone. A separate block walks into awkward corners: where it breaks first, what falls apart after a month, which obvious solution you actually do not want. Anything the disk can answer I never ask, I go and look.
+Then I interrogate you. One question at a time, each with my recommendation: agree, answer "yes", and it records itself. The questions are not improvised. The interview has a fixed set of slots: the goal, how readiness is measured, what must never be touched, what counts as failure, what I may decide alone. A separate block walks into awkward corners: where it breaks first, what falls apart after a month, which obvious solution you actually do not want. Anything the disk can answer I never ask, I go and look.
+
+Answer wherever you happen to be working. The channel means nothing to me, the question goes out everywhere at once:
+
+- in your editor: fill in the answer line inside `queue/BRIEF.md`, from VS Code, a JetBrains IDE, a desktop app or vim;
+- in a terminal or an agent session (Claude Code, Codex, whatever you run): `node scripts/helioz-plan.mjs answer --slot goal.done --text "yes"`;
+- in Telegram: just message the bot when you are out and only have a phone.
+
+Start in the cockpit, continue from a taxi, finish in the terminal. The state is one and it lives on disk.
 
 While a single critical slot sits empty there will be no plans. Not to be difficult: guessing costs more than waiting for one sentence from you. I will not idle over it either, I take other work and the question keeps hanging.
 
@@ -75,7 +83,7 @@ context runs out → handoff → the watchdog starts a fresh session from disk. 
 
 You can also drop a task by hand into `queue/tasks/`. One requirement: a check command. No command, no task. "Done" without proof is not done.
 
-Everything important lands in your Telegram: stage, percent, what went wrong and how I got out of it. Plain words, no code. Say "stop" and I freeze without losing anything. Say "go" and I keep driving.
+Everything important gets reported: stage, percent, what went wrong and how I got out of it. Plain words, no code. Reports fly to Telegram so they catch you away from the desk, and they sit on disk so anyone who opens the project can read them. Say "stop" and I freeze without losing anything. Say "go" and I keep driving.
 
 ## Install
 

@@ -29,14 +29,21 @@ if [ "$LANG_CHOICE" = "ru" ]; then
   1. Ты бросаешь мне идею одной фразой. Не задание, не план: просто мысль,
      вроде «переписать биллинг на новую схему».
 
-  2. Я тебя допрашиваю. По одному вопросу за раз, прямо в Telegram, и к
-     каждому вопросу сразу даю свой ответ. Согласен, напиши «да», я его
-     запишу и спрошу следующий. Спрашиваю не что попало, а по списку тем:
-     чего добиваемся, чем меряем готовность, что нельзя трогать, что
-     считается провалом, что решать без тебя. Отдельно иду в неудобные
-     углы: где сломается первым, что развалится через месяц, какое
-     очевидное решение тебе на самом деле не нужно. То, что видно на
-     диске, я не спрашиваю, а иду и смотрю сам.
+  2. Я тебя допрашиваю. По одному вопросу за раз, и к каждому сразу даю
+     свой ответ. Согласен, напиши «да», я запишу и спрошу следующий.
+     Спрашиваю не что попало, а по списку тем: чего добиваемся, чем меряем
+     готовность, что нельзя трогать, что считается провалом, что решать
+     без тебя. Отдельно иду в неудобные углы: где сломается первым, что
+     развалится через месяц, какое очевидное решение тебе на самом деле не
+     нужно. То, что видно на диске, я не спрашиваю, а иду и смотрю сам.
+
+     Отвечать можно там, где ты работаешь, канал мне безразличен. Правишь
+     строку «Ответ» в queue/BRIEF.md - подойдёт VS Code, любая IDE,
+     десктопное приложение, vim. Сидишь в терминале или в сессии агента
+     (Claude Code, Codex, что угодно) - командой:
+       node scripts/helioz-plan.mjs answer --slot goal.done --text "да"
+     Ты в дороге и под рукой телефон - пишешь боту в Telegram.
+     Вопрос я отправляю сразу везде, состояние одно и лежит на диске.
 
   3. Из твоих ответов рождается конечная цель. Это мой компас: каждое
      решение, принятое без тебя, я потом сверяю с ней. Пока главные
@@ -97,15 +104,23 @@ else
   1. You throw me an idea in one sentence. Not a spec, not a plan, just
      the thought: "move billing onto the new schema".
 
-  2. I interrogate you. One question at a time, right here in Telegram,
-     and every question comes with my own answer attached. Agree and just
-     say "yes": I record it and ask the next one. The questions are not
-     improvised, they follow a fixed list of topics: what we are after,
-     how readiness is measured, what must never be touched, what counts
-     as failure, what I may decide alone. Then I walk into the awkward
-     corners: where it breaks first, what falls apart after a month,
-     which obvious solution you actually do not want. Anything the disk
-     can answer I never ask you, I go and look.
+  2. I interrogate you. One question at a time, and every question comes
+     with my own answer attached. Agree and just say "yes": I record it
+     and ask the next one. The questions are not improvised, they follow
+     a fixed list of topics: what we are after, how readiness is
+     measured, what must never be touched, what counts as failure, what
+     I may decide alone. Then I walk into the awkward corners: where it
+     breaks first, what falls apart after a month, which obvious
+     solution you actually do not want. Anything the disk can answer I
+     never ask you, I go and look.
+
+     Answer wherever you work, the channel means nothing to me. Fill in
+     the answer line in queue/BRIEF.md from VS Code, any IDE, a desktop
+     app or vim. Sitting in a terminal or an agent session (Claude Code,
+     Codex, whatever) run:
+       node scripts/helioz-plan.mjs answer --slot goal.done --text "yes"
+     On the move with only a phone, message the bot in Telegram.
+     I send the question everywhere at once; the state is one, on disk.
 
   3. Your answers become the final goal. That is my compass: every
      decision I later make without you gets checked against it. While the

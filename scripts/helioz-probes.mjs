@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 // ШЕСТЬ ВРАЖДЕБНЫХ ПРОБ КОНВЕЙЕРА (порядок стройки, п.3). Все обязаны дать правильный красный/зелёный.
-// Только этот прибор пишет READY.json — и только когда все шесть зелёные. Пробы гоняются в изолированном
+// Только этот прибор пишет READY.json - и только когда все шесть зелёные. Пробы гоняются в изолированном
 // HELIOZ_HOME, боевое состояние не трогается (кроме записи READY.json при успехе).
 //
-// Коды: 0 — все пробы правильные, READY записан · 1 — хотя бы одна проба дала неверный цвет.
+// Коды: 0 - все пробы правильные, READY записан · 1 - хотя бы одна проба дала неверный цвет.
 import { existsSync, readFileSync, writeFileSync, mkdirSync, mkdtempSync, rmSync, readdirSync, chmodSync } from 'node:fs'
 import { spawn, spawnSync, execFileSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
@@ -16,7 +16,7 @@ const now = () => new Date().toISOString()
 const results = []
 function probe(name, ok, detail) {
   results.push({ name, ok, detail })
-  console.log(`${ok ? '✅' : '❌'} проба: ${name}${detail ? ' — ' + detail : ''}`)
+  console.log(`${ok ? '✅' : '❌'} проба: ${name}${detail ? ' - ' + detail : ''}`)
 }
 
 function mkHome() {
@@ -49,7 +49,7 @@ async function main() {
   {
     const tmp = mkHome()
     writeFileSync(path.join(tmp, 'queue', 'tasks', 'A.task.md'), task('A', 'docs/a.md'))
-    // B на ДРУГОМ CLI: иначе гейт честно заблокирует слот claude — проба мерила бы не «продолжение», а слоты
+    // B на ДРУГОМ CLI: иначе гейт честно заблокирует слот claude - проба мерила бы не «продолжение», а слоты
     writeFileSync(path.join(tmp, 'queue', 'tasks', 'B.task.md'), task('B', 'docs/b.md').replace('executor: claude', 'executor: codex'))
     gate(tmp, ['--start', 'A'])
     // «смерть» оркестратора: процесс исчез, памяти нет. Новый процесс читает ТОЛЬКО диск:
@@ -121,7 +121,7 @@ async function main() {
     rmSync(tmp, { recursive: true, force: true })
   }
 
-  // ---- 5. Совету — запретная развилка → обязан отложить, не решить ---------------------------------
+  // ---- 5. Совету - запретная развилка → обязан отложить, не решить ---------------------------------
   {
     const tmp = mkHome()
     let all = true, det = []
@@ -154,10 +154,10 @@ async function main() {
     writeFileSync(path.join(HOME, '.helioz', 'state', 'READY.json'), JSON.stringify({
       written_by: 'helioz-probes', probes: results.map(r => r.name), head, at: now(),
     }, null, 2) + '\n')
-    console.log('READY.json записан — конвейер готов принимать чужую работу (--adopt)')
+    console.log('READY.json записан - конвейер готов принимать чужую работу (--adopt)')
     return 0
   }
-  console.error(`ПРОБЫ НЕ ПРОЙДЕНЫ: ${results.filter(r => !r.ok).map(r => r.name).join('; ')} — READY не пишется`)
+  console.error(`ПРОБЫ НЕ ПРОЙДЕНЫ: ${results.filter(r => !r.ok).map(r => r.name).join('; ')} - READY не пишется`)
   return 1
 }
 main().then(c => process.exit(c)).catch(e => { console.error(String(e && e.stack || e)); process.exit(1) })

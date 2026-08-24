@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-// СОВЕТ ПО МЕТОДУ КАРПАТЫ — ночные развилки решает не один голос, а независимые линзы + синтез.
+// СОВЕТ ПО МЕТОДУ КАРПАТЫ - ночные развилки решает не один голос, а независимые линзы + синтез.
 // Метод (файл «Метод расхождения-схождения», 23.08.2026): изоляция до сведения (советники не видят
 // друг друга), гетерогенность (разные CLI сильнее клонов), синтез отдельным движком, решение в ledger.
 //
-// ЖЁСТКИЙ ЗАПРЕТ (контракт F): развилки kind ∈ {prod, foreign, expensive} совет решать НЕ ВПРАВЕ —
+// ЖЁСТКИЙ ЗАПРЕТ (контракт F): развилки kind ∈ {prod, foreign, expensive} совет решать НЕ ВПРАВЕ -
 // exit 2, развилка ждёт владельца в очереди, конвейер работает над остальным.
 //
 //   decide --dilemma <DID> [--day]     собрать совет и решить (по умолчанию только в тихие часы)
@@ -34,7 +34,7 @@ function isQuiet(d = new Date()) {
 
 function exec(args) { return spawnSync(process.execPath, [EXEC, ...args], { encoding: 'utf8', env: process.env }) }
 
-/** Конечная цель владельца — север совета. Ставится владельцем при постановке задачи:
+/** Конечная цель владельца - север совета. Ставится владельцем при постановке задачи:
  *  queue/GOAL.md (цель миссии) и/или поле goal: в задаче. Без цели совет решать НЕ ВПРАВЕ. */
 function ownerGoal(d) {
   const parts = []
@@ -52,13 +52,13 @@ function ownerGoal(d) {
 
 function advisorPrompt(d, lens, goal) {
   return [
-    `Ты — советник ночного совета конвейера. Твоя ЕДИНСТВЕННАЯ линза: «${lens}».`,
-    'Другие советники существуют, но их позиций ты не видишь — отвечай независимо.',
+    `Ты - советник ночного совета конвейера. Твоя ЕДИНСТВЕННАЯ линза: «${lens}».`,
+    'Другие советники существуют, но их позиций ты не видишь - отвечай независимо.',
     '',
     'КОНЕЧНАЯ ЦЕЛЬ ВЛАДЕЛЬЦА (север, установлена им при постановке задачи):',
     goal,
     'Твоё решение обязано служить этой цели. Вариант, противоречащий цели, не выбирай,',
-    'даже если он лучше по твоей линзе — линза подчинена цели.',
+    'даже если он лучше по твоей линзе - линза подчинена цели.',
     '',
     `РАЗВИЛКА: ${d.question}`,
     ...d.options.map((o, i) => `Вариант ${i + 1}: ${o}`),
@@ -67,7 +67,7 @@ function advisorPrompt(d, lens, goal) {
     'Ответь строго в формате:',
     'ВЫБОР: <номер варианта, либо 0 если НИ ОДИН вариант не служит цели владельца>',
     'ПОЧЕМУ: 2–4 предложения только через твою линзу.',
-    'РИСК ОШИБКИ: одно предложение — что будет, если твой выбор неверен.',
+    'РИСК ОШИБКИ: одно предложение - что будет, если твой выбор неверен.',
   ].filter(Boolean).join('\n')
 }
 
@@ -84,24 +84,24 @@ async function cmdDecide(id, day) {
   if (!existsSync(df)) { console.error(`развилка ${id} не найдена`); return 2 }
   const d = JSON.parse(readFileSync(df, 'utf8'))
 
-  // Запретные случаи — совет НЕ решает, ни ночью, ни с флагами. Ждут владельца.
+  // Запретные случаи - совет НЕ решает, ни ночью, ни с флагами. Ждут владельца.
   if (FORBIDDEN.includes(d.kind)) {
-    console.error(`ОТКАЗ: развилка ${id} kind=${d.kind} — из трёх случаев владельца, совет решать не вправе`)
+    console.error(`ОТКАЗ: развилка ${id} kind=${d.kind} - из трёх случаев владельца, совет решать не вправе`)
     return 2
   }
   if (d.status === 'answered') { console.error(`${id} уже решена (${d.decided_by})`); return 2 }
-  if (!day && !isQuiet()) { console.error('днём default-развилки решает оркестратор дефолтом; совет — ночной механизм (или --day)'); return 2 }
+  if (!day && !isQuiet()) { console.error('днём default-развилки решает оркестратор дефолтом; совет - ночной механизм (или --day)'); return 2 }
 
-  // Без конечной цели владельца совету не с чем сверять — решать НЕ ВПРАВЕ (fail-closed).
+  // Без конечной цели владельца совету не с чем сверять - решать НЕ ВПРАВЕ (fail-closed).
   const goal = ownerGoal(d)
-  if (!goal) { console.error(`ОТКАЗ: нет конечной цели владельца (queue/GOAL.md или goal: в задаче) — развилка ${id} ждёт владельца`); return 2 }
+  if (!goal) { console.error(`ОТКАЗ: нет конечной цели владельца (queue/GOAL.md или goal: в задаче) - развилка ${id} ждёт владельца`); return 2 }
 
   const lenses = (CFG.council && CFG.council.lenses) || ['риск', 'цена отката', 'соответствие контракту владельца', 'простота']
   const minAdv = (CFG.council && CFG.council.min_advisors) || 3
   const dir = path.join(STATE, 'council', id)
   mkdirSync(dir, { recursive: true })
 
-  // Советники: линза × живой CLI (гетерогенность по возможности), изоляция — каждый пишет в свой файл.
+  // Советники: линза × живой CLI (гетерогенность по возможности), изоляция - каждый пишет в свой файл.
   const positions = []
   const usedCli = []
   for (let i = 0; i < lenses.length; i++) {
@@ -119,7 +119,7 @@ async function cmdDecide(id, day) {
     if (choice !== null) { positions.push({ lens, cli, choice, file: path.relative(HOME, lf) }); usedCli.push(cli) }
   }
   if (positions.length < minAdv) {
-    console.error(`совет не собрался: позиций ${positions.length} < ${minAdv} — развилка остаётся владельцу`)
+    console.error(`совет не собрался: позиций ${positions.length} < ${minAdv} - развилка остаётся владельцу`)
     return 1
   }
   // Большинство советников считает, что НИ ОДИН вариант не служит цели → совет воздерживается,
@@ -133,11 +133,11 @@ async function cmdDecide(id, day) {
     return 1
   }
 
-  // Синтез: отдельный вызов, видит анонимизированные позиции (без имён CLI — слепое судейство).
+  // Синтез: отдельный вызов, видит анонимизированные позиции (без имён CLI - слепое судейство).
   const anon = positions.map((p, i) => `Советник ${String.fromCharCode(65 + i)} (линза «${p.lens}»):\n${readFileSync(path.join(HOME, p.file), 'utf8').split('--- stderr ---')[0].trim()}`)
   const synthPrompt = [
-    'Ты — синтез ночного совета. Ниже независимые позиции советников (имена скрыты).',
-    'Прими ОДНО решение. Разногласия не сглаживай — назови их прямо.',
+    'Ты - синтез ночного совета. Ниже независимые позиции советников (имена скрыты).',
+    'Прими ОДНО решение. Разногласия не сглаживай - назови их прямо.',
     '',
     'КОНЕЧНАЯ ЦЕЛЬ ВЛАДЕЛЬЦА (север): решение обязано служить ей.',
     goal, '',
@@ -145,12 +145,12 @@ async function cmdDecide(id, day) {
     ...anon, '',
     'Ответь строго в формате:',
     'РЕШЕНИЕ: <номер варианта, либо 0 если ни один не служит цели владельца>',
-    'ОБОСНОВАНИЕ: 3–5 предложений, первым — как решение служит цели.',
+    'ОБОСНОВАНИЕ: 3–5 предложений, первым - как решение служит цели.',
     'РАЗНОГЛАСИЯ: были/не было и какие.',
   ].join('\n')
   const spf = path.join(dir, 'synthesis-prompt.txt')
   writeFileSync(spf, synthPrompt)
-  // синтез — движком, не совпадающим с большинством советников, если возможно
+  // синтез - движком, не совпадающим с большинством советников, если возможно
   const counts = usedCli.reduce((a, c) => (a[c] = (a[c] || 0) + 1, a), {})
   const majority = Object.keys(counts).sort((a, b) => counts[b] - counts[a])[0]
   const spick = exec(['pick', '--role', 'synthesize', '--exclude', majority || ''])
@@ -164,13 +164,13 @@ async function cmdDecide(id, day) {
     appendFileSync(path.join(STATE, 'ledger.jsonl'), JSON.stringify({ ts: now(), kind: 'council-abstain', dilemma: id, why: 'синтез: ни один вариант не служит цели владельца' }) + '\n')
     const zeusB = path.join(path.dirname(EXEC), 'helioz-zeus.mjs')
     spawnSync(process.execPath, [zeusB, 'send', '--text', `🌙 Совет ВОЗДЕРЖАЛСЯ по развилке ${id}: синтез счёл, что ни один вариант не служит твоей цели. Ждёт тебя: «${id} <номер>».`, '--quiet'], { encoding: 'utf8', env: process.env })
-    console.error('синтез: ни один вариант не служит цели — воздержание')
+    console.error('синтез: ни один вариант не служит цели - воздержание')
     return 1
   }
   const numeric = positions.filter(p => p.choice !== 'none')
   const finalChoice = decision !== null ? decision
     : numeric.map(p => p.choice).sort((a, b) => numeric.filter(p => p.choice === b).length - numeric.filter(p => p.choice === a).length)[0] // фолбэк: большинство голосов
-  const rationale = (stext.match(/ОБОСНОВАНИЕ:\s*([\s\S]*?)(?:РАЗНОГЛАСИЯ:|$)/i) || [])[1]?.trim() || 'синтез без текста — решение большинством позиций'
+  const rationale = (stext.match(/ОБОСНОВАНИЕ:\s*([\s\S]*?)(?:РАЗНОГЛАСИЯ:|$)/i) || [])[1]?.trim() || 'синтез без текста - решение большинством позиций'
 
   // Запись: развилка + ledger (обоснование) + отбивка (тихая ночью, с механизмом «переиграть»).
   d.answer = finalChoice; d.status = 'answered'; d.decided_by = 'council'; d.answered_at = now()
@@ -220,7 +220,7 @@ async function cmdSelftest() {
     // 0а. Без конечной цели владельца совет решать НЕ ВПРАВЕ (exit 2).
     mkDil('DNoGoal', 'default')
     const rng = run(['decide', '--dilemma', 'DNoGoal', '--day'])
-    eq(rng.status, 2, 'нет цели — совет обязан отказаться')
+    eq(rng.status, 2, 'нет цели - совет обязан отказаться')
     ok(rng.stderr.includes('цели'), 'причина названа')
     // цель миссии ставит владелец при постановке задачи
     writeFileSync(path.join(tmp, 'queue', 'GOAL.md'), 'Конечная цель: конвейер работает 24/7 без потерь.')
@@ -248,7 +248,7 @@ async function cmdSelftest() {
     // позиции советников лежат файлами (изоляция: каждый писал в свой)
     const cdir = readdirSync(path.join(tmp, '.helioz', 'state', 'council', 'DOK'))
     ok(cdir.filter(f => f.startsWith('advisor-')).length === 3, 'три файла позиций')
-    // отбивка легла в outbox (Telegram-стаба нет — недоставленная, но durable)
+    // отбивка легла в outbox (Telegram-стаба нет - недоставленная, но durable)
     const obox = readdirSync(path.join(tmp, '.helioz', 'state', 'outbox'))
     ok(obox.length >= 1, 'отбивка о решении в outbox')
 
@@ -282,7 +282,7 @@ async function cmdSelftest() {
     const led2 = readFileSync(path.join(tmp, '.helioz', 'state', 'ledger.jsonl'), 'utf8').trim().split('\n').map(JSON.parse)
     ok(led2.some(l => l.kind === 'council-abstain' && l.dilemma === 'DNone'), 'воздержание записано в ledger')
 
-    console.log('selftest ok — без цели не решает, запретные отложены, default решён по цели, воздержание при «ни один», тонкий совет не решает')
+    console.log('selftest ok - без цели не решает, запретные отложены, default решён по цели, воздержание при «ни один», тонкий совет не решает')
     return 0
   } finally { rmSync(tmp, { recursive: true, force: true }) }
 }
