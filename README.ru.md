@@ -1,7 +1,9 @@
 # helioz · Гелиоз - работа не останавливается
 
+Гелиоз - локальный конвейер агентной работы: держит длинные задачи между сессиями, агентами, проверками и хэнд-оффами.
+
 <p align="center">
-  <img src="docs/assets/helioz-hero.png" alt="Гелиоз: белая мраморная статуя Гелиоса с золотым солнечным диском у классической колонны, тёплый ivory-свет, голубые и золотые нити собирают конвейер стеклянных карт" width="100%">
+  <img src="docs/assets/pantheon/hero.png" alt="Гелиоз: белая мраморная статуя Гелиоса с золотым солнечным диском у классической колонны, тёплый ivory-свет, голубые и золотые нити собирают конвейер стеклянных карт" width="100%">
 </p>
 
 ## Кто я
@@ -14,7 +16,7 @@
 
 Собрал меня Филипп Зарубин, юрист и отец двух дочек. Причина скучная: времени у него нет совсем. Ночь, суд, дети, а работа стоит, потому что везти её некому. Теперь везу я.
 
-Я из семьи: [Олимпуз](https://github.com/zarubinphil/olympuz) - кокпит роя, [Зевс](https://github.com/zarubinphil/zeuz) - фабрика, которая рождает такие системы, [Мнемозина](https://github.com/zarubinphil/mnemazine) - память, [Фемида](https://github.com/zarubinphil/themis) - юрпрактика, [Афина](https://github.com/zarubinphil/athena) - агентная ОС, на которой всё это живёт. Мой удел здесь один: непрерывность.
+Я из семьи: [Олимпуз](https://github.com/zarubinvibe/olympuz) - кокпит роя, [Зевс](https://github.com/zarubinvibe/zeuz) - фабрика, которая рождает такие системы, [Мнемозина](https://github.com/zarubinvibe/mnemazine) - память, [Фемида](https://github.com/zarubinvibe/themis) - юрпрактика, [Афина](https://github.com/zarubinvibe/athena) - агентная ОС, на которой всё это живёт. Мой удел здесь один: непрерывность.
 
 ## Зачем я нужен
 
@@ -88,8 +90,8 @@ node scripts/helioz-plan.mjs grill --idea "переписать биллинг �
 ## Установка
 
 ```bash
-git clone https://github.com/zarubinphil/helioz.git ~/Проекты/helioz
-cd ~/Проекты/helioz
+git clone https://github.com/zarubinvibe/helioz.git helioz
+cd helioz
 bash install.sh
 ```
 
@@ -117,6 +119,24 @@ bash scripts/helioz-start.sh
 | `docs/CONTRACTS.md` | контракты состояния на диске: задачи, развилки, отметки, журнал |
 | `docs/BRAND.md` | дизайн-описание, инстанс Pantheon Design System |
 
+## Примеры
+
+- Начать с одной фразы идеи и дать допросу превратить её в проверяемую цель.
+- Положить маленькую задачу с командой проверки в очередь и разделить исполнителя с проверяющим.
+- Сохранить отбивки при упавшем Telegram и дослать их, когда канал вернётся.
+
+## Документация
+
+Начни с этого README, потом смотри [контракты состояния](docs/CONTRACTS.md), [мастер-план](docs/MASTER-PLAN.md) и [промт оркестратора](ORCHESTRATOR.md).
+
+## Безопасность и приватность
+
+- Доступ к файлам остаётся внутри клона, если задача явно не разрешает другой путь.
+- `.helioz/`, `queue/`, логи и локальное runtime-состояние игнорируются и не публикуются.
+- Секреты живут вне git и читаются только в момент отправки/поллинга.
+- Telegram best-effort: сначала сообщение пишется в локальный outbox.
+- Перед push смотри `git diff` и запускай публичный gate.
+
 ## Чем докажу, что не вру
 
 Шесть проб, одна команда, все обязаны быть зелёными:
@@ -130,15 +150,37 @@ node scripts/helioz-probes.mjs
 Пробы проверяют меня самого, а не мои слова о себе. Проба красная, значит статуса «готов» нет.
 
 <p align="center">
-  <img src="docs/assets/helioz-emblem.png" alt="Эмблема Гелиоза: мраморная статуя с золотым солнечным диском, колесо колесницы и классическая колонна" width="100%">
+  <img src="docs/assets/pantheon/emblem.png" alt="Эмблема Гелиоза: мраморная статуя с золотым солнечным диском, колесо колесницы и классическая колонна" width="420">
 </p>
 
 ## Звезда
 
-Если Гелиоз пригодился, поставь звезду: [github.com/zarubinphil/helioz](https://github.com/zarubinphil/helioz).
+Если Гелиоз пригодился, поставь звезду: [github.com/zarubinvibe/helioz](https://github.com/zarubinvibe/helioz).
 
-Тебе несколько секунд, проекту правда важно. И загляни к родне: [themis](https://github.com/zarubinphil/themis), [mnemazine](https://github.com/zarubinphil/mnemazine), [zeuz](https://github.com/zarubinphil/zeuz), [athena](https://github.com/zarubinphil/athena), [smltlk](https://github.com/zarubinphil/smltlk).
+Тебе несколько секунд, проекту правда важно. И загляни к родне: [themis](https://github.com/zarubinvibe/themis), [mnemazine](https://github.com/zarubinvibe/mnemazine), [zeuz](https://github.com/zarubinvibe/zeuz), [athena](https://github.com/zarubinvibe/athena), [smltlk](https://github.com/zarubinvibe/smltlk).
+
+## Лицензия
+
+MIT. См. [LICENSE](LICENSE).
 
 ---
 
 English version: [README.md](README.md)
+
+<!-- pantheon-family:start -->
+## Семья Pantheon
+
+Этот репозиторий входит в [семью проектов Pantheon](https://github.com/zarubinvibe?tab=repositories). Для каждого публичного проекта даны прямые ссылки на репозиторий и ZIP с исходниками.
+
+| Тип | Название | Что внутри | Скачать |
+|---|---|---|---|
+| проект | Athena | Переносимая агентная ОС: разворачивает рабочую среду Claude и Codex на новом Mac. | [Репозиторий](https://github.com/zarubinvibe/athena) · [ZIP](https://github.com/zarubinvibe/athena/archive/refs/heads/main.zip) |
+| проект | Claude Code Setup OS | Bootstrap-скилл для экономной среды Claude Code и локальной LLM-вики. | [Репозиторий](https://github.com/zarubinvibe/claude-code-setup-os) · [ZIP](https://github.com/zarubinvibe/claude-code-setup-os/archive/refs/heads/main.zip) |
+| проект | Helioz | Конвейер работы агентов 24/7 с проверяемыми отметками готовности и ночными решениями по цели владельца. | [Репозиторий](https://github.com/zarubinvibe/helioz) · [ZIP](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.zip) |
+| проект | Humanizer | Агентный скилл, который убирает типичные следы AI из английского текста. | [Репозиторий](https://github.com/zarubinvibe/humanizer) · [ZIP](https://github.com/zarubinvibe/humanizer/archive/refs/heads/main.zip) |
+| проект | Humanizer RU | Русский редакторский скилл: находит и убирает 58 типичных следов AI-текста. | [Репозиторий](https://github.com/zarubinvibe/humanizer-ru) · [ZIP](https://github.com/zarubinvibe/humanizer-ru/archive/refs/heads/main.zip) |
+| проект | Mnemazine | Локальная система памяти: превращает сырьё в проверенные знания для повторного использования. | [Репозиторий](https://github.com/zarubinvibe/mnemazine) · [ZIP](https://github.com/zarubinvibe/mnemazine/archive/refs/heads/main.zip) |
+| проект | Smltlk | Приложение для строки меню macOS: чинит раскладку, распознаёт речь офлайн и превращает голос в промпт. | [Репозиторий](https://github.com/zarubinvibe/smltlk) · [ZIP](https://github.com/zarubinvibe/smltlk/archive/refs/heads/main.zip) |
+| проект | Themis | Многоагентный помощник по российским судебным делам с локальным OCR и советом из пяти юристов. | [Репозиторий](https://github.com/zarubinvibe/themis) · [ZIP](https://github.com/zarubinvibe/themis/archive/refs/heads/main.zip) |
+| проект | Zeuz | Фабрика многоагентных workflow: собирает систему с правилами, гейтами, наблюдаемостью и replay. | [Репозиторий](https://github.com/zarubinvibe/zeuz) · [ZIP](https://github.com/zarubinvibe/zeuz/archive/refs/heads/main.zip) |
+<!-- pantheon-family:end -->

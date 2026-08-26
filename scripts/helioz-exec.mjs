@@ -14,6 +14,7 @@
 import { parseArgs } from 'node:util'
 import { existsSync, readFileSync, writeFileSync, mkdirSync, mkdtempSync, rmSync, chmodSync } from 'node:fs'
 import { spawnSync } from 'node:child_process'
+import { createHash, randomBytes } from 'node:crypto'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import os from 'node:os'
@@ -25,6 +26,40 @@ const STATE = path.join(HOME, '.helioz', 'state')
 const HEALTH = path.join(STATE, 'cli-health.json')
 const now = () => new Date().toISOString()
 const cliNames = () => Object.keys(CLIS).filter(k => !k.startsWith('_'))
+const sha256 = s => createHash('sha256').update(s).digest('hex')
+const EXEC_SECRET = path.join(STATE, 'exec', '.secret')
+
+function ensureExecSecret() {
+  mkdirSync(path.dirname(EXEC_SECRET), { recursive: true })
+  if (!existsSync(EXEC_SECRET)) {
+    writeFileSync(EXEC_SECRET, randomBytes(32).toString('hex') + '\n', { mode: 0o600 })
+  }
+  return readFileSync(EXEC_SECRET, 'utf8').trim()
+}
+function receiptLogSha(rec, key) {
+  const rel = rec && rec[key]
+  if (!rel || path.isAbsolute(rel) || rel.includes('..')) return null
+  const f = path.join(HOME, rel)
+  return existsSync(f) ? sha256(readFileSync(f)) : null
+}
+function receiptPayload(rec) {
+  return {
+    receipt_version: 1,
+    executor_task_sha: rec.executor_task_sha || null,
+    verifier_task_sha: rec.verifier_task_sha || null,
+    executor_used: rec.executor_used || null,
+    verifier_used: rec.verifier_used || null,
+    executor_code: rec.executor_code ?? null,
+    verifier_code: rec.verifier_code ?? null,
+    executor_log: rec.executor_log || null,
+    verifier_log: rec.verifier_log || null,
+    executor_log_sha: receiptLogSha(rec, 'executor_log'),
+    verifier_log_sha: receiptLogSha(rec, 'verifier_log'),
+  }
+}
+function signReceipt(rec) {
+  return sha256(ensureExecSecret() + '\0' + JSON.stringify(receiptPayload(rec)))
+}
 
 // --- запуск одного CLI ----------------------------------------------------------------------------
 function invokeCli(name, prompt, { write = false, timeoutSec } = {}) {
@@ -93,7 +128,7 @@ function loadTask(id) {
   const text = readFileSync(f, 'utf8')
   const sec = name => { const m = text.match(new RegExp(`##\\s*${name}\\n([\\s\\S]*?)(?=\\n##\\s|$)`)); return m ? m[1].trim() : '' }
   const fm = k => { const m = text.match(new RegExp(`^${k}:\\s*(.*)$`, 'm')); return m ? m[1].trim().replace(/^["']|["']$/g, '') : '' }
-  return { id, executor: fm('executor'), verifier: fm('verifier'), executor_prompt: sec('Промт исполнителя'), verifier_prompt: sec('Промт проверяющего') }
+  return { id, task_sha: sha256(text), executor: fm('executor'), verifier: fm('verifier'), executor_prompt: sec('Промт исполнителя'), verifier_prompt: sec('Промт проверяющего') }
 }
 function cmdTask(id, role, forcedCli) {
   const t = loadTask(id)
@@ -124,7 +159,18 @@ function cmdTask(id, role, forcedCli) {
   mkdirSync(path.join(STATE, 'logs'), { recursive: true })
   const log = path.join(STATE, 'logs', `${id}-${role}-${cli}.log`)
   writeFileSync(log, `# ${now()} · ${id} · ${role} · ${cli} · code ${r.code} · ${r.ms}ms\n\n${r.stdout}\n\n--- stderr ---\n${r.stderr}\n`)
-  const rec = { ...execRec, [`${role}_used`]: cli, [`${role}_at`]: now(), [`${role}_code`]: r.code, [`${role}_log`]: path.relative(HOME, log) }
+  const rec = {
+    ...execRec,
+    [`${role}_task_sha`]: t.task_sha,
+    [`${role}_used`]: cli,
+    [`${role}_at`]: now(),
+    [`${role}_code`]: r.code,
+    [`${role}_log`]: path.relative(HOME, log),
+  }
+  delete rec.receipt_sig
+  rec.written_by = 'helioz-exec'
+  rec.receipt_version = 1
+  rec.receipt_sig = signReceipt(rec)
   mkdirSync(path.join(STATE, 'exec'), { recursive: true })
   writeFileSync(path.join(STATE, 'exec', `${id}.json`), JSON.stringify(rec, null, 2) + '\n')
   console.log(JSON.stringify({ ok: r.ok, cli, code: r.code, ms: r.ms, log: rec[`${role}_log`] }))
@@ -191,6 +237,8 @@ async function cmdSelftest() {
     eq(e1.status, 0)
     const rec = JSON.parse(readFileSync(path.join(tmp, '.helioz', 'state', 'exec', 'T9.json'), 'utf8'))
     eq(rec.executor_used, 'claude')
+    eq(rec.written_by, 'helioz-exec')
+    ok(rec.receipt_sig && rec.receipt_sig.length === 64, 'exec-квитанция подписана')
     ok(existsSync(path.join(tmp, rec.executor_log)), 'лог исполнителя на диске')
     const v1 = run(['task', '--id', 'T9', '--role', 'verifier', '--cli', 'claude'])
     eq(v1.status, 2, 'проверяющий = исполнитель → отказ (генератор не судит себя)')

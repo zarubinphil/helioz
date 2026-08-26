@@ -1,8 +1,10 @@
 .conveyor/state/
 node_modules/
 graphify-out/
+__pycache__/
+*.pyc
 
-# Рантайм-состояние и бэкапы: след того, как конвейером пользуется владелец.
-# В публичную сборку не идёт.
-.helioz/state/
-.helioz/backup/
+# Local Helioz runtime (never publish)
+.helioz/
+queue/
+scripts/free-scrape-helper.py

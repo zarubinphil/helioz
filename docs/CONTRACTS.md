@@ -52,14 +52,25 @@ kind: default                 # default | prod | foreign | expensive - клас�
 (слепой: диск + команды, отчёт исполнителя не передавать)
 ```
 
-Задача без `check_cmd` в конвейер НЕ принимается (`--ready` её не отдаёт, помечает `invalid`).
+Задача без `check_cmd`, без `executor`/`verifier` или с одинаковыми CLI в конвейер НЕ принимается
+(`--ready` её не отдаёт, помечает `invalid`).
 
 ## Маркер - `.helioz/state/markers/<ID>.done.json`
 
-Пишет ТОЛЬКО `helioz-gate.mjs --task <ID> --check-cmd …` при exit 0.
+Пишет ТОЛЬКО `helioz-gate.mjs --task <ID> --check-cmd … --executor … --verifier …` при exit 0.
+До маркера должны пройти обе роли через `helioz-exec.mjs`; факт хранится в
+`.helioz/state/exec/<ID>.json`. Квитанция обязана иметь `written_by:"helioz-exec"`,
+`receipt_version:1` и `receipt_sig`, пересчитанный по задаче, CLI, кодам и хешам логов.
 Поля целостности (все обязательны, отсутствие любого = tampered):
-`task, check_cmd, exit_code, base, head, sha_of_changed_files, executor_cli, verifier_cli, finished_at, written_by:"helioz-gate"`.
-`sha_of_changed_files` пересчитывается по base..head при каждом чтении - несовпадение = tampered.
+`task, task_sha, check_cmd, exit_code, base, head, sha_of_changed_files, external, external_sha, executor_cli, verifier_cli, finished_at, written_by:"helioz-gate"`.
+`task_sha` пересчитывается по текущему файлу задачи, `check_cmd` обязан совпадать с задачей,
+`sha_of_changed_files` пересчитывается по base..head, `external_sha` — по абсолютным путям из
+`paths`. Любое несовпадение, отсутствие зелёной exec-квитанции или рукописная квитанция
+без подписи `helioz-exec` = tampered.
+
+Живой smoke перед передачей/публикацией: `node scripts/helioz-gate.mjs --smoke --json`.
+Он должен вернуть `ok:true`, `stop:false`, `running_corrupt:false`, `invalid:[]` и ненулевую
+очередь. STOP, битый `running.json`, пустая очередь или невалидная задача дают exit 2.
 
 ## Развилка - `queue/dilemmas/<DID>.json`
 
@@ -93,11 +104,12 @@ Durable-запись ПЕРВОЙ, отправка best-effort. `flush` дош�
 ## Прочее состояние
 
 - `running.json` - `{"running":[{"task","started_at","executor"}]}`.
-- `heartbeat.json` - `{"at","session","note"}`; пишет `--beat`. Старше `watchdog_stale_min` → watchdog перезапускает оркестратора с `docs/HANDOFF.md` на входе.
+- `heartbeat.json` - `{"at","pid","note"}`; пишет `--beat`. Старше `watchdog_stale_min` → watchdog перезапускает оркестратора с `docs/HANDOFF.md` на входе.
 - `STOP` - файл-флаг. Есть → `--ready`/`--start` отказывают (exit 4), watchdog молчит. Ставится по «стоп» из Telegram или `--stop`; снимается «пуск»/`--go`.
 - `budget.json` - `{"started_at","ceiling_usd","ceiling_tokens"}`; `--budget` меряет факт по jsonl трёх CLI, превышение → exit 3.
 - `telegram-offset.json` - оффсет getUpdates.
-- `READY.json` - пишет ТОЛЬКО `--probes` при всех шести зелёных: `{"written_by":"helioz-gate","probes":6,"head","at"}`.
+- `READY.json` - пишет ТОЛЬКО `helioz-probes.mjs` при всех пробах зелёных:
+  `{"written_by":"helioz-probes","probes":[...],"head","at"}`.
 
 ## Приём чужой работы - `--adopt <dir>`
 
@@ -107,5 +119,5 @@ Durable-запись ПЕРВОЙ, отправка best-effort. `flush` дош�
 
 ## Секреты
 
-Токен и chat id читаются рантаймом из `~/.secrets/olympuz-telegram.env` в момент вызова.
-В env потомков, argv, логи, git, отбивки - никогда. В ошибках токен вырезается по образцу olympuz.
+Токен и chat id читаются рантаймом из файла, переданного через `HELIOZ_TG_ENV`, в момент вызова.
+В env потомков, argv, логи, git, отбивки - никогда. В ошибках токен вырезается.

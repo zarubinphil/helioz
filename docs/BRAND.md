@@ -1,6 +1,6 @@
 # Helioz - дизайн-описание (инстанс Pantheon Design System)
 
-Канон семейства: `~/Desktop/Desktop Archive/Projects/pantheon-design-system/DESIGN-SYSTEM.md`.
+Канон семейства: Pantheon Design System, общий стиль публичной семьи проектов.
 Правило семьи: новый проект = новый бог + та же колонна + та же палитра/материал/свет.
 
 ## Инстанс
@@ -23,7 +23,7 @@
 
 ```bash
 codex --ask-for-approval never exec --skip-git-repo-check -s workspace-write --ephemeral \
-  -i "~/Desktop/Desktop Archive/Projects/pantheon-design-system/emblems/style-anchor.png" \
+  -i "<pantheon-style-anchor.png>" \
   "<бриф из промптов ниже>"
 ```
 

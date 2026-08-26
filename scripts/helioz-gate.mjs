@@ -9,6 +9,7 @@
 //                      прогнать приёмку; exit 0 → маркер целостности. Иначе маркер не пишется.
 //   --require <id,..>  все маркеры done? tampered/missing → exit 2.
 //   --status --json    доска.
+//   --smoke [--json]   живой smoke текущего состояния: STOP нет, running.json читается, очередь валидна.
 //   --beat [note]      heartbeat оркестратора.
 //   --stop / --go      флаг STOP (ставится и по «стоп» из Telegram). При STOP: ready/start → exit 4.
 //   --budget           факт расхода по jsonl трёх CLI против budget.json. Нет файла → exit 2; перебор → exit 3.
@@ -32,6 +33,7 @@ const S = {
   dilemmas: path.join(HOME, 'queue', 'dilemmas'),
 }
 const MARKERS = () => path.join(S.state, 'markers')
+const EXEC_SECRET = () => path.join(S.state, 'exec', '.secret')
 
 // --- утилиты --------------------------------------------------------------------------------------
 const sha256 = s => createHash('sha256').update(s).digest('hex')
@@ -85,7 +87,7 @@ export function parseTask(text, file = '') {
   const sec = name => { const mm = body.match(new RegExp(`##\\s*${name}\\n([\\s\\S]*?)(?=\\n##\\s|$)`)); return mm ? mm[1].trim() : '' }
   t.executor_prompt = sec('Промт исполнителя')
   t.verifier_prompt = sec('Промт проверяющего')
-  t.valid = Boolean(t.id && t.check_cmd)
+  t.valid = Boolean(t.id && t.check_cmd && t.executor && t.verifier && t.executor !== t.verifier)
   return t
 }
 
@@ -102,6 +104,90 @@ async function loadTasks() {
 
 // --- маркеры целостности (порт rebuild-gate: подделка/обрезание = tampered) -----------------------
 const markerFile = id => path.join(MARKERS(), `${id}.done.json`)
+function taskFile(id) {
+  for (const dir of [S.tasks, path.join(S.tasks, 'done')]) {
+    const f = path.join(dir, `${id}.task.md`)
+    if (existsSync(f)) return f
+  }
+  return null
+}
+function readTaskSync(id) {
+  const f = taskFile(id)
+  if (!f) return null
+  const text = readFileSync(f, 'utf8')
+  const task = parseTask(text, path.relative(S.tasks, f))
+  return task ? { task, text, sha: sha256(text) } : null
+}
+const execReceiptFile = id => path.join(S.state, 'exec', `${id}.json`)
+function execReceipt(id) {
+  return readJson(execReceiptFile(id))
+}
+function receiptSecret() {
+  try { return readFileSync(EXEC_SECRET(), 'utf8').trim() } catch { return null }
+}
+function receiptLogOk(rec, key) {
+  const rel = rec && rec[key]
+  if (!rel || path.isAbsolute(rel) || rel.includes('..')) return false
+  return existsSync(path.join(HOME, rel))
+}
+function receiptLogSha(rec, key) {
+  const rel = rec && rec[key]
+  if (!rel || path.isAbsolute(rel) || rel.includes('..')) return null
+  const f = path.join(HOME, rel)
+  return existsSync(f) ? sha256(readFileSync(f)) : null
+}
+function receiptPayload(rec) {
+  return {
+    receipt_version: 1,
+    executor_task_sha: rec.executor_task_sha || null,
+    verifier_task_sha: rec.verifier_task_sha || null,
+    executor_used: rec.executor_used || null,
+    verifier_used: rec.verifier_used || null,
+    executor_code: rec.executor_code ?? null,
+    verifier_code: rec.verifier_code ?? null,
+    executor_log: rec.executor_log || null,
+    verifier_log: rec.verifier_log || null,
+    executor_log_sha: receiptLogSha(rec, 'executor_log'),
+    verifier_log_sha: receiptLogSha(rec, 'verifier_log'),
+  }
+}
+function receiptSig(rec, secret) {
+  return sha256(secret + '\0' + JSON.stringify(receiptPayload(rec)))
+}
+function receiptSignatureOk(rec) {
+  const secret = receiptSecret()
+  return Boolean(
+    secret &&
+    rec &&
+    rec.written_by === 'helioz-exec' &&
+    rec.receipt_version === 1 &&
+    rec.receipt_sig &&
+    rec.receipt_sig === receiptSig(rec, secret)
+  )
+}
+function walkFiles(root) {
+  if (!existsSync(root)) return []
+  const st = statSync(root)
+  if (st.isFile()) return [root]
+  if (!st.isDirectory()) return []
+  let out = []
+  for (const name of readdirSync(root).sort()) out = out.concat(walkFiles(path.join(root, name)))
+  return out
+}
+function externalProof(paths = []) {
+  const home = path.resolve(HOME)
+  const rows = []
+  for (const p of paths) {
+    const abs = path.resolve(HOME, p)
+    if (abs === home || abs.startsWith(home + path.sep)) continue
+    for (const f of walkFiles(abs)) {
+      const rel = path.relative('/', f)
+      rows.push(`${rel}\0${sha256(readFileSync(f))}`)
+    }
+  }
+  return rows.sort()
+}
+const externalSha = paths => sha256(externalProof(paths).join('\n'))
 function changedFilesSha(base, head, cwd = HOME) {
   const names = (gitSafe(['diff', '--name-only', `${base}..${head}`], cwd) || '').split('\n').filter(Boolean)
   let buf = names.join('\n')
@@ -113,31 +199,79 @@ export function readMarker(id) {
   if (!existsSync(f)) return { status: 'missing' }
   let d
   try { d = JSON.parse(readFileSync(f, 'utf8')) } catch { return { status: 'tampered', reason: 'нечитаемый json' } }
+  const taskRec = readTaskSync(id)
+  if (!taskRec) return { status: 'tampered', reason: 'нет файла задачи', data: d }
   if (d.written_by !== 'helioz-gate') return { status: 'tampered', reason: 'нет written_by:"helioz-gate"', data: d }
-  for (const k of ['task', 'base', 'head', 'sha_of_changed_files', 'finished_at']) {
+  for (const k of ['task', 'task_sha', 'check_cmd', 'base', 'head', 'sha_of_changed_files', 'external', 'external_sha', 'executor_cli', 'verifier_cli', 'finished_at']) {
     if (d[k] === undefined || d[k] === null || d[k] === '') return { status: 'tampered', reason: `нет поля целостности ${k}`, data: d }
   }
   // ревью codex: маркер обязан быть привязан к СВОЕЙ задаче - копия чужого валидного маркера не проходит
   if (d.task !== id) return { status: 'tampered', reason: `маркер от другой задачи (${d.task})`, data: d }
+  if (d.task_sha !== taskRec.sha) return { status: 'tampered', reason: 'task_sha не совпал с текущей задачей', data: d }
+  if (d.check_cmd !== taskRec.task.check_cmd) return { status: 'tampered', reason: 'check_cmd не совпал с задачей', data: d }
   // ревью codex+kimi: exit_code проверяется на значение, не на наличие
   if (d.exit_code !== 0) return { status: 'tampered', reason: `exit_code ${d.exit_code} ≠ 0`, data: d }
+  if (d.executor_cli === d.verifier_cli) {
+    return { status: 'tampered', reason: `executor_cli совпал с verifier_cli (${d.executor_cli})`, data: d }
+  }
+  const rec = execReceipt(id)
+  if (!rec) return { status: 'tampered', reason: 'нет exec-квитанции', data: d }
+  if (!receiptSignatureOk(rec)) {
+    return { status: 'tampered', reason: 'exec-квитанция не подписана helioz-exec', data: d }
+  }
+  if (rec.executor_task_sha !== taskRec.sha || rec.verifier_task_sha !== taskRec.sha) {
+    return { status: 'tampered', reason: 'exec-квитанция от разных/старых редакций задачи', data: d }
+  }
+  if (rec.executor_used !== d.executor_cli || rec.verifier_used !== d.verifier_cli) {
+    return { status: 'tampered', reason: 'exec-квитанция не совпала с маркером', data: d }
+  }
+  if (rec.executor_code !== 0 || rec.verifier_code !== 0) {
+    return { status: 'tampered', reason: `exec-коды не зелёные (${rec.executor_code}/${rec.verifier_code})`, data: d }
+  }
+  if (!receiptLogOk(rec, 'executor_log') || !receiptLogOk(rec, 'verifier_log')) {
+    return { status: 'tampered', reason: 'нет логов exec-квитанции', data: d }
+  }
   // ревью kimi: base===head даёт пустой diff со всем известным sha256("") - фордж без единой проверки
   if (d.base === d.head) return { status: 'tampered', reason: 'base === head (пустой diff - не доказательство)', data: d }
   if (!gitSafe(['rev-parse', '--verify', d.head + '^{commit}']) || !gitSafe(['rev-parse', '--verify', d.base + '^{commit}'])) {
     return { status: 'tampered', reason: 'base/head не резолвятся в коммиты', data: d }
   }
   if (changedFilesSha(d.base, d.head) !== d.sha_of_changed_files) return { status: 'tampered', reason: 'sha_of_changed_files не совпал', data: d }
+  if (!Array.isArray(d.external)) return { status: 'tampered', reason: 'external не список', data: d }
+  if (d.external.join('\n') !== externalProof(taskRec.task.paths).join('\n')) {
+    return { status: 'tampered', reason: 'external proof не совпал', data: d }
+  }
+  if (d.external_sha !== externalSha(taskRec.task.paths)) {
+    return { status: 'tampered', reason: 'external_sha не совпал', data: d }
+  }
   return { status: 'done', data: d }
 }
 function writeMarker(id, { checkCmd, executor, verifier, base }) {
   mkdirSync(MARKERS(), { recursive: true })
+  const taskRec = readTaskSync(id)
+  if (!taskRec) throw new Error(`маркер ${id}: файл задачи не найден`)
+  if (!taskRec.task.valid) throw new Error(`маркер ${id}: задача невалидна (нужны id/check_cmd/executor/verifier и разные CLI)`)
+  if (checkCmd !== taskRec.task.check_cmd) throw new Error(`маркер ${id}: --check-cmd не совпал с задачей`)
+  if (!executor || !verifier) throw new Error(`маркер ${id}: нужны executor и verifier`)
+  if (executor === verifier) throw new Error(`маркер ${id}: executor и verifier должны отличаться`)
+  const rec = execReceipt(id)
+  if (!rec) throw new Error(`маркер ${id}: нет exec-квитанции ${path.relative(HOME, execReceiptFile(id))}`)
+  if (!receiptSignatureOk(rec)) throw new Error(`маркер ${id}: exec-квитанция не подписана helioz-exec`)
+  if (rec.executor_task_sha !== taskRec.sha || rec.verifier_task_sha !== taskRec.sha) {
+    throw new Error(`маркер ${id}: exec-квитанция от разных/старых редакций задачи`)
+  }
+  if (rec.executor_used !== executor || rec.verifier_used !== verifier) throw new Error(`маркер ${id}: exec-квитанция не совпала с CLI маркера`)
+  if (rec.executor_code !== 0 || rec.verifier_code !== 0) throw new Error(`маркер ${id}: exec-коды не зелёные (${rec.executor_code}/${rec.verifier_code})`)
+  if (!receiptLogOk(rec, 'executor_log') || !receiptLogOk(rec, 'verifier_log')) throw new Error(`маркер ${id}: нет логов exec-квитанции`)
   const head = git(['rev-parse', 'HEAD'])
   const baseSha = gitSafe(['rev-parse', base || `${head}~1`])
   // ревью kimi: молчаливый фолбэк на head легализовывал пустой diff - теперь честный отказ
   if (!baseSha || baseSha === head) throw new Error(`маркер ${id}: base не резолвится или совпадает с head - сначала закоммить работу задачи`)
   const marker = {
-    task: id, check_cmd: checkCmd || '', exit_code: 0,
+    task: id, task_sha: taskRec.sha, check_cmd: taskRec.task.check_cmd, exit_code: 0,
     base: baseSha, head, sha_of_changed_files: changedFilesSha(baseSha, head),
+    external: externalProof(taskRec.task.paths),
+    external_sha: externalSha(taskRec.task.paths),
     executor_cli: executor || null, verifier_cli: verifier || null,
     finished_at: now(), written_by: 'helioz-gate',
   }
@@ -192,7 +326,7 @@ async function cmdReady(json) {
   const out = { ok: ready.length > 0, ready, blocked, invalid }
   if (json) console.log(JSON.stringify(out, null, 2))
   else {
-    if (invalid.length) console.log(`НЕ ПРИНЯТЫ (нет check_cmd/id): ${invalid.join(', ')}`)
+    if (invalid.length) console.log(`НЕ ПРИНЯТЫ (нужны id/check_cmd/executor/verifier и разные CLI): ${invalid.join(', ')}`)
     if (ready.length) { console.log('ГОТОВЫ:'); for (const r of ready) console.log(`  ${r.task} (${r.executor || 'любой'} → проверяет ${r.verifier || '?'})`) }
     else { console.log('готовых нет; блокеры:'); for (const id of Object.keys(blocked)) console.log(`  ${id}: ${blocked[id].join('; ')}`) }
   }
@@ -204,7 +338,7 @@ async function cmdStart(id, executor) {
   const tasks = await loadTasks()
   const t = tasks.get(id)
   if (!t) { console.error(`задача ${id} не в очереди`); return 2 }
-  if (!t.valid) { console.error(`задача ${id} без check_cmd - в конвейер не принимается`); return 2 }
+  if (!t.valid) { console.error(`задача ${id} невалидна: нужны id/check_cmd/executor/verifier и разные CLI`); return 2 }
   return withLock('running', () => {
     const st = readRunning()
     if (st.corrupt) { console.error('running.json нечитаем - fail-closed'); return 2 }
@@ -238,16 +372,23 @@ function cmdFinish(id) {
 async function cmdTask(id, opts) {
   const tasks = await loadTasks()
   if (!tasks.has(id)) { console.error(`задача ${id} не в очереди - маркер не пишется`); return 2 }
+  const t = tasks.get(id)
+  if (!t.valid) { console.error(`задача ${id} невалидна - маркер не пишется`); return 2 }
   if (!opts.checkCmd) { console.error('нет --check-cmd - приёмка без команды не бывает'); return 2 }
+  if (opts.checkCmd !== t.check_cmd) { console.error(`--check-cmd не совпал с задачей ${id} - маркер не пишется`); return 2 }
   const res = spawnSync('/bin/sh', ['-c', opts.checkCmd], { stdio: 'inherit', cwd: HOME })
   const code = res.status == null ? 1 : res.status
   if (code !== 0) { console.error(`проверка ${id} дала код ${code} - маркер не пишется`); return code || 1 }
-  const t = tasks.get(id)
   if (t.probe_cmd) {
     const pr = spawnSync('/bin/sh', ['-c', t.probe_cmd], { stdio: 'inherit', cwd: HOME })
     if ((pr.status ?? 1) !== 0) { console.error(`враждебная проба ${id} провалена (код ${pr.status}) - маркер не пишется`); return pr.status || 1 }
   }
-  writeMarker(id, opts)
+  try {
+    writeMarker(id, opts)
+  } catch (e) {
+    console.error(e.message || String(e))
+    return 2
+  }
   console.log(`маркер ${id} записан (exit_code 0)`)
   return 0
 }
@@ -286,6 +427,29 @@ async function cmdStatus(json) {
     for (const d of out.dilemmas) console.log(`  развилка ${d.id} [${d.kind}] ${d.status}`)
   }
   return 0
+}
+
+async function cmdSmoke(json) {
+  const rst = readRunning()
+  const tasks = await loadTasks()
+  const invalid = [...tasks].filter(([, t]) => !t.valid).map(([id]) => id).sort()
+  const reasons = []
+  if (stopped()) reasons.push('STOP')
+  if (rst.corrupt) reasons.push('running.json corrupt')
+  if (!tasks.size) reasons.push('queue empty')
+  if (invalid.length) reasons.push(`invalid tasks: ${invalid.join(', ')}`)
+  const out = {
+    ok: reasons.length === 0,
+    stop: stopped(),
+    running_corrupt: Boolean(rst.corrupt),
+    tasks: tasks.size,
+    invalid,
+    reasons,
+  }
+  if (json) console.log(JSON.stringify(out, null, 2))
+  else if (out.ok) console.log(`smoke ok: stop=false, invalid=[], tasks=${tasks.size}`)
+  else console.error(`smoke red: ${reasons.join('; ')}`)
+  return out.ok ? 0 : 2
 }
 
 function cmdBeat(note) {
@@ -438,16 +602,27 @@ async function cmdSelftest() {
   eq(t.executor_prompt, 'делай'); eq(t.verifier_prompt, 'проверяй'); eq(t.valid, true)
   const noCheck = parseTask(fx.replace('check_cmd: "true"\n', ''), 'fx2.md')
   eq(noCheck.valid, false, 'задача без check_cmd обязана быть invalid')
+  const sameCli = parseTask(fx.replace('verifier: codex', 'verifier: kimi'), 'fx3.md')
+  eq(sameCli.valid, false, 'executor==verifier обязан быть invalid')
 
   // 2–7. Изолированное состояние в tmp git-репо.
   const tmp = mkdtempSync(path.join(os.tmpdir(), 'helioz-selftest-'))
   try {
     const env = { ...process.env, HELIOZ_HOME: tmp }
     const self = fileURLToPath(import.meta.url)
+    const execScript = path.join(path.dirname(self), 'helioz-exec.mjs')
     const run = (args) => spawnSync(process.execPath, [self, ...args], { env, encoding: 'utf8' })
+    const runExec = (args) => spawnSync(process.execPath, [execScript, ...args], { env, encoding: 'utf8' })
     mkdirSync(path.join(tmp, 'queue', 'tasks'), { recursive: true })
     mkdirSync(path.join(tmp, 'queue', 'dilemmas'), { recursive: true })
     mkdirSync(path.join(tmp, 'docs'), { recursive: true })
+    mkdirSync(path.join(tmp, 'config'), { recursive: true })
+    writeFileSync(path.join(tmp, 'config', 'helioz.json'), JSON.stringify({ probe_timeout_sec: 5, run_timeout_sec: 5 }))
+    const stub = ['/bin/sh', '-c', 'cat >/dev/null 2>&1 || true; echo ok']
+    writeFileSync(path.join(tmp, 'config', 'clis.json'), JSON.stringify({
+      kimi: { invoke_read: stub, invoke_write: stub, stdin_prompt: true, roles: ['execute', 'verify'] },
+      codex: { invoke_read: stub, invoke_write: stub, stdin_prompt: true, roles: ['execute', 'verify'] },
+    }))
     execFileSync('git', ['-C', tmp, 'init', '-q'])
     writeFileSync(path.join(tmp, 'seed.txt'), 'seed\n')
     execFileSync('git', ['-C', tmp, 'add', '-A'])
@@ -463,10 +638,19 @@ async function cmdSelftest() {
     // задачи: A и B делят путь; C независима, тот же CLI что A
     const mk = (id, paths, extra = '') => writeFileSync(path.join(tmp, 'queue', 'tasks', `${id}.task.md`),
       `---\nid: ${id}\npaths:\n${paths.map(p => '  - ' + p).join('\n')}\nexecutor: kimi\nverifier: codex\ncheck_cmd: "true"\n${extra}---\n## Промт исполнителя\nx\n## Промт проверяющего\ny\n`)
+    const receipt = (id, executor = 'kimi', verifier = 'codex') => {
+      eq(runExec(['task', '--id', id, '--role', 'executor', '--cli', executor]).status, 0)
+      eq(runExec(['task', '--id', id, '--role', 'verifier', '--cli', verifier]).status, 0)
+    }
     mk('A', ['docs/x.md'])
     mk('B', ['docs/x.md', 'docs/y.md'])
     mk('C', ['docs/z.md'])
+    mk('F', ['docs/f.md'], 'check_cmd: "false"\n')
     eq(run(['--ready']).status, 0)
+    const smoke = run(['--smoke', '--json'])
+    eq(smoke.status, 0, 'здоровое живое состояние проходит smoke')
+    eq(JSON.parse(smoke.stdout).stop, false)
+    eq(JSON.parse(smoke.stdout).invalid.length, 0)
 
     // старт A, затем B (пересечение путей) → exit 5
     eq(run(['--start', 'A']).status, 0)
@@ -481,20 +665,50 @@ async function cmdSelftest() {
     eq(run(['--finish', 'B']).status, 0)
 
     // маркер: пишется только при exit 0, ловит подделку
-    eq(run(['--task', 'A', '--check-cmd', 'false']).status, 1, 'красная проверка не пишет маркер')
+    eq(run(['--task', 'A', '--check-cmd', 'false']).status, 2, 'чужой check_cmd не пишет маркер')
     ok(!existsSync(path.join(tmp, '.helioz', 'state', 'markers', 'A.done.json')))
+    receipt('F')
+    eq(run(['--task', 'F', '--check-cmd', 'false', '--executor', 'kimi', '--verifier', 'codex']).status, 1,
+       'красная проверка не пишет маркер')
+    ok(!existsSync(path.join(tmp, '.helioz', 'state', 'markers', 'F.done.json')))
+    receipt('A')
     eq(run(['--task', 'A', '--check-cmd', 'true', '--executor', 'kimi', '--verifier', 'codex']).status, 0)
     eq(run(['--require', 'A']).status, 0)
+    eq(run(['--task', 'B', '--check-cmd', 'true', '--executor', 'kimi', '--verifier', 'kimi']).status, 2,
+       'executor==verifier обязан давать 2')
+    receipt('B')
+    eq(run(['--task', 'B', '--check-cmd', 'true', '--executor', 'kimi']).status, 2,
+       'маркер без verifier обязан давать 2')
+    eq(run(['--task', 'B', '--check-cmd', 'false', '--executor', 'kimi', '--verifier', 'codex']).status, 2,
+       'check_cmd не из задачи обязан давать 2')
     // подделка руками → tampered
     const mf = path.join(tmp, '.helioz', 'state', 'markers', 'B.done.json')
     writeFileSync(mf, JSON.stringify({ task: 'B', written_by: 'orchestrator', finished_at: now() }))
     eq(run(['--require', 'B']).status, 2, 'рукописный маркер обязан быть tampered')
+    // рукописная exec-квитанция с логами, но без подписи helioz-exec → не доказательство
+    mkdirSync(path.join(tmp, '.helioz', 'state', 'exec'), { recursive: true })
+    mkdirSync(path.join(tmp, '.helioz', 'state', 'logs'), { recursive: true })
+    writeFileSync(path.join(tmp, '.helioz', 'state', 'logs', 'C-executor-kimi.log'), 'fake\n')
+    writeFileSync(path.join(tmp, '.helioz', 'state', 'logs', 'C-verifier-codex.log'), 'fake\n')
+    const cTask = readFileSync(path.join(tmp, 'queue', 'tasks', 'C.task.md'), 'utf8')
+    writeFileSync(path.join(tmp, '.helioz', 'state', 'exec', 'C.json'), JSON.stringify({
+      executor_task_sha: sha256(cTask), verifier_task_sha: sha256(cTask),
+      executor_used: 'kimi', verifier_used: 'codex', executor_code: 0, verifier_code: 0,
+      executor_log: '.helioz/state/logs/C-executor-kimi.log',
+      verifier_log: '.helioz/state/logs/C-verifier-codex.log',
+    }, null, 2) + '\n')
+    eq(run(['--task', 'C', '--check-cmd', 'true', '--executor', 'kimi', '--verifier', 'codex']).status, 2,
+       'рукописная exec-квитанция без подписи helioz-exec обязана давать 2')
     // обрезание полей у настоящего маркера → tampered
     const af = path.join(tmp, '.helioz', 'state', 'markers', 'A.done.json')
     const good = JSON.parse(readFileSync(af, 'utf8'))
     const cut = { ...good }; delete cut.sha_of_changed_files
     writeFileSync(af, JSON.stringify(cut))
     eq(run(['--require', 'A']).status, 2, 'обрезанный маркер обязан быть tampered')
+    writeFileSync(af, JSON.stringify(good) + '\n')
+    const cutExternal = { ...good }; delete cutExternal.external_sha
+    writeFileSync(af, JSON.stringify(cutExternal))
+    eq(run(['--require', 'A']).status, 2, 'маркер без external_sha обязан быть tampered')
     writeFileSync(af, JSON.stringify(good) + '\n')
     // повреждение содержимого: sha пересчитается и не совпадёт
     writeFileSync(af, JSON.stringify({ ...good, sha_of_changed_files: 'deadbeef' }) + '\n')
@@ -513,6 +727,7 @@ async function cmdSelftest() {
     // ревью codex+kimi: битый running.json → fail-closed, не пустой список
     writeFileSync(path.join(tmp, '.helioz', 'state', 'running.json'), '{')
     eq(run(['--ready']).status, 2, 'битый running.json обязан давать fail-closed')
+    eq(run(['--smoke']).status, 2, 'битый running.json обязан красить smoke')
     eq(run(['--start', 'C']).status, 2, 'старт при битом running.json запрещён')
     rmSync(path.join(tmp, '.helioz', 'state', 'running.json'))
 
@@ -544,7 +759,7 @@ async function cmdSelftest() {
     eq(run(['--budget']).status, 2, 'нет budget.json - потолок не подтверждён')
   } finally { rmSync(tmp, { recursive: true, force: true }) }
 
-  console.log('selftest ok - разбор задач, fail-closed, пересечения, слоты, tampered (3 вида), STOP, adopt, beat')
+    console.log('selftest ok - разбор задач, fail-closed, пересечения, слоты, tampered, STOP, adopt, beat')
   return 0
 }
 
@@ -555,7 +770,7 @@ async function main() {
     ({ values: v } = parseArgs({
       args: process.argv.slice(2), allowPositionals: true,
       options: {
-        ready: { type: 'boolean' }, status: { type: 'boolean' }, json: { type: 'boolean' },
+        ready: { type: 'boolean' }, status: { type: 'boolean' }, smoke: { type: 'boolean' }, json: { type: 'boolean' },
         start: { type: 'string' }, finish: { type: 'string' }, executor: { type: 'string' },
         task: { type: 'string' }, 'check-cmd': { type: 'string' }, verifier: { type: 'string' }, base: { type: 'string' },
         require: { type: 'string' }, beat: { type: 'string' }, budget: { type: 'boolean' },
@@ -568,6 +783,7 @@ async function main() {
   if (v.selftest) return cmdSelftest()
   if (v.ready) return cmdReady(v.json)
   if (v.status) return cmdStatus(v.json)
+  if (v.smoke) return cmdSmoke(v.json)
   if (v.start) return cmdStart(v.start, v.executor)
   if (v.finish) return cmdFinish(v.finish)
   if (v.task) return cmdTask(v.task, { checkCmd: v['check-cmd'], executor: v.executor, verifier: v.verifier, base: v.base })
@@ -577,7 +793,7 @@ async function main() {
   if (v.stop) { writeFileSync(stopFile(), now()); console.log('STOP поставлен'); return 0 }
   if (v.go) { rmSync(stopFile(), { force: true }); console.log('STOP снят'); return 0 }
   if (v.adopt) return cmdAdopt(v.adopt)
-  console.log('helioz-gate: --ready --start --finish --task --check-cmd --require --status --beat --budget --stop --go --adopt --selftest --json')
+  console.log('helioz-gate: --ready --start --finish --task --check-cmd --require --status --smoke --beat --budget --stop --go --adopt --selftest --json')
   return 0
 }
 main().then(c => process.exit(c)).catch(e => { console.error(e && e.message || e); process.exit(1) })

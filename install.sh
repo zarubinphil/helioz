@@ -84,7 +84,7 @@ if [ "$LANG_CHOICE" = "ru" ]; then
 
   Если он и тебе пригодится, поставь звезду:
 
-      https://github.com/zarubinphil/helioz
+      https://github.com/zarubinvibe/helioz
 
   Тебе несколько секунд, проекту правда важно. И загляни к его родне:
   themis, mnemazine, zeuz, athena. Они из одной семьи и работают вместе.»
@@ -165,7 +165,7 @@ else
 
   If it turns out useful to you too, star the project:
 
-      https://github.com/zarubinphil/helioz
+      https://github.com/zarubinvibe/helioz
 
   Seconds for you, genuinely important for the project. And meet the
   family: themis, mnemazine, zeuz, athena. Same house, they work
@@ -193,16 +193,15 @@ for t in helioz-plan helioz-gate helioz-zeus helioz-exec helioz-council; do
 done
 bash scripts/helioz-watchdog.sh --selftest >/dev/null 2>&1 && echo "  ✓ helioz-watchdog" || { echo "  ✗ helioz-watchdog"; exit 2; }
 
-mkdir -p .helioz/state
+mkdir -p .helioz/state queue/tasks queue/dilemmas
 date > .helioz/state/.onboarded
 echo ""
 echo "  Осталось руками (по одному разу):"
-echo "  1. Telegram-канал: файл ~/.secrets/olympuz-telegram.env (chmod 600) с"
-echo "     OLYMPUZ_TELEGRAM_TOKEN=<токен бота> и OLYMPUZ_TELEGRAM_CHAT=<твой chat id>."
-echo "  2. Сторож (автоперезапуск): подставь свои пути в шаблон и положи агент:"
-echo "     sed -e \"s#__HELIOZ_HOME__#$PWD#g\" -e \"s#__USER_HOME__#\$HOME#g\" \\"
-echo "       launchd/com.helioz.watchdog.plist > ~/Library/LaunchAgents/com.helioz.watchdog.plist"
-echo "     && launchctl bootstrap gui/\$(id -u) ~/Library/LaunchAgents/com.helioz.watchdog.plist"
+echo '  1. Telegram-канал: локальный файл секретов вне репозитория (chmod 600) с'
+echo "     HELIOZ_TELEGRAM_TOKEN=<токен бота> и HELIOZ_TELEGRAM_CHAT=<твой chat id>."
+echo "  2. Сторож (автоперезапуск): подставь путь клона в launchd/com.helioz.watchdog.plist"
+echo "     и положи результат в ~/Library/LaunchAgents/com.helioz.watchdog.plist,"
+echo "     затем: launchctl bootstrap gui/\$(id -u) ~/Library/LaunchAgents/com.helioz.watchdog.plist"
 echo "  3. Потолок расходов: .helioz/state/budget.json → {\"started_at\":\"…\",\"ceiling_usd\":N}."
 echo "     Окно считается от started_at; сбросить: node scripts/helioz-budget-reset.mjs"
 echo ""

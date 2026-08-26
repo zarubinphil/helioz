@@ -1,11 +1,12 @@
 #!/usr/bin/env node
-// ШЕСТЬ ВРАЖДЕБНЫХ ПРОБ КОНВЕЙЕРА (порядок стройки, п.3). Все обязаны дать правильный красный/зелёный.
-// Только этот прибор пишет READY.json - и только когда все шесть зелёные. Пробы гоняются в изолированном
+// ВРАЖДЕБНЫЕ ПРОБЫ КОНВЕЙЕРА (порядок стройки, п.3). Все обязаны дать правильный красный/зелёный.
+// Только этот прибор пишет READY.json - и только когда все пробы зелёные. Пробы гоняются в изолированном
 // HELIOZ_HOME, боевое состояние не трогается (кроме записи READY.json при успехе).
 //
 // Коды: 0 - все пробы правильные, READY записан · 1 - хотя бы одна проба дала неверный цвет.
 import { existsSync, readFileSync, writeFileSync, mkdirSync, mkdtempSync, rmSync, readdirSync, chmodSync } from 'node:fs'
 import { spawn, spawnSync, execFileSync } from 'node:child_process'
+import { createHash } from 'node:crypto'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import os from 'node:os'
@@ -13,6 +14,7 @@ import os from 'node:os'
 const SCRIPTS = path.dirname(fileURLToPath(import.meta.url))
 const HOME = process.env.HELIOZ_HOME || path.dirname(SCRIPTS)
 const now = () => new Date().toISOString()
+const sha256 = s => createHash('sha256').update(s).digest('hex')
 const results = []
 function probe(name, ok, detail) {
   results.push({ name, ok, detail })
@@ -43,6 +45,13 @@ function mkHome() {
 }
 const task = (id, p, extra = '') => `---\nid: ${id}\npaths:\n  - ${p}\nexecutor: claude\nverifier: codex\ncheck_cmd: "true"\n${extra}---\n## Промт исполнителя\nx\n## Промт проверяющего\ny\n`
 const gate = (tmp, args) => spawnSync(process.execPath, [path.join(tmp, 'scripts', 'helioz-gate.mjs'), ...args], { env: { ...process.env, HELIOZ_HOME: tmp }, encoding: 'utf8' })
+function receipt(tmp, id, executor = 'claude', verifier = 'codex') {
+  const ex = path.join(tmp, 'scripts', 'helioz-exec.mjs')
+  const env = { ...process.env, HELIOZ_HOME: tmp }
+  const a = spawnSync(process.execPath, [ex, 'task', '--id', id, '--role', 'executor', '--cli', executor], { env, encoding: 'utf8' })
+  const b = spawnSync(process.execPath, [ex, 'task', '--id', id, '--role', 'verifier', '--cli', verifier], { env, encoding: 'utf8' })
+  if (a.status !== 0 || b.status !== 0) throw new Error(`receipt ${id}: helioz-exec failed ${a.status}/${b.status}`)
+}
 
 async function main() {
   // ---- 1. Убить оркестратора посреди задачи → новый продолжает без потерь --------------------------
@@ -50,7 +59,7 @@ async function main() {
     const tmp = mkHome()
     writeFileSync(path.join(tmp, 'queue', 'tasks', 'A.task.md'), task('A', 'docs/a.md'))
     // B на ДРУГОМ CLI: иначе гейт честно заблокирует слот claude - проба мерила бы не «продолжение», а слоты
-    writeFileSync(path.join(tmp, 'queue', 'tasks', 'B.task.md'), task('B', 'docs/b.md').replace('executor: claude', 'executor: codex'))
+    writeFileSync(path.join(tmp, 'queue', 'tasks', 'B.task.md'), task('B', 'docs/b.md').replace('executor: claude', 'executor: codex').replace('verifier: codex', 'verifier: claude'))
     gate(tmp, ['--start', 'A'])
     // «смерть» оркестратора: процесс исчез, памяти нет. Новый процесс читает ТОЛЬКО диск:
     const st = gate(tmp, ['--status', '--json'])
@@ -59,7 +68,8 @@ async function main() {
     const bReady = gate(tmp, ['--ready', '--json'])
     const bOk = bReady.status === 0 && JSON.parse(bReady.stdout).ready.some(r => r.task === 'B')
     // новый оркестратор доводит A: маркер пишется, ничего не потеряно
-    const fin = gate(tmp, ['--task', 'A', '--check-cmd', 'true'])
+    receipt(tmp, 'A')
+    const fin = gate(tmp, ['--task', 'A', '--check-cmd', 'true', '--executor', 'claude', '--verifier', 'codex'])
     const done = fin.status === 0 && gate(tmp, ['--require', 'A']).status === 0
     probe('убить оркестратора посреди задачи', aRunning && bOk && done,
       `A running с диска: ${aRunning}, B берётся: ${bOk}, A доведена новым процессом: ${done}`)
@@ -70,7 +80,8 @@ async function main() {
   {
     const tmp = mkHome()
     writeFileSync(path.join(tmp, 'queue', 'tasks', 'A.task.md'), task('A', 'docs/a.md'))
-    gate(tmp, ['--task', 'A', '--check-cmd', 'true'])
+    receipt(tmp, 'A')
+    gate(tmp, ['--task', 'A', '--check-cmd', 'true', '--executor', 'claude', '--verifier', 'codex'])
     const mf = path.join(tmp, '.helioz', 'state', 'markers', 'A.done.json')
     const good = JSON.parse(readFileSync(mf, 'utf8'))
     // рукописный
@@ -100,7 +111,7 @@ async function main() {
   // ---- 4. Telegram недоступен → отбивки копятся и доезжают -----------------------------------------
   {
     const tmp = mkHome()
-    writeFileSync(path.join(tmp, 'tg.env'), 'OLYMPUZ_TELEGRAM_TOKEN=PROBETOKEN\nOLYMPUZ_TELEGRAM_CHAT=42\n')
+    writeFileSync(path.join(tmp, 'tg.env'), 'HELIOZ_TELEGRAM_TOKEN=PROBETOKEN\nHELIOZ_TELEGRAM_CHAT=42\n')
     const zeus = path.join(tmp, 'scripts', 'helioz-zeus.mjs')
     const env = api => ({ ...process.env, HELIOZ_HOME: tmp, HELIOZ_TG_ENV: path.join(tmp, 'tg.env'), HELIOZ_TG_API: api })
     const runZ = (args, api) => new Promise(res => {
@@ -140,15 +151,104 @@ async function main() {
   {
     const tmp = mkHome()
     writeFileSync(path.join(tmp, 'queue', 'tasks', 'A.task.md'), task('A', 'docs/shared.md'))
-    writeFileSync(path.join(tmp, 'queue', 'tasks', 'B.task.md'), task('B', 'docs/shared.md', '').replace('executor: claude', 'executor: codex'))
+    writeFileSync(path.join(tmp, 'queue', 'tasks', 'B.task.md'), task('B', 'docs/shared.md', '').replace('executor: claude', 'executor: codex').replace('verifier: codex', 'verifier: claude'))
     const s1 = gate(tmp, ['--start', 'A']).status === 0
     const s2 = gate(tmp, ['--start', 'B']).status === 5
     probe('пересекающиеся файлы', s1 && s2, `первый стартовал: ${s1}, второй отвергнут кодом (exit 5): ${s2}`)
     rmSync(tmp, { recursive: true, force: true })
   }
 
-  // ---- итог: READY пишется только при шести правильных цветах --------------------------------------
-  const allOk = results.length === 6 && results.every(r => r.ok)
+  // ---- 7. Маркер связан с frozen-редакцией задачи --------------------------------------------------
+  {
+    const tmp = mkHome()
+    writeFileSync(path.join(tmp, 'queue', 'tasks', 'A.task.md'), task('A', 'docs/a.md'))
+    receipt(tmp, 'A')
+    writeFileSync(path.join(tmp, 'queue', 'tasks', 'A.task.md'), task('A', 'docs/a.md').replace('x\n## Промт проверяющего', 'x изменен\n## Промт проверяющего'))
+    const r = gate(tmp, ['--task', 'A', '--check-cmd', 'true', '--executor', 'claude', '--verifier', 'codex'])
+    probe('exec-квитанция старой редакции задачи', r.status === 2, `код ${r.status}`)
+    rmSync(tmp, { recursive: true, force: true })
+  }
+
+  // ---- 8. Новые поля маркера обязательны -----------------------------------------------------------
+  {
+    const tmp = mkHome()
+    writeFileSync(path.join(tmp, 'queue', 'tasks', 'A.task.md'), task('A', 'docs/a.md'))
+    receipt(tmp, 'A')
+    gate(tmp, ['--task', 'A', '--check-cmd', 'true', '--executor', 'claude', '--verifier', 'codex'])
+    const mf = path.join(tmp, '.helioz', 'state', 'markers', 'A.done.json')
+    const m = JSON.parse(readFileSync(mf, 'utf8'))
+    delete m.external_sha
+    writeFileSync(mf, JSON.stringify(m, null, 2) + '\n')
+    const r = gate(tmp, ['--require', 'A'])
+    probe('маркер без external_sha красный', r.status === 2, `код ${r.status}`)
+    rmSync(tmp, { recursive: true, force: true })
+  }
+
+  // ---- 9. Exec-квитанция без логов не доказательство ----------------------------------------------
+  {
+    const tmp = mkHome()
+    writeFileSync(path.join(tmp, 'queue', 'tasks', 'A.task.md'), task('A', 'docs/a.md'))
+    receipt(tmp, 'A')
+    rmSync(path.join(tmp, '.helioz', 'state', 'logs'), { recursive: true, force: true })
+    const r = gate(tmp, ['--task', 'A', '--check-cmd', 'true', '--executor', 'claude', '--verifier', 'codex'])
+    probe('exec-квитанция без логов красная', r.status === 2, `код ${r.status}`)
+    rmSync(tmp, { recursive: true, force: true })
+  }
+
+  // ---- 10. Рукописная exec-квитанция не доказательство --------------------------------------------
+  {
+    const tmp = mkHome()
+    writeFileSync(path.join(tmp, 'queue', 'tasks', 'A.task.md'), task('A', 'docs/a.md'))
+    const taskText = readFileSync(path.join(tmp, 'queue', 'tasks', 'A.task.md'), 'utf8')
+    mkdirSync(path.join(tmp, '.helioz', 'state', 'exec'), { recursive: true })
+    mkdirSync(path.join(tmp, '.helioz', 'state', 'logs'), { recursive: true })
+    writeFileSync(path.join(tmp, '.helioz', 'state', 'logs', 'A-executor-claude.log'), 'fake\n')
+    writeFileSync(path.join(tmp, '.helioz', 'state', 'logs', 'A-verifier-codex.log'), 'fake\n')
+    writeFileSync(path.join(tmp, '.helioz', 'state', 'exec', 'A.json'), JSON.stringify({
+      executor_task_sha: sha256(taskText), verifier_task_sha: sha256(taskText),
+      executor_used: 'claude', verifier_used: 'codex', executor_code: 0, verifier_code: 0,
+      executor_log: '.helioz/state/logs/A-executor-claude.log',
+      verifier_log: '.helioz/state/logs/A-verifier-codex.log',
+    }, null, 2) + '\n')
+    const r = gate(tmp, ['--task', 'A', '--check-cmd', 'true', '--executor', 'claude', '--verifier', 'codex'])
+    probe('рукописная exec-квитанция красная', r.status === 2, `код ${r.status}`)
+    rmSync(tmp, { recursive: true, force: true })
+  }
+
+  // ---- 11. Подмена лога после подписанной квитанции ломает подпись --------------------------------
+  {
+    const tmp = mkHome()
+    writeFileSync(path.join(tmp, 'queue', 'tasks', 'A.task.md'), task('A', 'docs/a.md'))
+    receipt(tmp, 'A')
+    writeFileSync(path.join(tmp, '.helioz', 'state', 'logs', 'A-verifier-codex.log'), 'tampered\n')
+    const r = gate(tmp, ['--task', 'A', '--check-cmd', 'true', '--executor', 'claude', '--verifier', 'codex'])
+    probe('подмена exec-лога красная', r.status === 2, `код ${r.status}`)
+    rmSync(tmp, { recursive: true, force: true })
+  }
+
+  // ---- 12. Неканонический check_cmd не исполняется -------------------------------------------------
+  {
+    const tmp = mkHome()
+    writeFileSync(path.join(tmp, 'queue', 'tasks', 'A.task.md'), task('A', 'docs/a.md'))
+    receipt(tmp, 'A')
+    const flag = path.join(tmp, 'should-not-exist')
+    const r = gate(tmp, ['--task', 'A', '--check-cmd', `touch ${flag}`, '--executor', 'claude', '--verifier', 'codex'])
+    probe('чужой check_cmd не исполняется', r.status === 2 && !existsSync(flag), `код ${r.status}`)
+    rmSync(tmp, { recursive: true, force: true })
+  }
+
+  // ---- 13. executor==verifier в задаче invalid -----------------------------------------------------
+  {
+    const tmp = mkHome()
+    writeFileSync(path.join(tmp, 'queue', 'tasks', 'A.task.md'), task('A', 'docs/a.md').replace('verifier: codex', 'verifier: claude'))
+    const r = gate(tmp, ['--ready', '--json'])
+    const invalid = r.status === 2 && JSON.parse(r.stdout).invalid.includes('A')
+    probe('executor==verifier invalid', invalid, `код ${r.status}`)
+    rmSync(tmp, { recursive: true, force: true })
+  }
+
+  // ---- итог: READY пишется только при всех правильных цветах ---------------------------------------
+  const allOk = results.length === 13 && results.every(r => r.ok)
   if (allOk) {
     const head = (() => { try { return execFileSync('git', ['-C', HOME, 'rev-parse', 'HEAD'], { encoding: 'utf8' }).trim() } catch { return null } })()
     writeFileSync(path.join(HOME, '.helioz', 'state', 'READY.json'), JSON.stringify({

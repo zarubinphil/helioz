@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // КАНАЛ «ЗЕВС» (@ZeusKaifBot) - отбивки владельцу и решения владельца.
-// Паттерны взяты из olympuz (notify-telegram.ts / telegram-inbound.ts, проверены боем):
-//   durable-запись в outbox ПЕРВОЙ, Telegram - best-effort; токен из ~/.secrets, никогда в env
+// Паттерн канала: durable-запись первой, Telegram - best-effort.
+//   durable-запись в outbox ПЕРВОЙ, Telegram - best-effort; токен из домашнего каталога секретов, никогда в env
 //   потомков/argv/логи; чужой chat id → ТИШИНА; callback ≤64 байт, матч по префиксу id; fail-closed.
 //
 //   send --text "…" [--quiet]        отбивка (в outbox → попытка доставки)
@@ -24,7 +24,8 @@ const STATE = path.join(HOME, '.helioz', 'state')
 const OUTBOX = path.join(STATE, 'outbox')
 const DILEMMAS = path.join(HOME, 'queue', 'dilemmas')
 const API = process.env.HELIOZ_TG_API || 'https://api.telegram.org'
-const SECRETS = process.env.HELIOZ_TG_ENV || (CFG.secrets_env || '~/.secrets/olympuz-telegram.env').replace(/^~/, os.homedir())
+const defaultSecrets = path.join(os.homedir(), '.secrets', 'helioz-telegram.env')
+const SECRETS = process.env.HELIOZ_TG_ENV || (CFG.secrets_env ? CFG.secrets_env.replace(/^~/, os.homedir()) : defaultSecrets)
 const now = () => new Date().toISOString()
 
 // --- секреты: читаются в момент вызова, не кэшируются в env, в вывод не попадают ------------------
@@ -37,7 +38,8 @@ function readTg() {
     const at = l.indexOf('=')
     if (at > 0) kv.set(l.slice(0, at).trim(), l.slice(at + 1).trim())
   }
-  const token = kv.get('OLYMPUZ_TELEGRAM_TOKEN'), chat = kv.get('OLYMPUZ_TELEGRAM_CHAT')
+  const token = kv.get('HELIOZ_TELEGRAM_TOKEN') || kv.get('OLYMPUZ_TELEGRAM_TOKEN')
+  const chat = kv.get('HELIOZ_TELEGRAM_CHAT') || kv.get('OLYMPUZ_TELEGRAM_CHAT')
   return token && chat ? { token, chat } : null
 }
 const redact = (s, token) => (token ? String(s).split(token).join('<token>') : String(s))
@@ -259,7 +261,7 @@ async function cmdSelftest() {
   try {
     mkdirSync(path.join(tmp, 'queue', 'dilemmas'), { recursive: true })
     mkdirSync(path.join(tmp, '.helioz', 'state'), { recursive: true })
-    writeFileSync(path.join(tmp, 'tg.env'), 'OLYMPUZ_TELEGRAM_TOKEN=TESTTOKEN123\nOLYMPUZ_TELEGRAM_CHAT=42\n')
+    writeFileSync(path.join(tmp, 'tg.env'), 'HELIOZ_TELEGRAM_TOKEN=TESTTOKEN123\nHELIOZ_TELEGRAM_CHAT=42\n')
 
     // стаб-сервер Telegram
     const calls = []

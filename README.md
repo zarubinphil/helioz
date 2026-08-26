@@ -1,7 +1,9 @@
 # helioz - the work never stops
 
+Helioz is a local-first agent work conveyor that keeps long tasks moving across sessions, agents, checks, and handoffs.
+
 <p align="center">
-  <img src="docs/assets/helioz-hero.png" alt="Helioz: a white marble statue of Helios with a golden sun-disc beside the classical column, warm ivory light, blue and gold threads assembling a conveyor of glass cards" width="100%">
+  <img src="docs/assets/pantheon/hero.png" alt="Helioz: a white marble statue of Helios with a golden sun-disc beside the classical column, warm ivory light, blue and gold threads assembling a conveyor of glass cards" width="100%">
 </p>
 
 ## Who I am
@@ -14,7 +16,7 @@ Now I do the same with tasks.
 
 Philipp Zarubin built me. The reason is dull: he has no time. Night, court, kids, and the work sits still because nobody is driving it. Now I drive.
 
-I come from a family: [Olympuz](https://github.com/zarubinphil/olympuz) is the swarm cockpit, [Zeuz](https://github.com/zarubinphil/zeuz) is the factory that births systems like me, [Mnemazine](https://github.com/zarubinphil/mnemazine) is memory, [Themis](https://github.com/zarubinphil/themis) runs a law practice, [Athena](https://github.com/zarubinphil/athena) is the agent OS all of it lives on. My one job here is continuity.
+I come from a family: [Olympuz](https://github.com/zarubinvibe/olympuz) is the swarm cockpit, [Zeuz](https://github.com/zarubinvibe/zeuz) is the factory that births systems like me, [Mnemazine](https://github.com/zarubinvibe/mnemazine) is memory, [Themis](https://github.com/zarubinvibe/themis) runs a law practice, [Athena](https://github.com/zarubinvibe/athena) is the agent OS all of it lives on. My one job here is continuity.
 
 ## Why you need me
 
@@ -88,7 +90,7 @@ Everything important gets reported: stage, percent, what went wrong and how I go
 ## Install
 
 ```bash
-git clone https://github.com/zarubinphil/helioz.git ~/helioz
+git clone https://github.com/zarubinvibe/helioz.git ~/helioz
 cd ~/helioz
 bash install.sh en
 ```
@@ -117,6 +119,24 @@ bash scripts/helioz-start.sh
 | `docs/CONTRACTS.md` | on-disk state contracts: tasks, forks, marks, ledger |
 | `docs/BRAND.md` | design description, an instance of the Pantheon Design System |
 
+## Examples
+
+- Start with one sentence of intent and let the grill turn it into a checked goal.
+- Drop a small task with a check command into the queue and let executor/verifier split the work.
+- Keep reports durable when Telegram is down, then flush them when the channel returns.
+
+## Documentation
+
+Start with this README, then read [state contracts](docs/CONTRACTS.md), [the master plan](docs/MASTER-PLAN.md), and [the orchestrator prompt](ORCHESTRATOR.md).
+
+## Security And Privacy
+
+- File access stays inside the clone unless a task explicitly names another allowed path.
+- `.helioz/`, `queue/`, logs, and local runtime state are ignored and never published.
+- Secrets live outside git and are read only at send/poll time.
+- Telegram delivery is best-effort; messages are written to the local outbox first.
+- Review `git diff` and run the public gate before pushing.
+
 ## How I prove I am not lying
 
 Six probes, one command, all of them must be green:
@@ -130,15 +150,37 @@ Kill the orchestrator mid-task: the next one continues. Forge a mark: caught. St
 The probes test me, not my claims about myself. A red probe means no "ready" status.
 
 <p align="center">
-  <img src="docs/assets/helioz-emblem.png" alt="Helioz emblem: a marble statue with a golden sun-disc, a chariot wheel and the classical column" width="100%">
+  <img src="docs/assets/pantheon/emblem.png" alt="Helioz emblem: a marble statue with a golden sun-disc, a chariot wheel and the classical column" width="420">
 </p>
 
 ## A star
 
-If Helioz turns out useful, star it: [github.com/zarubinphil/helioz](https://github.com/zarubinphil/helioz).
+If Helioz turns out useful, star it: [github.com/zarubinvibe/helioz](https://github.com/zarubinvibe/helioz).
 
-Seconds for you, genuinely important for the project. And meet the family: [themis](https://github.com/zarubinphil/themis), [mnemazine](https://github.com/zarubinphil/mnemazine), [zeuz](https://github.com/zarubinphil/zeuz), [athena](https://github.com/zarubinphil/athena), [smltlk](https://github.com/zarubinphil/smltlk).
+Seconds for you, genuinely important for the project. And meet the family: [themis](https://github.com/zarubinvibe/themis), [mnemazine](https://github.com/zarubinvibe/mnemazine), [zeuz](https://github.com/zarubinvibe/zeuz), [athena](https://github.com/zarubinvibe/athena), [smltlk](https://github.com/zarubinvibe/smltlk).
+
+## License
+
+MIT. See [LICENSE](LICENSE).
 
 ---
 
 Русская версия: [README.ru.md](README.ru.md)
+
+<!-- pantheon-family:start -->
+## Pantheon family
+
+Part of the [Pantheon project family](https://github.com/zarubinvibe?tab=repositories). Every public project links directly to its repository and source ZIP.
+
+| Type | Name | What it does | Source |
+|---|---|---|---|
+| project | Athena | Portable agent OS that restores a complete Claude and Codex setup on a new Mac. | [Repository](https://github.com/zarubinvibe/athena) · [ZIP](https://github.com/zarubinvibe/athena/archive/refs/heads/main.zip) |
+| project | Claude Code Setup OS | Bootstrap skill for a token-efficient Claude Code workspace and a local LLM wiki. | [Repository](https://github.com/zarubinvibe/claude-code-setup-os) · [ZIP](https://github.com/zarubinvibe/claude-code-setup-os/archive/refs/heads/main.zip) |
+| project | Helioz | 24/7 agent work conveyor with verified completion markers and goal-based overnight decisions. | [Repository](https://github.com/zarubinvibe/helioz) · [ZIP](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.zip) |
+| project | Humanizer | Agent skill that removes common AI writing patterns from English text. | [Repository](https://github.com/zarubinvibe/humanizer) · [ZIP](https://github.com/zarubinvibe/humanizer/archive/refs/heads/main.zip) |
+| project | Humanizer RU | Russian writing skill that detects and removes 58 common AI text patterns. | [Repository](https://github.com/zarubinvibe/humanizer-ru) · [ZIP](https://github.com/zarubinvibe/humanizer-ru/archive/refs/heads/main.zip) |
+| project | Mnemazine | Local-first memory system that turns raw inputs into verified reusable knowledge. | [Repository](https://github.com/zarubinvibe/mnemazine) · [ZIP](https://github.com/zarubinvibe/mnemazine/archive/refs/heads/main.zip) |
+| project | Smltlk | macOS menu bar app for keyboard-layout repair, offline dictation, and speech-to-prompt. | [Repository](https://github.com/zarubinvibe/smltlk) · [ZIP](https://github.com/zarubinvibe/smltlk/archive/refs/heads/main.zip) |
+| project | Themis | Multi-agent assistant for Russian litigation with local OCR and review by a five-jurist council. | [Repository](https://github.com/zarubinvibe/themis) · [ZIP](https://github.com/zarubinvibe/themis/archive/refs/heads/main.zip) |
+| project | Zeuz | Factory that turns an idea into a governed multi-agent workflow with gates, observability, and replay. | [Repository](https://github.com/zarubinvibe/zeuz) · [ZIP](https://github.com/zarubinvibe/zeuz/archive/refs/heads/main.zip) |
+<!-- pantheon-family:end -->

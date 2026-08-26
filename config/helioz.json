@@ -10,6 +10,6 @@
     "max_advisors": 5,
     "synthesis_order": ["claude", "codex", "kimi"]
   },
-  "orchestrator_cmd": "cd \"$HOME/Проекты/helioz\" && claude -p \"$(cat ORCHESTRATOR.md; echo; echo '--- ХЭНДОФФ ---'; cat docs/HANDOFF.md 2>/dev/null)\" --permission-mode acceptEdits",
-  "secrets_env": "~/.secrets/olympuz-telegram.env"
+  "orchestrator_cmd": "cd \"$HELIOZ_HOME\" && claude -p \"$(cat ORCHESTRATOR.md; echo; echo '--- ХЭНДОФФ ---'; cat docs/HANDOFF.md 2>/dev/null)\" --permission-mode acceptEdits",
+  "secrets_env": ""
 }
