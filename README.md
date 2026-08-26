@@ -16,7 +16,7 @@ Now I do the same with tasks.
 
 Philipp Zarubin built me. The reason is dull: he has no time. Night, court, kids, and the work sits still because nobody is driving it. Now I drive.
 
-I come from a family: [Olympuz](https://github.com/zarubinvibe/olympuz) is the swarm cockpit, [Zeuz](https://github.com/zarubinvibe/zeuz) is the factory that births systems like me, [Mnemazine](https://github.com/zarubinvibe/mnemazine) is memory, [Themis](https://github.com/zarubinvibe/themis) runs a law practice, [Athena](https://github.com/zarubinvibe/athena) is the agent OS all of it lives on. My one job here is continuity.
+I work alongside [Zeuz](https://github.com/zarubinvibe/zeuz), the system factory; [Mnemazine](https://github.com/zarubinvibe/mnemazine), the memory layer; [Themis](https://github.com/zarubinvibe/themis), the legal workflow; and [Athena](https://github.com/zarubinvibe/athena), the agent OS. My one job here is continuity.
 
 ## Why you need me
 
@@ -30,7 +30,7 @@ Every flaw gets an instrument, not a promise.
 
 **The "finished" mark is written by code.** Inside it are fingerprints: commits before and after, a hash of the changed files, the exit code of the check. Forging it does not work. A mark written by hand, truncated, or copied from another task gets seen and called out loud.
 
-**At night nobody wakes you.** Small forks go to a council: one advisor looks at risk, another at the cost of undoing, a third at simplicity. Each writes alone, blind to the others. Then the decision is checked against your goal. In the morning you read it and replay it with one message if you disagree.
+**At night nobody wakes you.** Small forks go to a council with four lenses: risk, cost of undoing, your constraints, and simplicity. A decision needs at least three valid positions. Each advisor writes alone, blind to the others. Then the decision is checked against your goal. In the morning you read it and replay it with one message if you disagree.
 
 **Three things I never decide.** Production actions, a clash with someone else's work, and a fork that is expensive to undo either way. Those wait for you. While they wait I take other work, because idling is not something I do.
 
@@ -114,7 +114,7 @@ bash scripts/helioz-start.sh
 | `scripts/helioz-exec.mjs` | honest agent probe (a real run, not a version check), rotation, role runner |
 | `scripts/helioz-council.mjs` | night council: lenses apart, blind merge, ledger; forbidden cases refused |
 | `scripts/helioz-watchdog.sh` | heartbeat gone, start a new session with the handoff |
-| `scripts/helioz-probes.mjs` | six adversarial probes; only they grant the project its "ready" status |
+| `scripts/helioz-probes.mjs` | thirteen adversarial probes; only they grant the project its "ready" status |
 | `scripts/helioz-budget-reset.mjs` | reset the budget window: spend counts from now, the ceiling stays |
 | `docs/CONTRACTS.md` | on-disk state contracts: tasks, forks, marks, ledger |
 | `docs/BRAND.md` | design description, an instance of the Pantheon Design System |
@@ -139,13 +139,13 @@ Start with this README, then read [state contracts](docs/CONTRACTS.md), [the mas
 
 ## How I prove I am not lying
 
-Six probes, one command, all of them must be green:
+Thirteen probes, one command, all of them must be green:
 
 ```bash
 node scripts/helioz-probes.mjs
 ```
 
-Kill the orchestrator mid-task: the next one continues. Forge a mark: caught. Stay silent for a day: work goes on, forks intact. Cut Telegram: reports queue up and arrive later. Hand the council a forbidden fork: it refuses. Send two executors at one file: the second never starts.
+Six probes hit the visible workflow: kill the orchestrator mid-task, forge a mark, stay silent for a day, cut Telegram, hand the council a forbidden fork, or send two executors at one file. Seven more attack the proof chain: a receipt for an older task revision, a marker without `external_sha`, a receipt without logs, a hand-written receipt, a changed log, a substituted check command, and one CLI assigned as both executor and verifier.
 
 The probes test me, not my claims about myself. A red probe means no "ready" status.
 
@@ -157,7 +157,7 @@ The probes test me, not my claims about myself. A red probe means no "ready" sta
 
 If Helioz turns out useful, star it: [github.com/zarubinvibe/helioz](https://github.com/zarubinvibe/helioz).
 
-Seconds for you, genuinely important for the project. And meet the family: [themis](https://github.com/zarubinvibe/themis), [mnemazine](https://github.com/zarubinvibe/mnemazine), [zeuz](https://github.com/zarubinvibe/zeuz), [athena](https://github.com/zarubinvibe/athena), [smltlk](https://github.com/zarubinvibe/smltlk).
+Seconds for you, genuinely important for the project. And meet the family: [themis](https://github.com/zarubinvibe/themis), [mnemazine](https://github.com/zarubinvibe/mnemazine), [zeuz](https://github.com/zarubinvibe/zeuz), [athena](https://github.com/zarubinvibe/athena).
 
 ## License
 
@@ -168,19 +168,15 @@ MIT. See [LICENSE](LICENSE).
 Русская версия: [README.ru.md](README.ru.md)
 
 <!-- pantheon-family:start -->
-## Pantheon family
+## Olympuz family
 
-Part of the [Pantheon project family](https://github.com/zarubinvibe?tab=repositories). Every public project links directly to its repository and source ZIP.
+This is one of the public [Olympuz projects](https://github.com/zarubinvibe/athena#olympuz-family). Each row opens the repository or downloads its source as a ZIP.
 
 | Type | Name | What it does | Source |
 |---|---|---|---|
 | project | Athena | Portable agent OS that restores a complete Claude and Codex setup on a new Mac. | [Repository](https://github.com/zarubinvibe/athena) · [ZIP](https://github.com/zarubinvibe/athena/archive/refs/heads/main.zip) |
-| project | Claude Code Setup OS | Bootstrap skill for a token-efficient Claude Code workspace and a local LLM wiki. | [Repository](https://github.com/zarubinvibe/claude-code-setup-os) · [ZIP](https://github.com/zarubinvibe/claude-code-setup-os/archive/refs/heads/main.zip) |
 | project | Helioz | 24/7 agent work conveyor with verified completion markers and goal-based overnight decisions. | [Repository](https://github.com/zarubinvibe/helioz) · [ZIP](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.zip) |
-| project | Humanizer | Agent skill that removes common AI writing patterns from English text. | [Repository](https://github.com/zarubinvibe/humanizer) · [ZIP](https://github.com/zarubinvibe/humanizer/archive/refs/heads/main.zip) |
-| project | Humanizer RU | Russian writing skill that detects and removes 58 common AI text patterns. | [Repository](https://github.com/zarubinvibe/humanizer-ru) · [ZIP](https://github.com/zarubinvibe/humanizer-ru/archive/refs/heads/main.zip) |
 | project | Mnemazine | Local-first memory system that turns raw inputs into verified reusable knowledge. | [Repository](https://github.com/zarubinvibe/mnemazine) · [ZIP](https://github.com/zarubinvibe/mnemazine/archive/refs/heads/main.zip) |
-| project | Smltlk | macOS menu bar app for keyboard-layout repair, offline dictation, and speech-to-prompt. | [Repository](https://github.com/zarubinvibe/smltlk) · [ZIP](https://github.com/zarubinvibe/smltlk/archive/refs/heads/main.zip) |
 | project | Themis | Multi-agent assistant for Russian litigation with local OCR and review by a five-jurist council. | [Repository](https://github.com/zarubinvibe/themis) · [ZIP](https://github.com/zarubinvibe/themis/archive/refs/heads/main.zip) |
 | project | Zeuz | Factory that turns an idea into a governed multi-agent workflow with gates, observability, and replay. | [Repository](https://github.com/zarubinvibe/zeuz) · [ZIP](https://github.com/zarubinvibe/zeuz/archive/refs/heads/main.zip) |
 <!-- pantheon-family:end -->

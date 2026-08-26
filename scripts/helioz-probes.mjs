@@ -13,6 +13,11 @@ import os from 'node:os'
 
 const SCRIPTS = path.dirname(fileURLToPath(import.meta.url))
 const HOME = process.env.HELIOZ_HOME || path.dirname(SCRIPTS)
+const ISOLATED_GIT_ENV = {
+  ...process.env,
+  GIT_CONFIG_GLOBAL: os.devNull,
+  GIT_CONFIG_SYSTEM: os.devNull,
+}
 const now = () => new Date().toISOString()
 const sha256 = s => createHash('sha256').update(s).digest('hex')
 const results = []
@@ -25,13 +30,13 @@ function mkHome() {
   const tmp = mkdtempSync(path.join(os.tmpdir(), 'helioz-probe-'))
   for (const d of ['queue/tasks', 'queue/dilemmas', '.helioz/state', 'docs', 'scripts', 'config']) mkdirSync(path.join(tmp, d), { recursive: true })
   for (const s of readdirSync(SCRIPTS)) if (s.endsWith('.mjs') || s.endsWith('.sh')) writeFileSync(path.join(tmp, 'scripts', s), readFileSync(path.join(SCRIPTS, s)))
-  execFileSync('git', ['-C', tmp, 'init', '-q'])
+  execFileSync('git', ['-C', tmp, 'init', '-q'], { env: ISOLATED_GIT_ENV })
   writeFileSync(path.join(tmp, 'seed.txt'), 'seed\n')
-  execFileSync('git', ['-C', tmp, 'add', '-A'])
-  execFileSync('git', ['-C', tmp, '-c', 'user.email=p@c', '-c', 'user.name=probe', 'commit', '-qm', 'seed'])
+  execFileSync('git', ['-C', tmp, 'add', '-A'], { env: ISOLATED_GIT_ENV })
+  execFileSync('git', ['-C', tmp, '-c', 'user.email=p@c', '-c', 'user.name=probe', 'commit', '-qm', 'seed'], { env: ISOLATED_GIT_ENV })
   writeFileSync(path.join(tmp, 'seed.txt'), 'seed\nwork\n')
-  execFileSync('git', ['-C', tmp, 'add', '-A'])
-  execFileSync('git', ['-C', tmp, '-c', 'user.email=p@c', '-c', 'user.name=probe', 'commit', '-qm', 'work'])
+  execFileSync('git', ['-C', tmp, 'add', '-A'], { env: ISOLATED_GIT_ENV })
+  execFileSync('git', ['-C', tmp, '-c', 'user.email=p@c', '-c', 'user.name=probe', 'commit', '-qm', 'work'], { env: ISOLATED_GIT_ENV })
   writeFileSync(path.join(tmp, 'config', 'helioz.json'), JSON.stringify({ quiet_hours: { start: '00:00', end: '23:59' }, council: { lenses: ['риск', 'цена отката', 'простота'], min_advisors: 3 }, probe_timeout_sec: 5, run_timeout_sec: 5 }))
   const stub = path.join(tmp, 'bin-adv')
   writeFileSync(stub, '#!/bin/sh\ncat >/dev/null 2>&1\necho "ВЫБОР: 1"; echo "ПОЧЕМУ: так."; echo "РИСК ОШИБКИ: нет."\n')
@@ -44,10 +49,10 @@ function mkHome() {
   return tmp
 }
 const task = (id, p, extra = '') => `---\nid: ${id}\npaths:\n  - ${p}\nexecutor: claude\nverifier: codex\ncheck_cmd: "true"\n${extra}---\n## Промт исполнителя\nx\n## Промт проверяющего\ny\n`
-const gate = (tmp, args) => spawnSync(process.execPath, [path.join(tmp, 'scripts', 'helioz-gate.mjs'), ...args], { env: { ...process.env, HELIOZ_HOME: tmp }, encoding: 'utf8' })
+const gate = (tmp, args) => spawnSync(process.execPath, [path.join(tmp, 'scripts', 'helioz-gate.mjs'), ...args], { env: { ...ISOLATED_GIT_ENV, HELIOZ_HOME: tmp }, encoding: 'utf8' })
 function receipt(tmp, id, executor = 'claude', verifier = 'codex') {
   const ex = path.join(tmp, 'scripts', 'helioz-exec.mjs')
-  const env = { ...process.env, HELIOZ_HOME: tmp }
+  const env = { ...ISOLATED_GIT_ENV, HELIOZ_HOME: tmp }
   const a = spawnSync(process.execPath, [ex, 'task', '--id', id, '--role', 'executor', '--cli', executor], { env, encoding: 'utf8' })
   const b = spawnSync(process.execPath, [ex, 'task', '--id', id, '--role', 'verifier', '--cli', verifier], { env, encoding: 'utf8' })
   if (a.status !== 0 || b.status !== 0) throw new Error(`receipt ${id}: helioz-exec failed ${a.status}/${b.status}`)

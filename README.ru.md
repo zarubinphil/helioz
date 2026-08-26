@@ -16,7 +16,7 @@
 
 Собрал меня Филипп Зарубин, юрист и отец двух дочек. Причина скучная: времени у него нет совсем. Ночь, суд, дети, а работа стоит, потому что везти её некому. Теперь везу я.
 
-Я из семьи: [Олимпуз](https://github.com/zarubinvibe/olympuz) - кокпит роя, [Зевс](https://github.com/zarubinvibe/zeuz) - фабрика, которая рождает такие системы, [Мнемозина](https://github.com/zarubinvibe/mnemazine) - память, [Фемида](https://github.com/zarubinvibe/themis) - юрпрактика, [Афина](https://github.com/zarubinvibe/athena) - агентная ОС, на которой всё это живёт. Мой удел здесь один: непрерывность.
+Я работаю рядом с [Зевсом](https://github.com/zarubinvibe/zeuz), фабрикой систем; [Мнемозиной](https://github.com/zarubinvibe/mnemazine), слоем памяти; [Фемидой](https://github.com/zarubinvibe/themis), юридическим процессом; и [Афиной](https://github.com/zarubinvibe/athena), агентной ОС. Мой удел здесь один: непрерывность.
 
 ## Зачем я нужен
 
@@ -30,7 +30,7 @@
 
 **Отметку «готово» пишет код.** Внутри отпечатки: коммиты до и после, хэш изменённых файлов, код возврата проверки. Подделать не выйдет. Отметку, написанную руками, обрезанную или скопированную с чужой задачи, я вижу и объявляю подделкой вслух.
 
-**Ночью тебя никто не будит.** Мелкие развилки решает совет: один советник смотрит на риск, другой на цену отката, третий на простоту. Каждый пишет своё, чужого не видя. Потом решение сверяется с твоей целью. Утром прочитаешь и одним сообщением переиграешь, если не согласен.
+**Ночью тебя никто не будит.** Мелкие развилки решает совет с четырьмя линзами: риск, цена отката, твои ограничения и простота. Решение возможно, только если ответили хотя бы трое. Каждый советник пишет своё, чужого не видя. Потом решение сверяется с твоей целью. Утром прочитаешь и одним сообщением переиграешь, если не согласен.
 
 **Три вещи я не решаю никогда.** Выход в прод, столкновение с чужой работой и развилку, где любой вариант дорого откатывать. Тут жду тебя. Но пока жду, беру другую работу: стоять я не умею.
 
@@ -114,7 +114,7 @@ bash scripts/helioz-start.sh
 | `scripts/helioz-exec.mjs` | честный зонд агента (настоящий прогон, а не проверка версии), ротация, запуск ролей |
 | `scripts/helioz-council.mjs` | ночной совет: линзы врозь, слепой свод, журнал; запретные случаи отклоняет |
 | `scripts/helioz-watchdog.sh` | пульс пропал, поднять новую сессию с хэндоффом |
-| `scripts/helioz-probes.mjs` | шесть враждебных проб; только они дают проекту статус «готов» |
+| `scripts/helioz-probes.mjs` | тринадцать враждебных проб; только они дают проекту статус «готов» |
 | `scripts/helioz-budget-reset.mjs` | сброс окна бюджета: отсчёт расхода с этой минуты, потолок не трогает |
 | `docs/CONTRACTS.md` | контракты состояния на диске: задачи, развилки, отметки, журнал |
 | `docs/BRAND.md` | дизайн-описание, инстанс Pantheon Design System |
@@ -139,13 +139,13 @@ bash scripts/helioz-start.sh
 
 ## Чем докажу, что не вру
 
-Шесть проб, одна команда, все обязаны быть зелёными:
+Тринадцать проб, одна команда, все обязаны быть зелёными:
 
 ```bash
 node scripts/helioz-probes.mjs
 ```
 
-Убить оркестратора посреди задачи: следующий продолжит. Подделать отметку: поймается. Промолчать сутки: работа идёт, развилки целы. Обрубить Telegram: отбивки копятся и доезжают. Дать совету запретную развилку: откажется решать. Пустить двоих на один файл: второй не стартует.
+Шесть проб бьют по видимой механике: убить оркестратора посреди задачи, подделать отметку, промолчать сутки, обрубить Telegram, дать совету запретную развилку или пустить двоих на один файл. Ещё семь проверяют цепочку доказательств: квитанцию от старой редакции задачи, отметку без `external_sha`, квитанцию без логов, рукописную квитанцию, подмену лога, чужую команду проверки и один CLI сразу в ролях исполнителя и проверяющего.
 
 Пробы проверяют меня самого, а не мои слова о себе. Проба красная, значит статуса «готов» нет.
 
@@ -157,7 +157,7 @@ node scripts/helioz-probes.mjs
 
 Если Гелиоз пригодился, поставь звезду: [github.com/zarubinvibe/helioz](https://github.com/zarubinvibe/helioz).
 
-Тебе несколько секунд, проекту правда важно. И загляни к родне: [themis](https://github.com/zarubinvibe/themis), [mnemazine](https://github.com/zarubinvibe/mnemazine), [zeuz](https://github.com/zarubinvibe/zeuz), [athena](https://github.com/zarubinvibe/athena), [smltlk](https://github.com/zarubinvibe/smltlk).
+Тебе несколько секунд, проекту правда важно. И загляни к родне: [themis](https://github.com/zarubinvibe/themis), [mnemazine](https://github.com/zarubinvibe/mnemazine), [zeuz](https://github.com/zarubinvibe/zeuz), [athena](https://github.com/zarubinvibe/athena).
 
 ## Лицензия
 
@@ -168,19 +168,15 @@ MIT. См. [LICENSE](LICENSE).
 English version: [README.md](README.md)
 
 <!-- pantheon-family:start -->
-## Семья Pantheon
+## Семья Olympuz
 
-Этот репозиторий входит в [семью проектов Pantheon](https://github.com/zarubinvibe?tab=repositories). Для каждого публичного проекта даны прямые ссылки на репозиторий и ZIP с исходниками.
+Это один из публичных [проектов семьи Olympuz](https://github.com/zarubinvibe/athena#olympuz-family). Из таблицы можно открыть репозиторий или сразу скачать исходники в ZIP.
 
 | Тип | Название | Что внутри | Скачать |
 |---|---|---|---|
 | проект | Athena | Переносимая агентная ОС: разворачивает рабочую среду Claude и Codex на новом Mac. | [Репозиторий](https://github.com/zarubinvibe/athena) · [ZIP](https://github.com/zarubinvibe/athena/archive/refs/heads/main.zip) |
-| проект | Claude Code Setup OS | Bootstrap-скилл для экономной среды Claude Code и локальной LLM-вики. | [Репозиторий](https://github.com/zarubinvibe/claude-code-setup-os) · [ZIP](https://github.com/zarubinvibe/claude-code-setup-os/archive/refs/heads/main.zip) |
 | проект | Helioz | Конвейер работы агентов 24/7 с проверяемыми отметками готовности и ночными решениями по цели владельца. | [Репозиторий](https://github.com/zarubinvibe/helioz) · [ZIP](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.zip) |
-| проект | Humanizer | Агентный скилл, который убирает типичные следы AI из английского текста. | [Репозиторий](https://github.com/zarubinvibe/humanizer) · [ZIP](https://github.com/zarubinvibe/humanizer/archive/refs/heads/main.zip) |
-| проект | Humanizer RU | Русский редакторский скилл: находит и убирает 58 типичных следов AI-текста. | [Репозиторий](https://github.com/zarubinvibe/humanizer-ru) · [ZIP](https://github.com/zarubinvibe/humanizer-ru/archive/refs/heads/main.zip) |
 | проект | Mnemazine | Локальная система памяти: превращает сырьё в проверенные знания для повторного использования. | [Репозиторий](https://github.com/zarubinvibe/mnemazine) · [ZIP](https://github.com/zarubinvibe/mnemazine/archive/refs/heads/main.zip) |
-| проект | Smltlk | Приложение для строки меню macOS: чинит раскладку, распознаёт речь офлайн и превращает голос в промпт. | [Репозиторий](https://github.com/zarubinvibe/smltlk) · [ZIP](https://github.com/zarubinvibe/smltlk/archive/refs/heads/main.zip) |
 | проект | Themis | Многоагентный помощник по российским судебным делам с локальным OCR и советом из пяти юристов. | [Репозиторий](https://github.com/zarubinvibe/themis) · [ZIP](https://github.com/zarubinvibe/themis/archive/refs/heads/main.zip) |
 | проект | Zeuz | Фабрика многоагентных workflow: собирает систему с правилами, гейтами, наблюдаемостью и replay. | [Репозиторий](https://github.com/zarubinvibe/zeuz) · [ZIP](https://github.com/zarubinvibe/zeuz/archive/refs/heads/main.zip) |
 <!-- pantheon-family:end -->

@@ -513,7 +513,13 @@ async function cmdSelftest() {
     }))
     writeFileSync(path.join(tmp, 'config', 'helioz.json'), JSON.stringify({ probe_timeout_sec: 5, run_timeout_sec: 5 }))
     const self = path.join(tmp, 'scripts', 'helioz-plan.mjs')
-    const run = args => spawnSync(process.execPath, [self, ...args], { env: { ...process.env, HELIOZ_HOME: tmp }, encoding: 'utf8' })
+    const env = {
+      ...process.env,
+      HELIOZ_HOME: tmp,
+      GIT_CONFIG_GLOBAL: os.devNull,
+      GIT_CONFIG_SYSTEM: os.devNull,
+    }
+    const run = args => spawnSync(process.execPath, [self, ...args], { env, encoding: 'utf8' })
 
     eq(run(['grill']).status, 2, 'без идеи допрос невозможен')
     eq(run(['grill', '--idea', 'починить сборку']).status, 0)
@@ -543,8 +549,8 @@ async function cmdSelftest() {
     ok(existsSync(path.join(tmp, 'docs', 'MASTER-PLAN.md')), 'мастер-план на диске')
     const t1 = readFileSync(path.join(tmp, 'queue', 'tasks', 'T1.task.md'), 'utf8')
     ok(t1.includes('check_cmd:') && t1.includes('## Промт исполнителя') && t1.includes('## Промт проверяющего'))
-    spawnSync('git', ['-C', tmp, 'init', '-q'])
-    const gate = spawnSync(process.execPath, [path.join(tmp, 'scripts', 'helioz-gate.mjs'), '--ready', '--json'], { env: { ...process.env, HELIOZ_HOME: tmp }, encoding: 'utf8' })
+    spawnSync('git', ['-C', tmp, 'init', '-q'], { env })
+    const gate = spawnSync(process.execPath, [path.join(tmp, 'scripts', 'helioz-gate.mjs'), '--ready', '--json'], { env, encoding: 'utf8' })
     const ready = JSON.parse(gate.stdout || '{}')
     eq((ready.invalid || []).length, 0, 'гейт принял все рождённые задачи')
     ok((ready.ready || []).some(r => r.task === 'T1'), 'T1 готова к запуску')
