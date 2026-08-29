@@ -132,7 +132,7 @@ bash install.sh en
 bash scripts/helioz-start.sh
 ```
 
-Нет Git? Скачайте [ZIP](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.zip), распакуйте и запустите внутри тот же `bash install.sh en`. Привыкли к архиву из терминала? Возьмите [tar.gz](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.tar.gz).
+Нет Git? Скачайте [ZIP](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.zip), распакуйте и запустите внутри тот же `bash install.sh en`. Привыкли к архиву из терминала? Возьмите [tar.gz](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.tar.gz). Первый раз? Откройте проект в Claude Code и запустите `/helioz-setup`: установка пройдёт разговором, по одному вопросу, и ничего не поставится без вашего «да».
 
 Делаете это впервые? [Онбординг](docs/ONBOARDING.ru.md) проводит весь первый запуск по шагам и говорит, что видно после каждой команды.
 

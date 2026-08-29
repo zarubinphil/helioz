@@ -132,7 +132,7 @@ bash install.sh en
 bash scripts/helioz-start.sh
 ```
 
-No Git? Download [the ZIP](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.zip), unpack it, and run the same `bash install.sh en` inside. Prefer an archive in the terminal? Take [the tarball](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.tar.gz).
+No Git? Download [the ZIP](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.zip), unpack it, and run the same `bash install.sh en` inside. Prefer an archive in the terminal? Take [the tarball](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.tar.gz). First time here? Open the project in Claude Code and run `/helioz-setup`: the install goes as a conversation, one question at a time, and nothing is installed without your yes.
 
 Never done this before? [The onboarding](docs/ONBOARDING.md) walks the whole first run step by step and says what you see after every command.
 

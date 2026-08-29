@@ -132,7 +132,7 @@ bash install.sh en
 bash scripts/helioz-start.sh
 ```
 
-没有 Git？下载 [ZIP](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.zip) 解压后在里面执行同样的 `bash install.sh en`。习惯在终端里用压缩包？拿 [tar.gz](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.tar.gz)。
+没有 Git？下载 [ZIP](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.zip) 解压后在里面执行同样的 `bash install.sh en`。习惯在终端里用压缩包？拿 [tar.gz](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.tar.gz)。 第一次用？在 Claude Code 里打开项目并运行 `/helioz-setup`：安装以对话的方式进行，一次问一个问题，没有你的同意不会装任何东西。
 
 第一次做这件事？[上手引导](docs/ONBOARDING.zh.md) 会一步一步带你走完第一次运行，并写清楚每条命令之后你会看到什么。
 
