@@ -5,7 +5,7 @@
 Helioz is a local-first agent work conveyor that keeps long tasks moving across sessions, agents, checks, and handoffs.
 
 <p align="center">
-  <img src="docs/assets/pantheon/hero.png" alt="Helioz: a white marble statue of Helios with a golden sun-disc beside the classical column, warm ivory light, blue and gold threads assembling a conveyor of glass cards" width="100%">
+  <img src="../docs/assets/pantheon/hero.png" alt="Helioz: a white marble statue of Helios with a golden sun-disc beside the classical column, warm ivory light, blue and gold threads assembling a conveyor of glass cards" width="100%">
 </p>
 
 ## Who I am
@@ -82,7 +82,7 @@ context runs out → handoff → the watchdog starts a fresh session from disk. 
 ```
 
 <p align="center">
-  <img src="docs/assets/helioz-flow.png" alt="The tact: glass cards Queue, Gate, Executor, Blind Verifier, Integrity Marker, Telegram Report, Night Council, Ledger joined by blue arrows; a gold thread loops from the council back to the queue" width="100%">
+  <img src="../docs/assets/helioz-flow.png" alt="The tact: glass cards Queue, Gate, Executor, Blind Verifier, Integrity Marker, Telegram Report, Night Council, Ledger joined by blue arrows; a gold thread loops from the council back to the queue" width="100%">
 </p>
 
 You can also drop a task by hand into `queue/tasks/`. One requirement: a check command. No command, no task. "Done" without proof is not done.
@@ -129,7 +129,7 @@ bash scripts/helioz-start.sh
 
 ## Documentation
 
-Start with this README, then read [state contracts](docs/CONTRACTS.md), [the master plan](docs/MASTER-PLAN.md), and [the orchestrator prompt](ORCHESTRATOR.md).
+Start with this README, then read [state contracts](../docs/CONTRACTS.md), [the master plan](../docs/MASTER-PLAN.md), and [the orchestrator prompt](../ORCHESTRATOR.md).
 
 ## Security And Privacy
 
@@ -152,7 +152,7 @@ Six probes hit the visible workflow: kill the orchestrator mid-task, forge a mar
 The probes test me, not my claims about myself. A red probe means no "ready" status.
 
 <p align="center">
-  <img src="docs/assets/pantheon/emblem.png" alt="Helioz emblem: a marble statue with a golden sun-disc, a chariot wheel and the classical column" width="420">
+  <img src="../docs/assets/pantheon/emblem.png" alt="Helioz emblem: a marble statue with a golden sun-disc, a chariot wheel and the classical column" width="420">
 </p>
 
 ## A star
@@ -163,10 +163,10 @@ Seconds for you, genuinely important for the project. And meet the family: [them
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+MIT. See [LICENSE](../LICENSE).
 
 ---
 
-Русская версия: [README.ru.md](README.ru.md)
+Русская версия: [README.ru.md](../README.ru.md)
 
 

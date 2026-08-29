@@ -5,7 +5,7 @@
 Гелиоз - локальный конвейер агентной работы: держит длинные задачи между сессиями, агентами, проверками и хэнд-оффами.
 
 <p align="center">
-  <img src="docs/assets/pantheon/hero.png" alt="Гелиоз: белая мраморная статуя Гелиоса с золотым солнечным диском у классической колонны, тёплый ivory-свет, голубые и золотые нити собирают конвейер стеклянных карт" width="100%">
+  <img src="../docs/assets/pantheon/hero.png" alt="Гелиоз: белая мраморная статуя Гелиоса с золотым солнечным диском у классической колонны, тёплый ivory-свет, голубые и золотые нити собирают конвейер стеклянных карт" width="100%">
 </p>
 
 ## Кто я
@@ -82,7 +82,7 @@ node scripts/helioz-plan.mjs grill --idea "переписать биллинг �
 ```
 
 <p align="center">
-  <img src="docs/assets/helioz-flow.png" alt="Схема такта: стеклянные карты Queue, Gate, Executor, Blind Verifier, Integrity Marker, Telegram Report, Night Council, Ledger, соединённые голубыми стрелками; золотая нить возвращается от совета к очереди" width="100%">
+  <img src="../docs/assets/helioz-flow.png" alt="Схема такта: стеклянные карты Queue, Gate, Executor, Blind Verifier, Integrity Marker, Telegram Report, Night Council, Ledger, соединённые голубыми стрелками; золотая нить возвращается от совета к очереди" width="100%">
 </p>
 
 Задачу можно положить и руками, файлом в `queue/tasks/`. Требование одно: команда проверки. Нет команды, нет задачи. «Готово» без доказательства это не готово.
@@ -129,7 +129,7 @@ bash scripts/helioz-start.sh
 
 ## Документация
 
-Начни с этого README, потом смотри [контракты состояния](docs/CONTRACTS.md), [мастер-план](docs/MASTER-PLAN.md) и [промт оркестратора](ORCHESTRATOR.md).
+Начни с этого README, потом смотри [контракты состояния](../docs/CONTRACTS.md), [мастер-план](../docs/MASTER-PLAN.md) и [промт оркестратора](../ORCHESTRATOR.md).
 
 ## Безопасность и приватность
 
@@ -152,7 +152,7 @@ node scripts/helioz-probes.mjs
 Пробы проверяют меня самого, а не мои слова о себе. Проба красная, значит статуса «готов» нет.
 
 <p align="center">
-  <img src="docs/assets/pantheon/emblem.png" alt="Эмблема Гелиоза: мраморная статуя с золотым солнечным диском, колесо колесницы и классическая колонна" width="420">
+  <img src="../docs/assets/pantheon/emblem.png" alt="Эмблема Гелиоза: мраморная статуя с золотым солнечным диском, колесо колесницы и классическая колонна" width="420">
 </p>
 
 ## Звезда
@@ -163,10 +163,10 @@ node scripts/helioz-probes.mjs
 
 ## Лицензия
 
-MIT. См. [LICENSE](LICENSE).
+MIT. См. [LICENSE](../LICENSE).
 
 ---
 
-English version: [README.md](README.md)
+English version: [README.md](../README.md)
 
 
