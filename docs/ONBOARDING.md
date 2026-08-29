@@ -69,6 +69,10 @@ You need a Mac or a Linux machine, Node.js 20 or newer, git, and at least one ag
 
     You see thirteen adversarial probes: a forged mark, a receipt for an older revision, a rewritten log, a swapped check command, two executors sent at one file. All of them must be green. A red probe means the project has no "ready" status.
 
+## Keeping it current
+
+Later, when a new version is published, do not clone it again: open the project in Claude Code and run `/helioz-update`. It shows what changed first, pulls only fast-forward changes, leaves your settings and your data alone, and re-checks itself afterwards.
+
 ## If this helped
 
 If Helioz moved your work while you slept, give it a star: [https://github.com/zarubinvibe/helioz](https://github.com/zarubinvibe/helioz). It takes a second, and it decides whether other people ever find the project.
