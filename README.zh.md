@@ -83,11 +83,15 @@ Helioz 是一条智能体工作的传送带。你只说一次要做什么。它�
 
 你先说一句想做什么。Helioz 一次只问一个问题，并且附上自己的建议，所以同意只要一个词。回答可以在编辑器里，也可以在终端或 Telegram 里。
 
+<p align="center"><img src="docs/assets/pantheon/workflow/01-interview.png" alt="Pantheon 宽幅大理石场景：Helioz 工作流程第 1 步，先把目标说一次" width="100%"></p>
+
 **你会得到：** `queue/GOAL.md` 里的一个目标，之后每个决定都要对着它核对。
 
 ### 第 2 步：两个智能体各写各的计划
 
 两个智能体互相看不见，各写一份计划。第三个在盲态下把它们合并。一个聪明的智能体偏爱自己的错误，两个就会争。
+
+<p align="center"><img src="docs/assets/pantheon/workflow/02-plan.png" alt="Pantheon 宽幅大理石场景：Helioz 工作流程第 2 步，两个智能体各写各的计划" width="100%"></p>
 
 **你会得到：** 一份总计划和 `queue/tasks/` 里的小任务，每个都带自己的检查命令。
 
@@ -95,11 +99,15 @@ Helioz 是一条智能体工作的传送带。你只说一次要做什么。它�
 
 闸门只放行依赖已经关闭、预算窗口还有余量的任务。两个智能体不可能拿到同一个文件，代码会拒绝第二个。
 
+<p align="center"><img src="docs/assets/pantheon/workflow/03-gate.png" alt="Pantheon 宽幅大理石场景：Helioz 工作流程第 3 步，闸门挑出下一个任务" width="100%"></p>
+
 **你会得到：** 一个正在执行的任务，文件集合已锁定，预算实时计数。
 
 ### 第 4 步：执行者干活
 
 交活之前，Helioz 会真跑一遍每个智能体命令行，而不是相信版本号。任务交给答应了的那一个。
+
+<p align="center"><img src="docs/assets/pantheon/workflow/04-execute.png" alt="Pantheon 宽幅大理石场景：Helioz 工作流程第 4 步，执行者干活" width="100%"></p>
 
 **你会得到：** 被改动的工作目录，以及智能体真正执行过什么的日志。
 
@@ -107,17 +115,23 @@ Helioz 是一条智能体工作的传送带。你只说一次要做什么。它�
 
 验证者看不到执行者的报告。它看文件、跑检查命令，再加一个对抗性探针。这里没有人给自己判分。
 
+<p align="center"><img src="docs/assets/pantheon/workflow/05-verify.png" alt="Pantheon 宽幅大理石场景：Helioz 工作流程第 5 步，盲检的验证者来核" width="100%"></p>
+
 **你会得到：** 一个有命令输出撑着的结论，或者一个被打回重做的任务。
 
 ### 第 6 步：代码写下完成标记
 
 标记由闸门写，不由智能体写。十三个对抗性探针专门来伪造它：复制的回执、缺少外部提交的标记、被改过的日志、被换掉的检查命令。
 
+<p align="center"><img src="docs/assets/pantheon/workflow/06-mark.png" alt="Pantheon 宽幅大理石场景：Helioz 工作流程第 6 步，代码写下完成标记" width="100%"></p>
+
 **你会得到：** 一个用证据关闭的任务，经得起事后翻查。
 
 ### 第 7 步：汇报、议事会、交接
 
 进展会发到 Telegram，也写到磁盘。小岔路交给四个视角的议事会：它们分开写，结论再对着你的目标核对。生产动作、和别人工作的冲突、代价大的岔路始终等你。
+
+<p align="center"><img src="docs/assets/pantheon/workflow/07-handoff.png" alt="Pantheon 宽幅大理石场景：Helioz 工作流程第 7 步，汇报、议事会、交接" width="100%"></p>
 
 **你会得到：** 一份交接文件，看门狗据此拉起下一个会话，上下文不丢。
 

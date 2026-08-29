@@ -1,0 +1,41 @@
+You generate a coherent series of wide Pantheon workflow scenes with your built-in image_gen tool at the highest quality. Generate them one by one, in order.
+
+Pass these references to EVERY generation:
+1. $HOME/.agents/skills/public-repo-release-gate/assets/pantheon-style-anchor.png
+2. $HOME/.agents/skills/public-repo-release-gate/assets/pantheon-column.png
+3. docs/assets/pantheon/hero.png
+
+Hard constraints for every frame:
+- Same world, same figure, same camera height and lens as the hero. The classical white marble column appears in every frame.
+- Warm ivory background, white marble, soft daylight from upper left, long gentle shadows, generous empty space.
+- Sky blue means public flow and movement. Muted gold means private or valuable material.
+- Wide 16:9, at least 1600 px on the long side.
+- Absolutely no letters, digits, logos, watermarks, UI chrome or pseudo-text anywhere in the image. Documents and cards stay blank.
+- No dark background, no neon, no purple gradient, no cinematic smoke, no stock-photo look.
+- Each frame shows its own step. Do not repeat the hero composition.
+
+After each image, save it to the exact path given for that scene, then print the path and the pixel size. Do not modify any other file. Do not commit.
+
+Project: Helioz, the work conveyor. Figure: Helios in white marble with a golden sun crown. Recurring props: glass cards moving along a slender marble conveyor, blue threads for flow, a gold thread for a decision taken at night.
+
+Scene 1 already exists at docs/assets/pantheon/workflow/01-interview.png. Do not regenerate it; match its light and camera.
+
+Generate these six scenes:
+
+docs/assets/pantheon/workflow/02-plan.png
+Two identical marble writing desks stand apart, each with its own blank glass tablet, a low marble screen between them so neither sees the other. A third tablet in front merges the two into one ordered stack of small blank cards. Helios watches from beside the column.
+
+docs/assets/pantheon/workflow/03-gate.png
+A narrow marble gateway at the middle of the conveyor. One glass card passes through, the next waits behind a thin blue barrier. A small gold weight hangs above the gate as a budget counter. Helios stands at the gate with one hand raised.
+
+docs/assets/pantheon/workflow/04-execute.png
+A working bay beside the conveyor: one glass card lies open on a marble bench, thin blue threads reshaping it. Two other cards wait, locked under small gold clasps so nobody else can touch them. Helios is turned away, walking toward the next bay.
+
+docs/assets/pantheon/workflow/05-verify.png
+A second bay, deliberately separated by a solid marble wall from the first. A blindfolded marble figure examines the changed card with a magnifier of clear glass; the executor's report card lies face down and unread beside it. Blue light comes only from the card itself.
+
+docs/assets/pantheon/workflow/06-mark.png
+A marble press stamps a small gold seal onto a finished glass card. Inside the seal three thin engraved rings stand for the commit pair, the file hash and the exit code, without any text. A rejected forged copy of the card lies broken on the floor.
+
+docs/assets/pantheon/workflow/07-handoff.png
+Dawn light on the horizon. Helios hands a single glass card to a new identical Helios stepping in from the right, while a small round council table with four empty marble seats and one gold thread leading back to the conveyor stands behind them.

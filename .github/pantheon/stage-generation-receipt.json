@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "kind": "pantheon-generation",
+  "selection_mode": "managed-frontier",
+  "runtime": "codex",
+  "tool": "image_gen",
+  "route_id": "codex:image_gen:managed-frontier",
+  "model": {
+    "id": "provider-managed",
+    "revision": "provider-managed",
+    "tier": "frontier"
+  },
+  "quality": "highest",
+  "generation_id": "pantheon-stage-series-helioz-2026-08-29",
+  "generated_at": "2026-08-29T18:09:56Z",
+  "capability_snapshot": {
+    "checked_at": "2026-08-29T18:09:56Z",
+    "routes": [
+      {
+        "id": "codex:image_gen:managed-frontier",
+        "rank": 1,
+        "available": true,
+        "tier": "frontier",
+        "quality": "highest",
+        "model": {
+          "id": "provider-managed",
+          "revision": "provider-managed",
+          "tier": "frontier"
+        }
+      }
+    ]
+  },
+  "prompt": {
+    "path": ".github/pantheon/stage-prompt.txt",
+    "sha256": "54414946201af98b326b0add9c6ac1cabc330cb320d2814ec55e1af00789cb82"
+  },
+  "references": [
+    {
+      "role": "style-anchor",
+      "sha256": "ce524f9d22cb0092cb17aa280832e1b2ab2a77a0e01602065ec502232a3bb2d2"
+    },
+    {
+      "role": "column-reference",
+      "sha256": "9d32edd56ac55c4dd6d0425a28a2ac35035e9ab09073fc8ce0c1414b2edfb1bd"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "codex-managed-stage-series",
+      "route_id": "codex:image_gen:managed-frontier",
+      "generation_id": "pantheon-stage-series-helioz-2026-08-29",
+      "prompt_sha256": "54414946201af98b326b0add9c6ac1cabc330cb320d2814ec55e1af00789cb82",
+      "reference_sha256": [
+        "ce524f9d22cb0092cb17aa280832e1b2ab2a77a0e01602065ec502232a3bb2d2",
+        "9d32edd56ac55c4dd6d0425a28a2ac35035e9ab09073fc8ce0c1414b2edfb1bd"
+      ],
+      "outputs": [
+        {
+          "role": "stage-01-interview",
+          "source_sha256": "c6d4fb08509b784a164e68c08d7201751f52d1ec3824efa9e92d5542d3e29888",
+          "published_sha256": "c6d4fb08509b784a164e68c08d7201751f52d1ec3824efa9e92d5542d3e29888"
+        },
+        {
+          "role": "stage-02-plan",
+          "source_sha256": "5075ecafaa0fa4bcb879d36d6e27c5804fa14b962525205d7c19a494db028363",
+          "published_sha256": "5075ecafaa0fa4bcb879d36d6e27c5804fa14b962525205d7c19a494db028363"
+        },
+        {
+          "role": "stage-03-gate",
+          "source_sha256": "06ad5428d1fdda1a5ab81e1123f29c7e26304ce74fd001748c4e70b80caa3cd3",
+          "published_sha256": "06ad5428d1fdda1a5ab81e1123f29c7e26304ce74fd001748c4e70b80caa3cd3"
+        },
+        {
+          "role": "stage-04-execute",
+          "source_sha256": "ce0feb018e64eee387b14194b187223a790ca8d208ec24fb3acabe37c39d49a4",
+          "published_sha256": "ce0feb018e64eee387b14194b187223a790ca8d208ec24fb3acabe37c39d49a4"
+        },
+        {
+          "role": "stage-05-verify",
+          "source_sha256": "3656149e3b820a42f21319ed8b2d295bdf3e70dd5d6b65d0e745af055a72a335",
+          "published_sha256": "3656149e3b820a42f21319ed8b2d295bdf3e70dd5d6b65d0e745af055a72a335"
+        },
+        {
+          "role": "stage-06-mark",
+          "source_sha256": "345bb0dd3fb418d7d5328b793d553957893c75595d71f998347aabf6f47aba9d",
+          "published_sha256": "345bb0dd3fb418d7d5328b793d553957893c75595d71f998347aabf6f47aba9d"
+        },
+        {
+          "role": "stage-07-handoff",
+          "source_sha256": "79ee371d06d3af5088ca1f2e116501e4e47aeec01d1cebaaaa3714462c2af45a",
+          "published_sha256": "79ee371d06d3af5088ca1f2e116501e4e47aeec01d1cebaaaa3714462c2af45a"
+        }
+      ]
+    }
+  ],
+  "winner_id": "codex-managed-stage-series"
+}

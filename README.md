@@ -83,11 +83,15 @@ One tact runs in a loop. Each step leaves a file on disk, so a killed session co
 
 You start with one sentence of intent. Helioz asks one question at a time and attaches its own recommendation, so agreeing takes a word. Answer in the editor, in a terminal, or in Telegram.
 
+<p align="center"><img src="docs/assets/pantheon/workflow/01-interview.png" alt="Helioz workflow stage 1: Say the goal once, drawn as a wide Pantheon marble scene" width="100%"></p>
+
 **You get:** a goal in `queue/GOAL.md` that every later decision is checked against.
 
 ### Step 2: Two agents plan blind
 
 Two agents write plans without seeing each other. A third merges them blind. One clever agent is fond of its own mistakes; two of them argue.
+
+<p align="center"><img src="docs/assets/pantheon/workflow/02-plan.png" alt="Helioz workflow stage 2: Two agents plan blind, drawn as a wide Pantheon marble scene" width="100%"></p>
 
 **You get:** a master plan plus small tasks in `queue/tasks/`, each with a check command.
 
@@ -95,11 +99,15 @@ Two agents write plans without seeing each other. A third merges them blind. One
 
 The gate takes only a task whose dependencies are closed and whose budget window still has room. Two agents can never hold the same file, because the code refuses the second one.
 
+<p align="center"><img src="docs/assets/pantheon/workflow/03-gate.png" alt="Helioz workflow stage 3: The gate picks the next task, drawn as a wide Pantheon marble scene" width="100%"></p>
+
 **You get:** one running task with a locked file set and a live budget count.
 
 ### Step 4: An executor does the work
 
 Before handing over work, Helioz runs a real probe of each agent CLI instead of trusting a version string. The task goes to the agent that answered.
+
+<p align="center"><img src="docs/assets/pantheon/workflow/04-execute.png" alt="Helioz workflow stage 4: An executor does the work, drawn as a wide Pantheon marble scene" width="100%"></p>
 
 **You get:** a changed working tree and a log of what the agent actually ran.
 
@@ -107,17 +115,23 @@ Before handing over work, Helioz runs a real probe of each agent CLI instead of 
 
 The verifier never sees the executor's report. It looks at the files, runs the check command, and adds an adversarial probe. Nobody grades their own homework.
 
+<p align="center"><img src="docs/assets/pantheon/workflow/05-verify.png" alt="Helioz workflow stage 5: A blind verifier checks it, drawn as a wide Pantheon marble scene" width="100%"></p>
+
 **You get:** a verdict backed by command output, or a task sent back for rework.
 
 ### Step 6: Code writes the finish mark
 
 The mark is written by the gate, not by the agent. Thirteen adversarial probes try to forge it: a copied receipt, a mark without the external commit, a rewritten log, a swapped check command.
 
+<p align="center"><img src="docs/assets/pantheon/workflow/06-mark.png" alt="Helioz workflow stage 6: Code writes the finish mark, drawn as a wide Pantheon marble scene" width="100%"></p>
+
 **You get:** a task closed with evidence that survives an audit.
 
 ### Step 7: Report, council, handoff
 
 Progress goes to Telegram and to disk. A small fork goes to a council of four lenses that write apart and are checked against your goal. Production actions, clashes with someone else's work, and expensive forks always wait for you.
+
+<p align="center"><img src="docs/assets/pantheon/workflow/07-handoff.png" alt="Helioz workflow stage 7: Report, council, handoff, drawn as a wide Pantheon marble scene" width="100%"></p>
 
 **You get:** a handoff file, so the watchdog starts the next session without losing context.
 
