@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // ИСПОЛНИТЕЛЬНЫЙ ПРИБОР - зонд CLI настоящим прогоном, ротация без простоя, запуск ролей.
-// Уроки П26: зонд «provider list» лжёт (зелёный при мёртвом вызове) - зондируем НАСТОЯЩИМ прогоном.
-// Контракт C: исполнитель и проверяющий - разные CLI; проверяющий слеп к отчёту исполнителя
-// (получает ТОЛЬКО свой промт из задачи - отчёт исполнителя сюда физически не передаётся).
+// Уроки П26: зонд «provider list» лжет (зеленый при мертвом вызове) - зондируем НАСТОЯЩИМ прогоном.
+// Контракт C: исполнитель и проверяющий - разные CLI; проверяющий слеп к отчету исполнителя
+// (получает ТОЛЬКО свой промт из задачи - отчет исполнителя сюда физически не передается).
 //
 //   probe [--cli X | --all] [--force]   живой прогон «скажи одно слово: жив» → cli-health.json
 //   pick --role execute|verify|advise [--exclude a,b] [--prefer X]   выбор живого CLI ротацией
@@ -79,7 +79,7 @@ function invokeCli(name, prompt, { write = false, timeoutSec } = {}) {
   })
   const out = (r.stdout || '').trim()
   return {
-    ok: r.status === 0 && out.length > 0, // пустой ответ = мёртв, даже при коде 0 (fail-closed)
+    ok: r.status === 0 && out.length > 0, // пустой ответ = мертв, даже при коде 0 (fail-closed)
     code: r.status ?? 1, stdout: out, stderr: (r.stderr || '').slice(0, 4000),
     ms: Date.now() - t0, timed_out: Boolean(r.error && r.error.code === 'ETIMEDOUT'),
   }
@@ -88,12 +88,12 @@ function invokeCli(name, prompt, { write = false, timeoutSec } = {}) {
 // --- зонд настоящим прогоном ----------------------------------------------------------------------
 function readHealth() { try { return JSON.parse(readFileSync(HEALTH, 'utf8')) } catch { return {} } }
 function probeOne(name) {
-  const r = invokeCli(name, 'Ответь ровно одним словом без чего-либо ещё: жив', { write: false, timeoutSec: CFG.probe_timeout_sec || 90 })
+  const r = invokeCli(name, 'Ответь ровно одним словом без чего-либо еще: жив', { write: false, timeoutSec: CFG.probe_timeout_sec || 90 })
   const h = readHealth()
   h[name] = { alive: r.ok, at: now(), ms: r.ms, note: r.ok ? null : (r.timed_out ? 'timeout' : `code ${r.code}${r.stdout ? '' : ', пустой ответ'}`) }
   mkdirSync(STATE, { recursive: true })
   writeFileSync(HEALTH, JSON.stringify(h, null, 2) + '\n')
-  console.log(`${name}: ${r.ok ? 'жив' : 'МЁРТВ'} (${r.ms}ms${h[name].note ? ', ' + h[name].note : ''})`)
+  console.log(`${name}: ${r.ok ? 'жив' : 'МЕРТВ'} (${r.ms}ms${h[name].note ? ', ' + h[name].note : ''})`)
   return r.ok
 }
 function cmdProbe(cli, all) {
@@ -104,7 +104,7 @@ function cmdProbe(cli, all) {
   return alive > 0 ? 0 : 2 // все мертвы → fail-closed, оркестратору STOP+отбивка
 }
 
-// --- ротация: квота умерла → следующий; восстановился → вернулся; простой запрещён ---------------
+// --- ротация: квота умерла → следующий; восстановился → вернулся; простой запрещен ---------------
 function cmdPick(role, excludeCsv, prefer) {
   const exclude = new Set((excludeCsv || '').split(',').map(s => s.trim()).filter(Boolean))
   const roleKey = { execute: 'execute', executor: 'execute', verify: 'verify', verifier: 'verify', advise: 'advise', synthesize: 'synthesize' }[role]
@@ -154,7 +154,7 @@ function cmdTask(id, role, forcedCli) {
     console.error(`ОТКАЗ: проверяющий ${cli} совпал с исполнителем - генератор не судит себя`); return 2
   }
   const header = `Рабочий каталог: ${HOME}. Задача ${id}, роль: ${isExec ? 'исполнитель' : 'проверяющий'}.\n` +
-    (isExec ? '' : 'Ты проверяешь ТОЛЬКО по диску и командам - никаких отчётов исполнителя не существует.\n')
+    (isExec ? '' : 'Ты проверяешь ТОЛЬКО по диску и командам - никаких отчетов исполнителя не существует.\n')
   const r = invokeCli(cli, header + '\n' + prompt, { write: isExec })
   mkdirSync(path.join(STATE, 'logs'), { recursive: true })
   const log = path.join(STATE, 'logs', `${id}-${role}-${cli}.log`)
@@ -209,18 +209,18 @@ async function cmdSelftest() {
     const self = fileURLToPath(import.meta.url)
     const run = (args) => spawnSync(process.execPath, [self, ...args], { env: { ...process.env, HELIOZ_HOME: tmp }, encoding: 'utf8' })
 
-    // 1. Зонд: живой зелёный, сломанный вызов КРАСНЫЙ (не «provider list зелёный»), пустой ответ КРАСНЫЙ.
+    // 1. Зонд: живой зеленый, сломанный вызов КРАСНЫЙ (не «provider list зеленый»), пустой ответ КРАСНЫЙ.
     eq(run(['probe', '--cli', 'claude']).status, 0)
     const rb = run(['probe', '--cli', 'codex'])
     eq(rb.status, 2, 'сломанный invoke обязан давать красный зонд')
-    ok(rb.stdout.includes('МЁРТВ'))
+    ok(rb.stdout.includes('МЕРТВ'))
     clis.codex.invoke_read = [empty]; writeFileSync(path.join(tmp, 'config', 'clis.json'), JSON.stringify(clis))
-    ok(run(['probe', '--cli', 'codex', '--force']).stdout.includes('МЁРТВ'), 'пустой ответ при коде 0 = мёртв')
+    ok(run(['probe', '--cli', 'codex', '--force']).stdout.includes('МЕРТВ'), 'пустой ответ при коде 0 = мертв')
     clis.codex.invoke_read = [broken, 'exec']; writeFileSync(path.join(tmp, 'config', 'clis.json'), JSON.stringify(clis))
 
-    // 2. Ротация: предпочтённый мёртв → берём следующего живого. Все мертвы → 2.
+    // 2. Ротация: предпочтенный мертв → берем следующего живого. Все мертвы → 2.
     const p1 = run(['pick', '--role', 'execute', '--prefer', 'codex'])
-    eq(p1.status, 0); eq(p1.stdout.trim().split('\n').pop(), 'claude', 'мёртвый codex заменён живым claude')
+    eq(p1.status, 0); eq(p1.stdout.trim().split('\n').pop(), 'claude', 'мертвый codex заменен живым claude')
     const p2 = run(['pick', '--role', 'execute', '--exclude', 'claude,codex'])
     eq(p2.status, 2, 'нет живых для роли - fail-closed (kimi не execute)')
 

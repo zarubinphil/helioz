@@ -114,7 +114,7 @@ async function cmdFlushLocked() {
 }
 
 async function cmdSend(text, quiet) {
-  if (!text || !text.trim()) { console.error('пустая отбивка запрещена - каждое сообщение несёт данные'); return 2 }
+  if (!text || !text.trim()) { console.error('пустая отбивка запрещена - каждое сообщение несет данные'); return 2 }
   enqueue({ text, quiet: quiet || isQuietHours() })
   return cmdFlush()
 }
@@ -131,7 +131,7 @@ async function cmdAsk(id) {
   if (!d) { console.error(`развилка ${id} не найдена`); return 2 }
   const lines = [`❓ Развилка ${d.id} [${d.kind}]${d.task ? ' · задача ' + d.task : ''}`, d.question, '']
   d.options.forEach((o, i) => lines.push(`${i + 1}. ${o}${i === d.recommend ? '  ← рекомендую' : ''}`))
-  lines.push('', d.council ? 'Совет уже решил ночью - ответ переиграет его решение.' : 'Кнопкой или текстом: «' + d.id + ' номер». Конвейер не ждёт - работает дальше.')
+  lines.push('', d.council ? 'Совет уже решил ночью - ответ переиграет его решение.' : 'Кнопкой или текстом: «' + d.id + ' номер». Конвейер не ждет - работает дальше.')
   const idp = d.id.slice(0, 8)
   const buttons = [d.options.map((_, i) => ({ text: String(i + 1), callback_data: `d:${idp}:${i}` }))]
   enqueue({ text: lines.join('\n'), quiet: isQuietHours(), buttons })
@@ -180,7 +180,7 @@ async function cmdPollLocked(timeoutSec) {
   for (const u of r.result) {
     offset = Math.max(offset, u.update_id + 1)
     // poison-update не смеет заблокировать канал (ревью kimi): ошибка одного update логируется,
-    // offset всё равно продвигается - «стоп» доедет следующим сообщением
+    // offset все равно продвигается - «стоп» доедет следующим сообщением
     try {
       await handleUpdate(u)
     } catch (e) { console.error(`update ${u.update_id}: ${redact(e.message || e, tgc.token)}`) }
@@ -210,7 +210,7 @@ async function cmdPollLocked(timeoutSec) {
     if (lower === 'стоп' || lower === 'stop') {
       writeFileSync(path.join(STATE, 'STOP'), now())
       events.push({ kind: 'stop' })
-      enqueue({ text: '🛑 СТОП принят. Всё замораживается; состояние в приборе, ничего не потеряно. Возобновить: «пуск».', quiet: false })
+      enqueue({ text: '🛑 СТОП принят. Все замораживается; состояние в приборе, ничего не потеряно. Возобновить: «пуск».', quiet: false })
       return
     }
     if (lower === 'пуск' || lower === 'go') {
@@ -229,7 +229,7 @@ async function cmdPollLocked(timeoutSec) {
       enqueue({ text: reply, quiet: isQuietHours() })
       return
     }
-    // Идёт допрос и вопрос открыт - свободный текст владельца это ОТВЕТ на него.
+    // Идет допрос и вопрос открыт - свободный текст владельца это ОТВЕТ на него.
     // Так конвейер начинается прямо с телефона: владелец отвечает по одному, прибор пишет и спрашивает дальше.
     const gs = path.join(HOME, 'queue', 'GRILL-STATE.json')
     if (existsSync(gs)) {
@@ -281,7 +281,7 @@ async function cmdSelftest() {
     const port = srv.address().port
     const self = fileURLToPath(import.meta.url)
     const env = (api) => ({ ...process.env, HELIOZ_HOME: tmp, HELIOZ_TG_ENV: path.join(tmp, 'tg.env'), HELIOZ_TG_API: api })
-    // spawn (не spawnSync): сервер-стаб живёт в этом же процессе, блокировать event loop нельзя
+    // spawn (не spawnSync): сервер-стаб живет в этом же процессе, блокировать event loop нельзя
     const run = (args, api = `http://127.0.0.1:${port}`) => new Promise(resolve => {
       const p = spawn(process.execPath, [self, ...args], { env: env(api) })
       let stdout = '', stderr = ''
@@ -292,19 +292,19 @@ async function cmdSelftest() {
     // 1. Пустая отбивка запрещена.
     eq((await run(['send', '--text', '  '])).status, 2)
 
-    // 2. send доставляется; текст дошёл до стаба; токен не светится в выводе.
+    // 2. send доставляется; текст дошел до стаба; токен не светится в выводе.
     const r1 = await run(['send', '--text', 'проба связи'])
     eq(r1.status, 0)
     ok(calls.some(c => c.method.startsWith('sendMessage') && c.body.text === 'проба связи'), 'стаб получил sendMessage')
     ok(!r1.stdout.includes('TESTTOKEN123') && !r1.stderr.includes('TESTTOKEN123'), 'токен не печатается')
 
-    // 3. Telegram мёртв → отбивка КОПИТСЯ (exit 0, конвейер не падает), затем flush дошлёт.
+    // 3. Telegram мертв → отбивка КОПИТСЯ (exit 0, конвейер не падает), затем flush дошлет.
     const r2 = await run(['send', '--text', 'офлайн-отбивка'], 'http://127.0.0.1:1')
-    eq(r2.status, 0, 'мёртвый Telegram не роняет конвейер')
+    eq(r2.status, 0, 'мертвый Telegram не роняет конвейер')
     const box = () => readdirSync(path.join(tmp, '.helioz', 'state', 'outbox')).map(f => JSON.parse(readFileSync(path.join(tmp, '.helioz', 'state', 'outbox', f), 'utf8')))
     ok(box().some(m => m.text === 'офлайн-отбивка' && !m.delivered_at), 'недоставленное лежит в outbox')
     eq((await run(['flush'])).status, 0)
-    ok(box().every(m => m.delivered_at), 'flush дослал всё')
+    ok(box().every(m => m.delivered_at), 'flush дослал все')
 
     // 4. ask: развилка → кнопки, статус asked.
     const dil = { id: 'D001', task: 'T1', kind: 'default', question: 'Куда?', options: ['влево', 'вправо'], recommend: 1, status: 'open', asked_at: null, answered_at: null, answer: null, decided_by: null, council: null, replay: [] }
@@ -349,7 +349,7 @@ async function cmdSelftest() {
     ok(!isQuietHours(new Date('2026-01-01T12:00:00'), { start: '23:00', end: '09:00' }))
 
     srv.close()
-    console.log('selftest ok - durable outbox, мёртвый Telegram не роняет, кнопки/переиграть/стоп, чужим тишина, токен не течёт')
+    console.log('selftest ok - durable outbox, мертвый Telegram не роняет, кнопки/переиграть/стоп, чужим тишина, токен не течет')
     return 0
   } finally { rmSync(tmp, { recursive: true, force: true }) }
 }

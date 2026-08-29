@@ -22,4 +22,4 @@ for (const [name, c] of Object.entries(clis)) {
     if (!row.includes(role)) { console.error(`красный: у ${name} в таблице нет роли ${role}`); process.exit(1) }
   }
 }
-console.log('зелёный: таблица соответствует config/clis.json')
+console.log('зеленый: таблица соответствует config/clis.json')

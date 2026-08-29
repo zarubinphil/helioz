@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Сброс окна бюджета: started_at на сейчас, потолок не трогаем. Без него потолок однажды
-// упрётся навсегда, потому что расход считается накопительно от даты старта.
+// упрется навсегда, потому что расход считается накопительно от даты старта.
 import { readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'

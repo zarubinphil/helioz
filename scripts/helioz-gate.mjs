@@ -6,14 +6,14 @@
 //   --start <id>       занять слот; пересечение путей с бегущей задачей → exit 5, НЕ стартует.
 //   --finish <id>      освободить слот.
 //   --task <id> --check-cmd "…" [--executor cli --verifier cli --base ref]
-//                      прогнать приёмку; exit 0 → маркер целостности. Иначе маркер не пишется.
+//                      прогнать приемку; exit 0 → маркер целостности. Иначе маркер не пишется.
 //   --require <id,..>  все маркеры done? tampered/missing → exit 2.
 //   --status --json    доска.
 //   --smoke [--json]   живой smoke текущего состояния: STOP нет, running.json читается, очередь валидна.
 //   --beat [note]      heartbeat оркестратора.
 //   --stop / --go      флаг STOP (ставится и по «стоп» из Telegram). При STOP: ready/start → exit 4.
-//   --budget           факт расхода по jsonl трёх CLI против budget.json. Нет файла → exit 2; перебор → exit 3.
-//   --adopt <dir>      идемпотентный приём чужого ledger.jsonl и dilemmas/*.json (Мозг 2.0 пересядет сюда).
+//   --budget           факт расхода по jsonl трех CLI против budget.json. Нет файла → exit 2; перебор → exit 3.
+//   --adopt <dir>      идемпотентный прием чужого ledger.jsonl и dilemmas/*.json (Мозг 2.0 пересядет сюда).
 //   --selftest         детерминированные пробы прибора в изолированном состоянии.
 //
 // Коды: 0 ok · 1 красный · 2 fail-closed (пусто/недостаточно) · 3 бюджет · 4 STOP · 5 пересечение путей.
@@ -38,7 +38,7 @@ const EXEC_SECRET = () => path.join(S.state, 'exec', '.secret')
 // --- утилиты --------------------------------------------------------------------------------------
 const sha256 = s => createHash('sha256').update(s).digest('hex')
 function readJson(f) { try { return JSON.parse(readFileSync(f, 'utf8')) } catch { return null } }
-// атомарная запись: tmp + rename - смерть процесса не оставляет усечённый JSON (ревью kimi, класс 4)
+// атомарная запись: tmp + rename - смерть процесса не оставляет усеченный JSON (ревью kimi, класс 4)
 function writeJson(f, o) {
   mkdirSync(path.dirname(f), { recursive: true })
   const tmp = f + '.tmp-' + process.pid
@@ -226,12 +226,12 @@ export function readMarker(id) {
     return { status: 'tampered', reason: 'exec-квитанция не совпала с маркером', data: d }
   }
   if (rec.executor_code !== 0 || rec.verifier_code !== 0) {
-    return { status: 'tampered', reason: `exec-коды не зелёные (${rec.executor_code}/${rec.verifier_code})`, data: d }
+    return { status: 'tampered', reason: `exec-коды не зеленые (${rec.executor_code}/${rec.verifier_code})`, data: d }
   }
   if (!receiptLogOk(rec, 'executor_log') || !receiptLogOk(rec, 'verifier_log')) {
     return { status: 'tampered', reason: 'нет логов exec-квитанции', data: d }
   }
-  // ревью kimi: base===head даёт пустой diff со всем известным sha256("") - фордж без единой проверки
+  // ревью kimi: base===head дает пустой diff со всем известным sha256("") - фордж без единой проверки
   if (d.base === d.head) return { status: 'tampered', reason: 'base === head (пустой diff - не доказательство)', data: d }
   if (!gitSafe(['rev-parse', '--verify', d.head + '^{commit}']) || !gitSafe(['rev-parse', '--verify', d.base + '^{commit}'])) {
     return { status: 'tampered', reason: 'base/head не резолвятся в коммиты', data: d }
@@ -261,7 +261,7 @@ function writeMarker(id, { checkCmd, executor, verifier, base }) {
     throw new Error(`маркер ${id}: exec-квитанция от разных/старых редакций задачи`)
   }
   if (rec.executor_used !== executor || rec.verifier_used !== verifier) throw new Error(`маркер ${id}: exec-квитанция не совпала с CLI маркера`)
-  if (rec.executor_code !== 0 || rec.verifier_code !== 0) throw new Error(`маркер ${id}: exec-коды не зелёные (${rec.executor_code}/${rec.verifier_code})`)
+  if (rec.executor_code !== 0 || rec.verifier_code !== 0) throw new Error(`маркер ${id}: exec-коды не зеленые (${rec.executor_code}/${rec.verifier_code})`)
   if (!receiptLogOk(rec, 'executor_log') || !receiptLogOk(rec, 'verifier_log')) throw new Error(`маркер ${id}: нет логов exec-квитанции`)
   const head = git(['rev-parse', 'HEAD'])
   const baseSha = gitSafe(['rev-parse', base || `${head}~1`])
@@ -315,7 +315,7 @@ async function cmdReady(json) {
     const reasons = []
     for (const dep of t.requires) {
       const mk = readMarker(dep)
-      if (mk.status !== 'done') reasons.push(`ждёт маркер ${dep}${mk.status === 'tampered' ? ' (tampered)' : ''}`)
+      if (mk.status !== 'done') reasons.push(`ждет маркер ${dep}${mk.status === 'tampered' ? ' (tampered)' : ''}`)
     }
     const inter = t.paths.filter(p => busyPaths.has(p))
     if (inter.length) reasons.push(`пересечение путей: ${inter.join(', ')}`)
@@ -334,7 +334,7 @@ async function cmdReady(json) {
 }
 
 async function cmdStart(id, executor) {
-  if (stopped()) { console.error('STOP - старт запрещён'); return 4 }
+  if (stopped()) { console.error('STOP - старт запрещен'); return 4 }
   const tasks = await loadTasks()
   const t = tasks.get(id)
   if (!t) { console.error(`задача ${id} не в очереди`); return 2 }
@@ -343,7 +343,7 @@ async function cmdStart(id, executor) {
     const st = readRunning()
     if (st.corrupt) { console.error('running.json нечитаем - fail-closed'); return 2 }
     if (st.running.some(r => r.task === id)) { console.error(`${id} уже бежит`); return 1 }
-    // Непересечение файлов сторожит КОД до запуска, не договорённость.
+    // Непересечение файлов сторожит КОД до запуска, не договоренность.
     for (const r of st.running) {
       const rt = tasks.get(r.task)
       const inter = rt ? t.paths.filter(p => rt.paths.includes(p)) : []
@@ -374,7 +374,7 @@ async function cmdTask(id, opts) {
   if (!tasks.has(id)) { console.error(`задача ${id} не в очереди - маркер не пишется`); return 2 }
   const t = tasks.get(id)
   if (!t.valid) { console.error(`задача ${id} невалидна - маркер не пишется`); return 2 }
-  if (!opts.checkCmd) { console.error('нет --check-cmd - приёмка без команды не бывает'); return 2 }
+  if (!opts.checkCmd) { console.error('нет --check-cmd - приемка без команды не бывает'); return 2 }
   if (opts.checkCmd !== t.check_cmd) { console.error(`--check-cmd не совпал с задачей ${id} - маркер не пишется`); return 2 }
   const res = spawnSync('/bin/sh', ['-c', opts.checkCmd], { stdio: 'inherit', cwd: HOME })
   const code = res.status == null ? 1 : res.status
@@ -458,7 +458,7 @@ function cmdBeat(note) {
   return 0
 }
 
-// --- бюджет: факт с диска по jsonl трёх CLI (порт rebuild-gate, best-effort) ----------------------
+// --- бюджет: факт с диска по jsonl трех CLI (порт rebuild-gate, best-effort) ----------------------
 const CLAUDE_RATES = { opus: [15, 75, 18.75, 1.5], sonnet: [3, 15, 3.75, 0.3], haiku: [1, 5, 1.25, 0.1], fable: [15, 75, 18.75, 1.5] }
 const NON_CLAUDE_USD_PER_MTOK = 3
 const claudeProjDir = () => path.join(os.homedir(), '.claude', 'projects', HOME.replace(/[^A-Za-z0-9]/g, '-'))
@@ -527,9 +527,9 @@ async function kimiSpend(since) {
 }
 async function cmdBudget(json) {
   const b = readJson(path.join(S.state, 'budget.json'))
-  if (!b) { console.error('budget.json отсутствует - потолок не подтверждён'); return 2 }
-  // ревью codex+kimi: раньше недоступность ВСЕХ источников логов давала расход 0 и зелёный при
-  // любом реальном перерасходе. С потолком и нулём читаемых источников - честный красный.
+  if (!b) { console.error('budget.json отсутствует - потолок не подтвержден'); return 2 }
+  // ревью codex+kimi: раньше недоступность ВСЕХ источников логов давала расход 0 и зеленый при
+  // любом реальном перерасходе. С потолком и нулем читаемых источников - честный красный.
   const roots = [claudeProjDir(), path.join(os.homedir(), '.codex', 'sessions'), path.join(os.homedir(), '.kimi-code', 'session_index.jsonl')]
   const hasCeiling = (Number.isFinite(b.ceiling_tokens) && b.ceiling_tokens > 0) || (Number.isFinite(b.ceiling_usd) && b.ceiling_usd > 0)
   if (hasCeiling && !roots.some(r => existsSync(r))) { console.error('расход неизвестен: ни один источник логов CLI не читается - fail-closed'); return 2 }
@@ -544,7 +544,7 @@ async function cmdBudget(json) {
     try { for (const f of readdirSync(dir)) { if (statSync(path.join(dir, f)).mtimeMs >= since) runsInWindow++ } } catch { }
   }
   if (hasCeiling && tokens === 0 && runsInWindow > 0) {
-    console.error(`расход неизвестен: в окне было ${runsInWindow} прогонов, а журналы CLI дали 0 токенов - замер слеп, потолок не подтверждён`)
+    console.error(`расход неизвестен: в окне было ${runsInWindow} прогонов, а журналы CLI дали 0 токенов - замер слеп, потолок не подтвержден`)
     return 2
   }
   const rep = { ok: !over, since: new Date(since).toISOString(), spend_tokens: tokens, spend_usd: Number(usd.toFixed(2)), by_cli: { claude: c, codex: x, kimi: k }, ceiling_usd: b.ceiling_usd ?? null, ceiling_tokens: b.ceiling_tokens ?? null, runs_in_window: runsInWindow }
@@ -553,7 +553,7 @@ async function cmdBudget(json) {
   return over ? 3 : 0
 }
 
-// --- adopt: приём чужого ledger и развилок, идемпотентно, без потерь ------------------------------
+// --- adopt: прием чужого ledger и развилок, идемпотентно, без потерь ------------------------------
 function cmdAdopt(dir) {
   if (!dir || !existsSync(dir)) { console.error('adopt: каталог не найден - fail-closed'); return 2 }
   return withLock('adopt', () => cmdAdoptLocked(dir))
@@ -710,7 +710,7 @@ async function cmdSelftest() {
     writeFileSync(af, JSON.stringify(cutExternal))
     eq(run(['--require', 'A']).status, 2, 'маркер без external_sha обязан быть tampered')
     writeFileSync(af, JSON.stringify(good) + '\n')
-    // повреждение содержимого: sha пересчитается и не совпадёт
+    // повреждение содержимого: sha пересчитается и не совпадет
     writeFileSync(af, JSON.stringify({ ...good, sha_of_changed_files: 'deadbeef' }) + '\n')
     eq(run(['--require', 'A']).status, 2, 'битый sha обязан быть tampered')
     // ревью codex: копия чужого ВАЛИДНОГО маркера → tampered (маркер не привязан был к id)
@@ -728,13 +728,13 @@ async function cmdSelftest() {
     writeFileSync(path.join(tmp, '.helioz', 'state', 'running.json'), '{')
     eq(run(['--ready']).status, 2, 'битый running.json обязан давать fail-closed')
     eq(run(['--smoke']).status, 2, 'битый running.json обязан красить smoke')
-    eq(run(['--start', 'C']).status, 2, 'старт при битом running.json запрещён')
+    eq(run(['--start', 'C']).status, 2, 'старт при битом running.json запрещен')
     rmSync(path.join(tmp, '.helioz', 'state', 'running.json'))
 
-    // requires: D ждёт маркер E
+    // requires: D ждет маркер E
     mk('D', ['docs/d.md'], 'requires: [E]\n')
     const rd = run(['--ready', '--json'])
-    ok(rd.stdout.includes('ждёт маркер E'), 'зависимость без маркера блокирует')
+    ok(rd.stdout.includes('ждет маркер E'), 'зависимость без маркера блокирует')
 
     // STOP → ready/start exit 4
     writeFileSync(path.join(tmp, '.helioz', 'state', 'STOP'), now())
@@ -756,7 +756,7 @@ async function cmdSelftest() {
     ok(existsSync(path.join(tmp, '.helioz', 'state', 'heartbeat.json')))
 
     // бюджет: нет budget.json → 2; с потолком 1 токен и нулевым расходом (пустые каталоги) → 0
-    eq(run(['--budget']).status, 2, 'нет budget.json - потолок не подтверждён')
+    eq(run(['--budget']).status, 2, 'нет budget.json - потолок не подтвержден')
   } finally { rmSync(tmp, { recursive: true, force: true }) }
 
     console.log('selftest ok - разбор задач, fail-closed, пересечения, слоты, tampered, STOP, adopt, beat')

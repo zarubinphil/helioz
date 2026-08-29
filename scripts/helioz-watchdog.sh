@@ -74,6 +74,9 @@ fi
 CMD="$(cfg orchestrator_cmd)"
 if [ -z "$CMD" ]; then echo "$(date '+%F %T') watchdog: orchestrator_cmd пуст" >> "$LOGS/watchdog.log"; exit 0; fi
 TS="$(date +%Y%m%d-%H%M%S)"
+# launchd не наследует HELIOZ_HOME: без него `cd "$HELIOZ_HOME"` в команде
+# оставляет оркестратор в корне, и он умирает на первом же cat.
+export HELIOZ_HOME="$HOME_DIR"
 nohup bash -lc "$CMD" >> "$LOGS/orchestrator-$TS.log" 2>&1 &
 echo $! > "$STATE/orchestrator.pid"
 node "$SELF/helioz-zeus.mjs" send --text "♻️ Оркестратор перезапущен сторожем (heartbeat протух). Продолжаю с хэндоффа, состояние цело." >> "$LOGS/watchdog.log" 2>&1 || true

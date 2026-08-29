@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// ВРАЖДЕБНЫЕ ПРОБЫ КОНВЕЙЕРА (порядок стройки, п.3). Все обязаны дать правильный красный/зелёный.
-// Только этот прибор пишет READY.json - и только когда все пробы зелёные. Пробы гоняются в изолированном
+// ВРАЖДЕБНЫЕ ПРОБЫ КОНВЕЙЕРА (порядок стройки, п.3). Все обязаны дать правильный красный/зеленый.
+// Только этот прибор пишет READY.json - и только когда все пробы зеленые. Пробы гоняются в изолированном
 // HELIOZ_HOME, боевое состояние не трогается (кроме записи READY.json при успехе).
 //
 // Коды: 0 - все пробы правильные, READY записан · 1 - хотя бы одна проба дала неверный цвет.
@@ -72,7 +72,7 @@ async function main() {
     const fin = gate(tmp, ['--task', 'A', '--check-cmd', 'true', '--executor', 'claude', '--verifier', 'codex'])
     const done = fin.status === 0 && gate(tmp, ['--require', 'A']).status === 0
     probe('убить оркестратора посреди задачи', aRunning && bOk && done,
-      `A running с диска: ${aRunning}, B берётся: ${bOk}, A доведена новым процессом: ${done}`)
+      `A running с диска: ${aRunning}, B берется: ${bOk}, A доведена новым процессом: ${done}`)
     rmSync(tmp, { recursive: true, force: true })
   }
 
@@ -104,7 +104,7 @@ async function main() {
     const works = r.status === 0 && JSON.parse(r.stdout).ready.some(x => x.task === 'B')
     const d = JSON.parse(readFileSync(path.join(tmp, 'queue', 'dilemmas', 'DW.json'), 'utf8'))
     const intact = d.status === 'asked' && d.answer === null
-    probe('владелец молчит сутки', works && intact, `конвейер работает: ${works}, развилка цела и ждёт: ${intact}`)
+    probe('владелец молчит сутки', works && intact, `конвейер работает: ${works}, развилка цела и ждет: ${intact}`)
     rmSync(tmp, { recursive: true, force: true })
   }
 
