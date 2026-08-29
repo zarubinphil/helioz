@@ -2,7 +2,7 @@
 
 Helioz keeps long agent work moving across sessions, checks, and handoffs, so nothing stalls while you sleep.
 
-[Русский](README.ru.md)
+[Русский](README.ru.md) · [中文](README.zh.md)
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![Stars](https://img.shields.io/github/stars/zarubinvibe/helioz?style=flat&color=C9A87A)](https://github.com/zarubinvibe/helioz/stargazers) [![Status](https://img.shields.io/badge/status-working-brightgreen.svg)](https://github.com/zarubinvibe/helioz) [![Olympuz](https://img.shields.io/badge/olympuz-family-B8D6EA.svg)](https://github.com/zarubinvibe/athena#olympuz-family)
 

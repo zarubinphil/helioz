@@ -33,49 +33,63 @@
         "title_en": "Say the goal once",
         "title_ru": "Скажите цель один раз",
         "diagram_en": "Interview",
-        "diagram_ru": "Допрос"
+        "diagram_ru": "Допрос",
+        "title_zh": "先把目标说一次",
+        "diagram_zh": "追问"
       },
       {
         "id": "plan",
         "title_en": "Two agents plan blind",
         "title_ru": "Двое планируют вслепую",
         "diagram_en": "Plan",
-        "diagram_ru": "План"
+        "diagram_ru": "План",
+        "title_zh": "两个智能体各写各的计划",
+        "diagram_zh": "计划"
       },
       {
         "id": "gate",
         "title_en": "The gate picks the next task",
         "title_ru": "Ворота берут следующую задачу",
         "diagram_en": "Gate",
-        "diagram_ru": "Ворота"
+        "diagram_ru": "Ворота",
+        "title_zh": "闸门挑出下一个任务",
+        "diagram_zh": "闸门"
       },
       {
         "id": "execute",
         "title_en": "An executor does the work",
         "title_ru": "Исполнитель делает работу",
         "diagram_en": "Execute",
-        "diagram_ru": "Работа"
+        "diagram_ru": "Работа",
+        "title_zh": "执行者干活",
+        "diagram_zh": "执行"
       },
       {
         "id": "verify",
         "title_en": "A blind verifier checks it",
         "title_ru": "Слепой проверяющий сверяет",
         "diagram_en": "Verify",
-        "diagram_ru": "Проверка"
+        "diagram_ru": "Проверка",
+        "title_zh": "盲检的验证者来核",
+        "diagram_zh": "验证"
       },
       {
         "id": "mark",
         "title_en": "Code writes the finish mark",
         "title_ru": "Код пишет отметку о готовности",
         "diagram_en": "Mark",
-        "diagram_ru": "Отметка"
+        "diagram_ru": "Отметка",
+        "title_zh": "代码写下完成标记",
+        "diagram_zh": "标记"
       },
       {
         "id": "handoff",
         "title_en": "Report, council, handoff",
         "title_ru": "Отчёт, совет, передача",
         "diagram_en": "Handoff",
-        "diagram_ru": "Передача"
+        "diagram_ru": "Передача",
+        "title_zh": "汇报、议事会、交接",
+        "diagram_zh": "交接"
       }
     ]
   },

@@ -1,0 +1,361 @@
+{
+  "schema_version": 1,
+  "owner": "zarubinvibe",
+  "slug": "helioz",
+  "license_badge": "MIT",
+  "status_badge": "working",
+  "languages": [
+    "en",
+    "ru",
+    "zh"
+  ],
+  "quick_code": "git clone https://github.com/zarubinvibe/helioz.git ~/helioz\ncd ~/helioz\nbash install.sh en\nbash scripts/helioz-start.sh",
+  "text": {
+    "en": {
+      "title": "Helioz",
+      "name": "Helioz",
+      "tagline": "Helioz keeps long agent work moving across sessions, checks, and handoffs, so nothing stalls while you sleep.",
+      "hero_alt": "Helios in white marble with a golden sun disc beside the classical column, blue and gold threads assembling a conveyor of glass cards",
+      "what": "Helioz is a conveyor for agent work. You say what you want once. It interrogates you, writes the plans, hands tasks to coding agents, checks the result with a second agent, and reports back. It runs on your machine and keeps every bit of state on disk.",
+      "why": "An agent forgets the task between sessions, says \"done\" when it is not, and wakes you at night over a small fork. Helioz answers each of those with an instrument: state on disk, a blind verifier, and a night council. You get progress by morning instead of a stalled chat window.",
+      "advantage": "the finish mark is written by code, not by the agent that did the work.",
+      "better": "a mark carries the commits before and after, a hash of the changed files, and the exit code of the check command. A copied or hand-written mark is caught and named out loud.",
+      "how": "One tact runs in a loop. Each step leaves a file on disk, so a killed session continues from the same line.",
+      "quick_intro": "You need macOS or Linux, Node.js 20 or newer, git, and at least one agent CLI: `claude`, `codex`, or `kimi`. Pick any of the three ways in.",
+      "quick_extra": "No Git? Download [the ZIP](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.zip), unpack it, and run the same `bash install.sh en` inside. Prefer an archive in the terminal? Take [the tarball](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.tar.gz).",
+      "quick_result": "the installer introduces itself, checks Node, git, and your agent CLIs, runs the instrument selftests, and names what is left to do by hand.",
+      "compare": [
+        [
+          "**Helioz**",
+          "Long work must continue while you are away",
+          "State on disk, blind verification, forged-proof marks, night decisions",
+          "You run and watch it yourself"
+        ],
+        [
+          "Running the agent by hand",
+          "One short task in one sitting",
+          "Full control of every step",
+          "The work stops the moment you close the laptop"
+        ],
+        [
+          "A CI pipeline",
+          "Repeatable checks after a commit",
+          "Server-side runs and history",
+          "It reacts to commits; it does not plan or decide"
+        ],
+        [
+          "A tracker plus agent chat",
+          "Team coordination",
+          "Visible board and comments",
+          "Nothing verifies that \"done\" is true"
+        ]
+      ],
+      "glossary": [
+        [
+          "Agent CLI",
+          "A coding assistant you run in the terminal, such as Claude Code or Codex"
+        ],
+        [
+          "Check command",
+          "The command that proves a task is done, for example `npm test`"
+        ]
+      ],
+      "safety": [
+        "File access stays inside the clone unless a task names another allowed path.",
+        "`.helioz/`, `queue/`, and logs are local runtime state and are never published.",
+        "Secrets live outside git and are read only when a message is sent or polled.",
+        "Telegram delivery is best effort: messages land in a local outbox first.",
+        "Production actions and expensive forks are refused by the council and wait for you.",
+        "An empty queue, unreadable state, or a goalless council is a red result, not a pass."
+      ],
+      "safety_tail": "Review `git diff` and run the public gate before any push.",
+      "status": "Status: working local system, run daily by its author.",
+      "limits": [
+        "macOS and Linux only; there is no Windows path.",
+        "Quality of the work is the quality of the agent CLI you installed.",
+        "The gate proves file state and command output. It does not judge product taste.",
+        "Telegram, the night council, and the watchdog are optional and can be switched off."
+      ],
+      "docs": "Deeper reading: [the full reference](docs/DETAILS.md), [state contracts](docs/CONTRACTS.md), [the orchestrator prompt](ORCHESTRATOR.md), and [the master plan](docs/MASTER-PLAN.md). Proof of the claims above: `node scripts/helioz-probes.mjs` runs thirteen adversarial probes and all of them must be green.",
+      "license": "MIT. See [LICENSE](LICENSE)."
+    },
+    "ru": {
+      "title": "Helioz",
+      "name": "Helioz",
+      "tagline": "Helioz двигает долгую работу агентов через сессии, проверки и передачи, чтобы дело не вставало, пока вы спите.",
+      "hero_alt": "Гелиос из белого мрамора с золотым солнечным диском у классической колонны, голубые и золотые нити собирают конвейер стеклянных карточек",
+      "what": "Helioz это конвейер для работы агентов. Вы один раз говорите, что нужно. Он допрашивает вас, пишет планы, раздаёт задачи агентам, проверяет результат вторым агентом и отчитывается. Работает на вашем компьютере, всё состояние лежит на диске.",
+      "why": "Агент забывает задачу между сессиями, говорит «готово», когда не готово, и будит вас ночью из-за мелкой развилки. На каждую из этих бед у Helioz есть прибор: состояние на диске, слепой проверяющий и ночной совет. К утру у вас движение, а не замерший чат.",
+      "advantage": "отметку о готовности пишет код, а не тот агент, который делал работу.",
+      "better": "в отметке лежат коммиты до и после, хеш изменённых файлов и код возврата проверочной команды, поэтому скопированную или написанную руками отметку видно и о ней говорят вслух.",
+      "how": "Такт крутится по кругу. Каждый шаг оставляет файл на диске, поэтому убитая сессия продолжает с той же строки.",
+      "quick_intro": "Нужны macOS или Linux, Node.js 20 или новее, git и хотя бы один агентский CLI: `claude`, `codex` или `kimi`. Заходить можно любым из трёх путей.",
+      "quick_extra": "Нет Git? Скачайте [ZIP](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.zip), распакуйте и запустите внутри тот же `bash install.sh en`. Привыкли к архиву из терминала? Возьмите [tar.gz](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.tar.gz).",
+      "quick_result": "установщик представляется, проверяет Node, git и ваши агентские CLI, гоняет селф-тесты приборов и называет то, что осталось сделать руками.",
+      "compare": [
+        [
+          "**Helioz**",
+          "Долгая работа должна идти, пока вас нет",
+          "Состояние на диске, слепая проверка, неподделываемые отметки, ночные решения",
+          "Запускаете и присматриваете сами"
+        ],
+        [
+          "Агент руками",
+          "Одна короткая задача за один присест",
+          "Полный контроль каждого шага",
+          "Работа встаёт, как только вы закрыли ноутбук"
+        ],
+        [
+          "CI-пайплайн",
+          "Повторяемые проверки после коммита",
+          "Прогоны на сервере и история",
+          "Реагирует на коммиты, но не планирует и не решает"
+        ],
+        [
+          "Трекер плюс чат с агентом",
+          "Координация команды",
+          "Видимая доска и комментарии",
+          "Никто не проверяет, правда ли «сделано»"
+        ]
+      ],
+      "glossary": [
+        [
+          "Agent CLI",
+          "Кодовый помощник, который запускается в терминале: Claude Code, Codex и подобные"
+        ],
+        [
+          "Check command",
+          "Команда, доказывающая, что задача сделана, например `npm test`"
+        ]
+      ],
+      "safety": [
+        "Доступ к файлам не выходит за пределы клона, пока задача не назовёт другой разрешённый путь.",
+        "`.helioz/`, `queue/` и логи это локальное рантайм-состояние, наружу они не уходят.",
+        "Секреты лежат вне git и читаются только в момент отправки или опроса.",
+        "Доставка в Telegram это best effort: сообщение сначала ложится в локальный outbox.",
+        "Продакшн-действия и дорогие развилки совет отклоняет, они ждут вас.",
+        "Пустая очередь, нечитаемое состояние или совет без цели это красный результат, а не пропуск."
+      ],
+      "safety_tail": "Перед любым push просмотрите `git diff` и прогоните публичный gate.",
+      "status": "Статус: рабочая локальная система, автор гоняет её каждый день.",
+      "limits": [
+        "Только macOS и Linux, пути под Windows нет.",
+        "Качество работы это качество того агентского CLI, который вы поставили.",
+        "Ворота доказывают состояние файлов и вывод команд, но не оценивают продуктовый вкус.",
+        "Telegram, ночной совет и сторож необязательны, их можно выключить."
+      ],
+      "docs": "Глубже: [полный разбор](docs/DETAILS.ru.md), [контракты состояния](docs/CONTRACTS.md), [промпт оркестратора](ORCHESTRATOR.md) и [мастер-план](docs/MASTER-PLAN.md). Доказательство сказанного выше: `node scripts/helioz-probes.mjs` гоняет тринадцать враждебных проб, и все они должны быть зелёными.",
+      "license": "MIT. Текст в файле [LICENSE](LICENSE)."
+    },
+    "zh": {
+      "title": "Helioz",
+      "name": "Helioz",
+      "tagline": "Helioz 让长时间的智能体工作跨越会话、检查和交接继续推进，你睡觉的时候活也不停。",
+      "hero_alt": "白色大理石的赫利俄斯手持金色日轮站在古典石柱旁，蓝色与金色的丝线把玻璃卡片汇成一条传送带",
+      "what": "Helioz 是一条智能体工作的传送带。你只说一次要做什么。它逐条追问，写出计划，把任务交给编码智能体，再让第二个智能体检查结果，然后向你汇报。它跑在你自己的电脑上，所有状态都写在磁盘里。",
+      "why": "智能体在会话之间会忘记任务，没做完也说“做完了”，还会为一个小岔路在半夜叫醒你。Helioz 对每一条毛病都给出一件工具：状态写在磁盘、盲检的验证者、夜间议事会。早上你看到的是进展，而不是停住的对话框。",
+      "advantage": "完成标记由代码写下，而不是由干活的那个智能体自己写。",
+      "better": "标记里记着前后两个提交、改动文件的哈希和检查命令的退出码。复制来的或手写的标记会被发现，并被当场点名。",
+      "how": "一个节拍循环运行。每一步都在磁盘上留下文件，所以会话被杀掉，也能从同一行继续。",
+      "quick_intro": "你需要 macOS 或 Linux、Node.js 20 以上、git，以及至少一个智能体命令行：`claude`、`codex` 或 `kimi`。三条路进来都行。",
+      "quick_extra": "没有 Git？下载 [ZIP](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.zip) 解压后在里面执行同样的 `bash install.sh en`。习惯在终端里用压缩包？拿 [tar.gz](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.tar.gz)。",
+      "quick_result": "安装脚本先做自我介绍，检查 Node、git 和你的智能体命令行，跑一遍各个器件的自检，然后告诉你还剩下哪些要手动做。",
+      "compare": [
+        [
+          "**Helioz**",
+          "你不在的时候长活也要往前走",
+          "状态写在磁盘、盲检验证、无法伪造的标记、夜间决策",
+          "要你自己启动并留意"
+        ],
+        [
+          "手动跑智能体",
+          "一次坐下能做完的小任务",
+          "每一步都在你手里",
+          "合上笔记本，活就停了"
+        ],
+        [
+          "CI 流水线",
+          "提交之后的重复检查",
+          "服务器端执行和历史记录",
+          "它只对提交作出反应，不做计划也不做决定"
+        ],
+        [
+          "任务板加智能体聊天",
+          "团队协作",
+          "看得见的看板和评论",
+          "没有人验证“做完了”是不是真的"
+        ]
+      ],
+      "glossary": [
+        [
+          "Agent CLI",
+          "智能体命令行：在终端里运行的编码助手，例如 Claude Code、Codex"
+        ],
+        [
+          "Check command",
+          "检查命令：证明任务做完的那条命令，例如 `npm test`"
+        ]
+      ],
+      "safety": [
+        "文件访问不出克隆目录，除非任务明确写出另一个允许的路径。",
+        "`.helioz/`、`queue/` 和日志是本地运行状态，不会被发布出去。",
+        "密钥放在 git 之外，只有发送或轮询的那一刻才被读取。",
+        "Telegram 的送达是尽力而为：消息先落在本地发件箱里。",
+        "生产环境的动作和代价大的岔路会被议事会拒绝，它们等你来定。",
+        "空队列、读不出来的状态、没有目标的议事会都算红色结果，不算通过。"
+      ],
+      "safety_tail": "任何 push 之前，先看 `git diff`，再跑一遍公开发布闸门。",
+      "status": "状态：可用的本地系统，作者每天都在用。",
+      "limits": [
+        "只支持 macOS 和 Linux，没有 Windows 的路径。",
+        "工作的质量就是你装的那个智能体命令行的质量。",
+        "闸门证明的是文件状态和命令输出，不评判产品品味。",
+        "Telegram、夜间议事会和看门狗都是可选的，可以关掉。"
+      ],
+      "docs": "想看得更深：[完整参考](docs/DETAILS.md)、[状态契约](docs/CONTRACTS.md)、[编排提示词](ORCHESTRATOR.md) 和 [总计划](docs/MASTER-PLAN.md)。上面这些说法的证据：`node scripts/helioz-probes.mjs` 会跑十三个对抗性探针，全部必须是绿的。",
+      "license": "MIT。见 [LICENSE](LICENSE)。"
+    }
+  },
+  "stages": {
+    "interview": {
+      "en": {
+        "short": "One sentence turns into filled slots and a written goal",
+        "body": "You start with one sentence of intent. Helioz asks one question at a time and attaches its own recommendation, so agreeing takes a word. Answer in the editor, in a terminal, or in Telegram.",
+        "result": "a goal in `queue/GOAL.md` that every later decision is checked against.",
+        "alt": "Helioz workflow stage 1: Say the goal once, drawn as a wide Pantheon marble scene"
+      },
+      "ru": {
+        "short": "Одна фраза превращается в заполненные слоты и записанную цель",
+        "body": "Вы начинаете с одной фразы о намерении. Helioz задаёт по одному вопросу и прикладывает свою рекомендацию, так что согласиться можно одним словом. Отвечать можно в редакторе, в терминале или в Telegram.",
+        "result": "цель в `queue/GOAL.md`, по которой сверяется каждое следующее решение.",
+        "alt": "Этап 1 такта Helioz: Скажите цель один раз, показан широкой мраморной сценой Pantheon"
+      },
+      "zh": {
+        "short": "一句话变成填好的槽位和写下来的目标",
+        "body": "你先说一句想做什么。Helioz 一次只问一个问题，并且附上自己的建议，所以同意只要一个词。回答可以在编辑器里，也可以在终端或 Telegram 里。",
+        "result": "`queue/GOAL.md` 里的一个目标，之后每个决定都要对着它核对。",
+        "alt": "Pantheon 宽幅大理石场景：Helioz 工作流程第 1 步，先把目标说一次"
+      }
+    },
+    "plan": {
+      "en": {
+        "short": "Two independent plans, merged by a third agent",
+        "body": "Two agents write plans without seeing each other. A third merges them blind. One clever agent is fond of its own mistakes; two of them argue.",
+        "result": "a master plan plus small tasks in `queue/tasks/`, each with a check command.",
+        "alt": "Helioz workflow stage 2: Two agents plan blind, drawn as a wide Pantheon marble scene"
+      },
+      "ru": {
+        "short": "Два независимых плана, которые сводит третий агент",
+        "body": "Два агента пишут планы, не видя друг друга. Третий сводит их вслепую. Один умный агент любит собственные ошибки, а двое спорят.",
+        "result": "мастер-план и мелкие задачи в `queue/tasks/`, у каждой своя проверочная команда.",
+        "alt": "Этап 2 такта Helioz: Двое планируют вслепую, показан широкой мраморной сценой Pantheon"
+      },
+      "zh": {
+        "short": "两份独立的计划，由第三个智能体合并",
+        "body": "两个智能体互相看不见，各写一份计划。第三个在盲态下把它们合并。一个聪明的智能体偏爱自己的错误，两个就会争。",
+        "result": "一份总计划和 `queue/tasks/` 里的小任务，每个都带自己的检查命令。",
+        "alt": "Pantheon 宽幅大理石场景：Helioz 工作流程第 2 步，两个智能体各写各的计划"
+      }
+    },
+    "gate": {
+      "en": {
+        "short": "Slots, dependencies, budget, and a stop switch",
+        "body": "The gate takes only a task whose dependencies are closed and whose budget window still has room. Two agents can never hold the same file, because the code refuses the second one.",
+        "result": "one running task with a locked file set and a live budget count.",
+        "alt": "Helioz workflow stage 3: The gate picks the next task, drawn as a wide Pantheon marble scene"
+      },
+      "ru": {
+        "short": "Слоты, зависимости, бюджет и рубильник «стоп»",
+        "body": "Ворота берут только ту задачу, у которой закрыты зависимости и осталось место в бюджетном окне. Двое агентов не возьмут один файл: код откажет второму.",
+        "result": "одна взятая задача с закреплённым набором файлов и живым счётом бюджета.",
+        "alt": "Этап 3 такта Helioz: Ворота берут следующую задачу, показан широкой мраморной сценой Pantheon"
+      },
+      "zh": {
+        "short": "槽位、依赖、预算和一个“停”的开关",
+        "body": "闸门只放行依赖已经关闭、预算窗口还有余量的任务。两个智能体不可能拿到同一个文件，代码会拒绝第二个。",
+        "result": "一个正在执行的任务，文件集合已锁定，预算实时计数。",
+        "alt": "Pantheon 宽幅大理石场景：Helioz 工作流程第 3 步，闸门挑出下一个任务"
+      }
+    },
+    "execute": {
+      "en": {
+        "short": "A real CLI probe picks the agent that actually runs",
+        "body": "Before handing over work, Helioz runs a real probe of each agent CLI instead of trusting a version string. The task goes to the agent that answered.",
+        "result": "a changed working tree and a log of what the agent actually ran.",
+        "alt": "Helioz workflow stage 4: An executor does the work, drawn as a wide Pantheon marble scene"
+      },
+      "ru": {
+        "short": "Живая проба CLI выбирает агента, который реально работает",
+        "body": "Перед выдачей работы Helioz гоняет живую пробу каждого агентского CLI, а не верит строке версии. Задача уходит тому, кто ответил.",
+        "result": "изменённое рабочее дерево и лог того, что агент действительно запускал.",
+        "alt": "Этап 4 такта Helioz: Исполнитель делает работу, показан широкой мраморной сценой Pantheon"
+      },
+      "zh": {
+        "short": "真实探针挑出真正能跑起来的那个智能体",
+        "body": "交活之前，Helioz 会真跑一遍每个智能体命令行，而不是相信版本号。任务交给答应了的那一个。",
+        "result": "被改动的工作目录，以及智能体真正执行过什么的日志。",
+        "alt": "Pantheon 宽幅大理石场景：Helioz 工作流程第 4 步，执行者干活"
+      }
+    },
+    "verify": {
+      "en": {
+        "short": "A second agent reads the disk, not the report",
+        "body": "The verifier never sees the executor's report. It looks at the files, runs the check command, and adds an adversarial probe. Nobody grades their own homework.",
+        "result": "a verdict backed by command output, or a task sent back for rework.",
+        "alt": "Helioz workflow stage 5: A blind verifier checks it, drawn as a wide Pantheon marble scene"
+      },
+      "ru": {
+        "short": "Второй агент читает диск, а не отчёт",
+        "body": "Проверяющий не видит отчёт исполнителя. Он смотрит файлы, запускает проверочную команду и добавляет враждебную пробу. Свою работу здесь никто не оценивает.",
+        "result": "вердикт, подкреплённый выводом команды, либо задача, отправленная на доработку.",
+        "alt": "Этап 5 такта Helioz: Слепой проверяющий сверяет, показан широкой мраморной сценой Pantheon"
+      },
+      "zh": {
+        "short": "第二个智能体读磁盘，不读报告",
+        "body": "验证者看不到执行者的报告。它看文件、跑检查命令，再加一个对抗性探针。这里没有人给自己判分。",
+        "result": "一个有命令输出撑着的结论，或者一个被打回重做的任务。",
+        "alt": "Pantheon 宽幅大理石场景：Helioz 工作流程第 5 步，盲检的验证者来核"
+      }
+    },
+    "mark": {
+      "en": {
+        "short": "Commits, file hashes, and exit code inside the mark",
+        "body": "The mark is written by the gate, not by the agent. Thirteen adversarial probes try to forge it: a copied receipt, a mark without the external commit, a rewritten log, a swapped check command.",
+        "result": "a task closed with evidence that survives an audit.",
+        "alt": "Helioz workflow stage 6: Code writes the finish mark, drawn as a wide Pantheon marble scene"
+      },
+      "ru": {
+        "short": "Коммиты, хеши файлов и код возврата внутри отметки",
+        "body": "Отметку пишут ворота, а не агент. Тринадцать враждебных проб пытаются её подделать: скопированная расписка, отметка без внешнего коммита, переписанный лог, подменённая проверочная команда.",
+        "result": "задача, закрытая доказательством, которое переживает разбор.",
+        "alt": "Этап 6 такта Helioz: Код пишет отметку о готовности, показан широкой мраморной сценой Pantheon"
+      },
+      "zh": {
+        "short": "提交、文件哈希和退出码都在标记里",
+        "body": "标记由闸门写，不由智能体写。十三个对抗性探针专门来伪造它：复制的回执、缺少外部提交的标记、被改过的日志、被换掉的检查命令。",
+        "result": "一个用证据关闭的任务，经得起事后翻查。",
+        "alt": "Pantheon 宽幅大理石场景：Helioz 工作流程第 6 步，代码写下完成标记"
+      }
+    },
+    "handoff": {
+      "en": {
+        "short": "Telegram report, night council on small forks, fresh session",
+        "body": "Progress goes to Telegram and to disk. A small fork goes to a council of four lenses that write apart and are checked against your goal. Production actions, clashes with someone else's work, and expensive forks always wait for you.",
+        "result": "a handoff file, so the watchdog starts the next session without losing context.",
+        "alt": "Helioz workflow stage 7: Report, council, handoff, drawn as a wide Pantheon marble scene"
+      },
+      "ru": {
+        "short": "Отчёт в Telegram, ночной совет по мелким развилкам, свежая сессия",
+        "body": "Ход работы уходит в Telegram и на диск. Мелкая развилка идёт в совет из четырёх линз: они пишут порознь, а решение сверяется с вашей целью. Продакшн, столкновение с чужой работой и дорогие развилки всегда ждут вас.",
+        "result": "файл передачи, по которому сторож поднимает следующую сессию без потери контекста.",
+        "alt": "Этап 7 такта Helioz: Отчёт, совет, передача, показан широкой мраморной сценой Pantheon"
+      },
+      "zh": {
+        "short": "Telegram 汇报，小岔路交给夜间议事会，然后开新会话",
+        "body": "进展会发到 Telegram，也写到磁盘。小岔路交给四个视角的议事会：它们分开写，结论再对着你的目标核对。生产动作、和别人工作的冲突、代价大的岔路始终等你。",
+        "result": "一份交接文件，看门狗据此拉起下一个会话，上下文不丢。",
+        "alt": "Pantheon 宽幅大理石场景：Helioz 工作流程第 7 步，汇报、议事会、交接"
+      }
+    }
+  }
+}
