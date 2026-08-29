@@ -13,13 +13,15 @@
     "presentation": {
       "min_width": 1600,
       "aspect_ratio": "16:9",
-      "readme_width": "100%"
+      "readme_width": "100%",
+      "published_width": 1664,
+      "published_height": 936
     },
     "hero": {
       "source_path": "docs/assets/pantheon/hero-source.png",
       "source_sha256": "732baa672e2d73b3ce96d4a663c835ad6376add5d19731a7fd0d34d2a289a47f",
       "published_path": "docs/assets/pantheon/hero.png",
-      "published_sha256": "732baa672e2d73b3ce96d4a663c835ad6376add5d19731a7fd0d34d2a289a47f"
+      "published_sha256": "86ba390dcfc65dff7666d8a068cdde9878201fc09d1cd1b5b4b01354cc8980d9"
     },
     "emblem": {
       "source_path": "docs/assets/pantheon/emblem-source.png",
@@ -36,7 +38,7 @@
         "diagram_ru": "Допрос",
         "title_zh": "先把目标说一次",
         "diagram_zh": "追问",
-        "source_path": "docs/assets/pantheon/workflow/01-interview.png",
+        "source_path": "docs/assets/pantheon/workflow/01-interview-source.png",
         "source_sha256": "c6d4fb08509b784a164e68c08d7201751f52d1ec3824efa9e92d5542d3e29888",
         "published_path": "docs/assets/pantheon/workflow/01-interview.png",
         "published_sha256": "c6d4fb08509b784a164e68c08d7201751f52d1ec3824efa9e92d5542d3e29888"
@@ -49,7 +51,7 @@
         "diagram_ru": "План",
         "title_zh": "两个智能体各写各的计划",
         "diagram_zh": "计划",
-        "source_path": "docs/assets/pantheon/workflow/02-plan.png",
+        "source_path": "docs/assets/pantheon/workflow/02-plan-source.png",
         "source_sha256": "5075ecafaa0fa4bcb879d36d6e27c5804fa14b962525205d7c19a494db028363",
         "published_path": "docs/assets/pantheon/workflow/02-plan.png",
         "published_sha256": "5075ecafaa0fa4bcb879d36d6e27c5804fa14b962525205d7c19a494db028363"
@@ -62,7 +64,7 @@
         "diagram_ru": "Ворота",
         "title_zh": "闸门挑出下一个任务",
         "diagram_zh": "闸门",
-        "source_path": "docs/assets/pantheon/workflow/03-gate.png",
+        "source_path": "docs/assets/pantheon/workflow/03-gate-source.png",
         "source_sha256": "06ad5428d1fdda1a5ab81e1123f29c7e26304ce74fd001748c4e70b80caa3cd3",
         "published_path": "docs/assets/pantheon/workflow/03-gate.png",
         "published_sha256": "06ad5428d1fdda1a5ab81e1123f29c7e26304ce74fd001748c4e70b80caa3cd3"
@@ -75,7 +77,7 @@
         "diagram_ru": "Работа",
         "title_zh": "执行者干活",
         "diagram_zh": "执行",
-        "source_path": "docs/assets/pantheon/workflow/04-execute.png",
+        "source_path": "docs/assets/pantheon/workflow/04-execute-source.png",
         "source_sha256": "ce0feb018e64eee387b14194b187223a790ca8d208ec24fb3acabe37c39d49a4",
         "published_path": "docs/assets/pantheon/workflow/04-execute.png",
         "published_sha256": "ce0feb018e64eee387b14194b187223a790ca8d208ec24fb3acabe37c39d49a4"
@@ -88,7 +90,7 @@
         "diagram_ru": "Проверка",
         "title_zh": "盲检的验证者来核",
         "diagram_zh": "验证",
-        "source_path": "docs/assets/pantheon/workflow/05-verify.png",
+        "source_path": "docs/assets/pantheon/workflow/05-verify-source.png",
         "source_sha256": "3656149e3b820a42f21319ed8b2d295bdf3e70dd5d6b65d0e745af055a72a335",
         "published_path": "docs/assets/pantheon/workflow/05-verify.png",
         "published_sha256": "3656149e3b820a42f21319ed8b2d295bdf3e70dd5d6b65d0e745af055a72a335"
@@ -101,7 +103,7 @@
         "diagram_ru": "Отметка",
         "title_zh": "代码写下完成标记",
         "diagram_zh": "标记",
-        "source_path": "docs/assets/pantheon/workflow/06-mark.png",
+        "source_path": "docs/assets/pantheon/workflow/06-mark-source.png",
         "source_sha256": "345bb0dd3fb418d7d5328b793d553957893c75595d71f998347aabf6f47aba9d",
         "published_path": "docs/assets/pantheon/workflow/06-mark.png",
         "published_sha256": "345bb0dd3fb418d7d5328b793d553957893c75595d71f998347aabf6f47aba9d"
@@ -114,7 +116,7 @@
         "diagram_ru": "Передача",
         "title_zh": "汇报、议事会、交接",
         "diagram_zh": "交接",
-        "source_path": "docs/assets/pantheon/workflow/07-handoff.png",
+        "source_path": "docs/assets/pantheon/workflow/07-handoff-source.png",
         "source_sha256": "79ee371d06d3af5088ca1f2e116501e4e47aeec01d1cebaaaa3714462c2af45a",
         "published_path": "docs/assets/pantheon/workflow/07-handoff.png",
         "published_sha256": "79ee371d06d3af5088ca1f2e116501e4e47aeec01d1cebaaaa3714462c2af45a"

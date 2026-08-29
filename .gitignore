@@ -8,3 +8,6 @@ __pycache__/
 .helioz/
 queue/
 scripts/free-scrape-helper.py
+
+# Локальные снимки браузера агента
+.playwright-mcp/
