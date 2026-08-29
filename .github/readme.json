@@ -77,7 +77,8 @@
         "Telegram, the night council, and the watchdog are optional and can be switched off."
       ],
       "docs": "Deeper reading: [the full reference](docs/DETAILS.md), [state contracts](docs/CONTRACTS.md), [the orchestrator prompt](ORCHESTRATOR.md), and [the master plan](docs/MASTER-PLAN.md). Proof of the claims above: `node scripts/helioz-probes.mjs` runs thirteen adversarial probes and all of them must be green.",
-      "license": "MIT. See [LICENSE](LICENSE)."
+      "license": "MIT. See [LICENSE](LICENSE).",
+      "welcome": "Hello. I am a lawyer with two daughters and a coffee business, and my evenings are short. I built Helioz because the work kept stopping the moment I closed the laptop: the agent forgot the task, called it done when it was not, and woke me at night over a small fork.\n\nIt runs on my own machine every day. If it moves your work forward while you sleep, take it and make it yours."
     },
     "ru": {
       "title": "Helioz",
@@ -145,7 +146,8 @@
         "Telegram, ночной совет и сторож необязательны, их можно выключить."
       ],
       "docs": "Глубже: [полный разбор](docs/DETAILS.ru.md), [контракты состояния](docs/CONTRACTS.md), [промпт оркестратора](ORCHESTRATOR.md) и [мастер-план](docs/MASTER-PLAN.md). Доказательство сказанного выше: `node scripts/helioz-probes.mjs` гоняет тринадцать враждебных проб, и все они должны быть зелёными.",
-      "license": "MIT. Текст в файле [LICENSE](LICENSE)."
+      "license": "MIT. Текст в файле [LICENSE](LICENSE).",
+      "welcome": "Привет. Я юрист, у меня две дочки и кофейное дело, а вечера короткие. Helioz появился, потому что работа вставала ровно в тот момент, когда я закрывал ноутбук: агент забывал задачу, называл сделанным несделанное и будил ночью из-за мелкой развилки.\n\nОн крутится у меня каждый день. Если он двигает вашу работу, пока вы спите, забирайте и делайте своим."
     },
     "zh": {
       "title": "Helioz",
@@ -213,7 +215,8 @@
         "Telegram、夜间议事会和看门狗都是可选的，可以关掉。"
       ],
       "docs": "想看得更深：[完整参考](docs/DETAILS.md)、[状态契约](docs/CONTRACTS.md)、[编排提示词](ORCHESTRATOR.md) 和 [总计划](docs/MASTER-PLAN.md)。上面这些说法的证据：`node scripts/helioz-probes.mjs` 会跑十三个对抗性探针，全部必须是绿的。",
-      "license": "MIT。见 [LICENSE](LICENSE)。"
+      "license": "MIT。见 [LICENSE](LICENSE)。",
+      "welcome": "你好。我是一名律师，有两个女儿和一份咖啡生意，晚上的时间很短。做 Helioz 是因为：只要我合上笔记本，活就停了。智能体忘记任务，把没做完的说成做完了，还为一个小岔路半夜叫醒我。\n\n它每天都在我自己的机器上跑。如果它能在你睡觉的时候推进你的工作，就拿去，把它变成你自己的。"
     }
   },
   "stages": {
@@ -357,5 +360,10 @@
         "alt": "Pantheon 宽幅大理石场景：Helioz 工作流程第 7 步，汇报、议事会、交接"
       }
     }
+  },
+  "owner_display_name": {
+    "en": "Filipp Zarubin",
+    "ru": "Филипп Зарубин",
+    "zh": "Filipp Zarubin"
   }
 }

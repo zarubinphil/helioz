@@ -8,6 +8,16 @@ Helioz 让长时间的智能体工作跨越会话、检查和交接继续推进�
 
 <p align="center"><img src="docs/assets/pantheon/hero.png" alt="白色大理石的赫利俄斯手持金色日轮站在古典石柱旁，蓝色与金色的丝线把玻璃卡片汇成一条传送带" width="100%"></p>
 
+<!-- owner-welcome:start -->
+
+> 你好。我是一名律师，有两个女儿和一份咖啡生意，晚上的时间很短。做 Helioz 是因为：只要我合上笔记本，活就停了。智能体忘记任务，把没做完的说成做完了，还为一个小岔路半夜叫醒我。
+>
+> 它每天都在我自己的机器上跑。如果它能在你睡觉的时候推进你的工作，就拿去，把它变成你自己的。
+>
+> — Filipp Zarubin
+
+<!-- owner-welcome:end -->
+
 ## 目录
 
 - [这是什么](#这是什么)
@@ -123,6 +133,8 @@ bash scripts/helioz-start.sh
 ```
 
 没有 Git？下载 [ZIP](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.zip) 解压后在里面执行同样的 `bash install.sh en`。习惯在终端里用压缩包？拿 [tar.gz](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.tar.gz)。
+
+第一次做这件事？[上手引导](docs/ONBOARDING.zh.md) 会一步一步带你走完第一次运行，并写清楚每条命令之后你会看到什么。
 
 **你会得到：** 安装脚本先做自我介绍，检查 Node、git 和你的智能体命令行，跑一遍各个器件的自检，然后告诉你还剩下哪些要手动做。
 

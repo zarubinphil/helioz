@@ -8,6 +8,16 @@ Helioz keeps long agent work moving across sessions, checks, and handoffs, so no
 
 <p align="center"><img src="docs/assets/pantheon/hero.png" alt="Helios in white marble with a golden sun disc beside the classical column, blue and gold threads assembling a conveyor of glass cards" width="100%"></p>
 
+<!-- owner-welcome:start -->
+
+> Hello. I am a lawyer with two daughters and a coffee business, and my evenings are short. I built Helioz because the work kept stopping the moment I closed the laptop: the agent forgot the task, called it done when it was not, and woke me at night over a small fork.
+>
+> It runs on my own machine every day. If it moves your work forward while you sleep, take it and make it yours.
+>
+> — Filipp Zarubin
+
+<!-- owner-welcome:end -->
+
 ## Contents
 
 - [What This Is](#what-this-is)
@@ -123,6 +133,8 @@ bash scripts/helioz-start.sh
 ```
 
 No Git? Download [the ZIP](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.zip), unpack it, and run the same `bash install.sh en` inside. Prefer an archive in the terminal? Take [the tarball](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.tar.gz).
+
+Never done this before? [The onboarding](docs/ONBOARDING.md) walks the whole first run step by step and says what you see after every command.
 
 **You get:** the installer introduces itself, checks Node, git, and your agent CLIs, runs the instrument selftests, and names what is left to do by hand.
 

@@ -16,7 +16,7 @@ In the old stories I drove the sun chariot across the sky every single day. No w
 
 Now I do the same with tasks.
 
-Philipp Zarubin built me. The reason is dull: he has no time. Night, court, kids, and the work sits still because nobody is driving it. Now I drive.
+Filipp Zarubin built me. The reason is dull: he has no time. Night, court, kids, and the work sits still because nobody is driving it. Now I drive.
 
 I work alongside [Zeuz](https://github.com/zarubinvibe/zeuz), the system factory; [Mnemazine](https://github.com/zarubinvibe/mnemazine), the memory layer; [Themis](https://github.com/zarubinvibe/themis), the legal workflow; and [Athena](https://github.com/zarubinvibe/athena), the agent OS. My one job here is continuity.
 
