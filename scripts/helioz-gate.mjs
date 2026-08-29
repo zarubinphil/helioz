@@ -608,12 +608,7 @@ async function cmdSelftest() {
   // 2–7. Изолированное состояние в tmp git-репо.
   const tmp = mkdtempSync(path.join(os.tmpdir(), 'helioz-selftest-'))
   try {
-    const env = {
-      ...process.env,
-      HELIOZ_HOME: tmp,
-      GIT_CONFIG_GLOBAL: os.devNull,
-      GIT_CONFIG_SYSTEM: os.devNull,
-    }
+    const env = { ...process.env, HELIOZ_HOME: tmp }
     const self = fileURLToPath(import.meta.url)
     const execScript = path.join(path.dirname(self), 'helioz-exec.mjs')
     const run = (args) => spawnSync(process.execPath, [self, ...args], { env, encoding: 'utf8' })
@@ -628,14 +623,14 @@ async function cmdSelftest() {
       kimi: { invoke_read: stub, invoke_write: stub, stdin_prompt: true, roles: ['execute', 'verify'] },
       codex: { invoke_read: stub, invoke_write: stub, stdin_prompt: true, roles: ['execute', 'verify'] },
     }))
-    execFileSync('git', ['-C', tmp, 'init', '-q'], { env })
+    execFileSync('git', ['-C', tmp, 'init', '-q'])
     writeFileSync(path.join(tmp, 'seed.txt'), 'seed\n')
-    execFileSync('git', ['-C', tmp, 'add', '-A'], { env })
-    execFileSync('git', ['-C', tmp, '-c', 'user.email=g@c', '-c', 'user.name=gate', 'commit', '-qm', 'seed'], { env })
+    execFileSync('git', ['-C', tmp, 'add', '-A'])
+    execFileSync('git', ['-C', tmp, '-c', 'user.email=g@c', '-c', 'user.name=gate', 'commit', '-qm', 'seed'])
     // второй коммит: маркер требует base≠head с реальным diff (пустой diff = фордж, ревью kimi)
     writeFileSync(path.join(tmp, 'seed.txt'), 'seed\nwork\n')
-    execFileSync('git', ['-C', tmp, 'add', '-A'], { env })
-    execFileSync('git', ['-C', tmp, '-c', 'user.email=g@c', '-c', 'user.name=gate', 'commit', '-qm', 'work'], { env })
+    execFileSync('git', ['-C', tmp, 'add', '-A'])
+    execFileSync('git', ['-C', tmp, '-c', 'user.email=g@c', '-c', 'user.name=gate', 'commit', '-qm', 'work'])
 
     // пустая очередь → exit 2 (fail-closed)
     eq(run(['--ready']).status, 2, 'пустая очередь обязана давать 2')

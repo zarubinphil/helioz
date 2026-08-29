@@ -46,7 +46,7 @@ if [ "${1:-}" = "--selftest" ]; then
   case "$out" in SKIP:heartbeat*) ;; *) echo "FAIL: при свежем heartbeat получили '$out'"; exit 1;; esac
   # проба 3: протухший heartbeat + незакрытая задача → START
   node -e "require('fs').writeFileSync('$TMP/.helioz/state/heartbeat.json',JSON.stringify({at:new Date(Date.now()-3600e3).toISOString()}))"
-  printf -- '---\nid: TW\npaths:\n  - docs/w.md\nexecutor: claude\nverifier: codex\ncheck_cmd: "true"\n---\n## Промт исполнителя\nx\n## Промт проверяющего\ny\n' > "$TMP/queue/tasks/TW.task.md"
+  printf -- '---\nid: TW\npaths:\n  - docs/w.md\ncheck_cmd: "true"\n---\n## Промт исполнителя\nx\n## Промт проверяющего\ny\n' > "$TMP/queue/tasks/TW.task.md"
   out=$(HELIOZ_HOME="$TMP" bash "$0" --dry-run)
   [ "$out" = "START" ] || { echo "FAIL: при протухшем heartbeat получили '$out'"; exit 1; }
   # проба 4: протухший heartbeat, но очередь закрыта → SKIP
