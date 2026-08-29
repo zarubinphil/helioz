@@ -1,7 +1,7 @@
 #!/bin/bash
 # СТОРОЖ КОНВЕЙЕРА - убийство оркестратора ничего не теряет: heartbeat протух → новый стартует с хэндоффом.
 # Запускается launchd каждые 2 минуты. Делает три вещи:
-#   1) zeus poll (стоп/пуск/ответы владельца доезжают даже при мёртвом оркестраторе) + flush отбивок;
+#   1) zeus poll (стоп/пуск/ответы владельца доезжают даже при мертвом оркестраторе) + flush отбивок;
 #   2) при STOP - молчит (не стартует ничего);
 #   3) heartbeat старше порога и есть незакрытая работа → поднимает новую сессию оркестратора.
 # --dry-run: печатает решение, ничего не запускает. --selftest: детерминированные пробы.
@@ -57,7 +57,7 @@ if [ "${1:-}" = "--selftest" ]; then
   exit 0
 fi
 
-# штатный прогон: связь с владельцем даже при мёртвом оркестраторе
+# штатный прогон: связь с владельцем даже при мертвом оркестраторе
 node "$SELF/helioz-zeus.mjs" poll --timeout 20 >> "$LOGS/watchdog.log" 2>&1 || true
 node "$SELF/helioz-zeus.mjs" flush >> "$LOGS/watchdog.log" 2>&1 || true
 
@@ -66,7 +66,7 @@ if [ "${1:-}" = "--dry-run" ]; then echo "$DECISION"; exit 0; fi
 echo "$(date '+%F %T') watchdog: $DECISION" >> "$LOGS/watchdog.log"
 [ "$DECISION" = "START" ] || exit 0
 
-# двойной старт запрещён: pid прошлого оркестратора ещё жив → не трогаем
+# двойной старт запрещен: pid прошлого оркестратора еще жив → не трогаем
 if [ -f "$STATE/orchestrator.pid" ] && kill -0 "$(cat "$STATE/orchestrator.pid")" 2>/dev/null; then
   echo "$(date '+%F %T') watchdog: pid жив, не стартуем" >> "$LOGS/watchdog.log"; exit 0
 fi

@@ -1,5 +1,5 @@
 #!/bin/bash
-# ЗАПУСК КОНВЕЙЕРА ОДНОЙ СТРОКОЙ: приборы зелёные → heartbeat → отбивка → что дальше.
+# ЗАПУСК КОНВЕЙЕРА ОДНОЙ СТРОКОЙ: приборы зеленые → heartbeat → отбивка → что дальше.
 set -u
 SELF="$(cd "$(dirname "$0")" && pwd)"
 HOME_DIR="$(dirname "$SELF")"
@@ -15,7 +15,7 @@ for t in "node scripts/helioz-plan.mjs --selftest" \
          "bash scripts/helioz-watchdog.sh --selftest"; do
   if $t >/dev/null 2>&1; then echo "  ok  $t"; else echo "  FAIL $t"; fail=1; fi
 done
-[ "$fail" -eq 0 ] || { echo "приборы красные - запуск запрещён (fail-closed)"; exit 2; }
+[ "$fail" -eq 0 ] || { echo "приборы красные - запуск запрещен (fail-closed)"; exit 2; }
 
 node scripts/helioz-gate.mjs --beat "start.sh"
 node scripts/helioz-zeus.mjs send --text "🚀 Конвейер запущен. Очередь: $(ls queue/tasks/*.task.md 2>/dev/null | wc -l | tr -d ' ') задач. «стоп» - заморозить, «пуск» - продолжить." >/dev/null 2>&1 || true

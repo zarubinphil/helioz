@@ -1,4 +1,4 @@
-# Контракты состояния - всё на диске, ничего в памяти агента
+# Контракты состояния - все на диске, ничего в памяти агента
 
 Все пути относительно дома проекта. Писать состояние вправе только приборы (`scripts/*.mjs`);
 оркестратор-LLM читает и вызывает приборы, руками файлы состояния не правит.
@@ -23,10 +23,10 @@ BRIEF хранит по слоту три поля, разметка машин�
 
 ## Планы - `docs/MASTER-PLAN.md` + `queue/tasks/*.task.md`
 
-Рождает `plan plan`: два разных CLI планируют независимо, третий сводит вслепую. Ворота приёмки плана
+Рождает `plan plan`: два разных CLI планируют независимо, третий сводит вслепую. Ворота приемки плана
 (`validatePlan`) отвергают: задачу без `check_cmd`, без дословных промтов ролей, с >3 путями,
 с исполнителем=проверяющим, с зависимостью-призраком, с пересечением путей внутри волны. Мастер-план -
-карта для оркестратора; исполняется всё равно через очередь и гейт.
+карта для оркестратора; исполняется все равно через очередь и гейт.
 
 ## Задача - `queue/tasks/<ID>.task.md`
 
@@ -39,7 +39,7 @@ paths:                        # точные пути, по ним гейт бл
 requires: []                  # id задач, чьи маркеры обязаны быть done
 executor: kimi                # предпочтение; ротация может заменить (факт - в маркере)
 verifier: codex               # ОБЯЗАН отличаться от фактического исполнителя
-check_cmd: "grep -q '## Таблица' docs/LESSON-1.md"   # приёмка кодом, exit 0
+check_cmd: "grep -q '## Таблица' docs/LESSON-1.md"   # приемка кодом, exit 0
 probe_cmd: "! grep -q 'ВРАЖДЕБНАЯ-МЕТКА' docs/LESSON-1.md"  # враждебная проба, exit 0 = красный пойман
 stop: "две попытки подряд красные → развилка владельцу"
 price: "≤10 мин, ≤50к токенов"
@@ -49,11 +49,11 @@ kind: default                 # default | prod | foreign | expensive - клас�
 (дословный, заморожен при постановке)
 
 ## Промт проверяющего
-(слепой: диск + команды, отчёт исполнителя не передавать)
+(слепой: диск + команды, отчет исполнителя не передавать)
 ```
 
 Задача без `check_cmd`, без `executor`/`verifier` или с одинаковыми CLI в конвейер НЕ принимается
-(`--ready` её не отдаёт, помечает `invalid`).
+(`--ready` ее не отдает, помечает `invalid`).
 
 ## Маркер - `.helioz/state/markers/<ID>.done.json`
 
@@ -65,7 +65,7 @@ kind: default                 # default | prod | foreign | expensive - клас�
 `task, task_sha, check_cmd, exit_code, base, head, sha_of_changed_files, external, external_sha, executor_cli, verifier_cli, finished_at, written_by:"helioz-gate"`.
 `task_sha` пересчитывается по текущему файлу задачи, `check_cmd` обязан совпадать с задачей,
 `sha_of_changed_files` пересчитывается по base..head, `external_sha` — по абсолютным путям из
-`paths`. Любое несовпадение, отсутствие зелёной exec-квитанции или рукописная квитанция
+`paths`. Любое несовпадение, отсутствие зеленой exec-квитанции или рукописная квитанция
 без подписи `helioz-exec` = tampered.
 
 Живой smoke перед передачей/публикацией: `node scripts/helioz-gate.mjs --smoke --json`.
@@ -87,13 +87,13 @@ kind: default                 # default | prod | foreign | expensive - клас�
 }
 ```
 
-`kind` из {prod, foreign, expensive} - совет решать НЕ вправе (exit 2), ждёт владельца.
-`kind=default` - днём дефолтом решает оркестратор (фиксация в ledger), ночью - совет.
+`kind` из {prod, foreign, expensive} - совет решать НЕ вправе (exit 2), ждет владельца.
+`kind=default` - днем дефолтом решает оркестратор (фиксация в ledger), ночью - совет.
 
 ## Отбивка - `.helioz/state/outbox/<ts>-<n>.json`
 
 `{"text": "…", "quiet": true|false, "buttons": [[{"text","callback_data"}]] , "delivered_at": null, "attempts": 0}`
-Durable-запись ПЕРВОЙ, отправка best-effort. `flush` дошлёт недоставленное. Пустых отбивок без данных не бывает.
+Durable-запись ПЕРВОЙ, отправка best-effort. `flush` дошлет недоставленное. Пустых отбивок без данных не бывает.
 
 ## Ledger - `.helioz/state/ledger.jsonl` (append-only)
 
@@ -106,14 +106,14 @@ Durable-запись ПЕРВОЙ, отправка best-effort. `flush` дош�
 - `running.json` - `{"running":[{"task","started_at","executor"}]}`.
 - `heartbeat.json` - `{"at","pid","note"}`; пишет `--beat`. Старше `watchdog_stale_min` → watchdog перезапускает оркестратора с `docs/HANDOFF.md` на входе.
 - `STOP` - файл-флаг. Есть → `--ready`/`--start` отказывают (exit 4), watchdog молчит. Ставится по «стоп» из Telegram или `--stop`; снимается «пуск»/`--go`.
-- `budget.json` - `{"started_at","ceiling_usd","ceiling_tokens"}`; `--budget` меряет факт по jsonl трёх CLI, превышение → exit 3.
+- `budget.json` - `{"started_at","ceiling_usd","ceiling_tokens"}`; `--budget` меряет факт по jsonl трех CLI, превышение → exit 3.
 - `telegram-offset.json` - оффсет getUpdates.
-- `READY.json` - пишет ТОЛЬКО `helioz-probes.mjs` при всех пробах зелёных:
+- `READY.json` - пишет ТОЛЬКО `helioz-probes.mjs` при всех пробах зеленых:
   `{"written_by":"helioz-probes","probes":[...],"head","at"}`.
 
-## Приём чужой работы - `--adopt <dir>`
+## Прием чужой работы - `--adopt <dir>`
 
-Ждёт в `<dir>`: `ledger.jsonl` и/или `dilemmas/*.json`. Слияние идемпотентно:
+Ждет в `<dir>`: `ledger.jsonl` и/или `dilemmas/*.json`. Слияние идемпотентно:
 строки ledger - по sha256 строки, развилки - по id (коллизия id при разном содержимом → префикс `adX-`).
 Ничего не удаляется и не перезаписывается.
 
