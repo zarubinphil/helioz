@@ -1,6 +1,6 @@
 # Helioz
 
-Helioz keeps long agent work moving across sessions, checks, and handoffs, so nothing stalls while you sleep.
+While you sleep the work keeps moving: Helioz drives it and shows you in the morning what shifted.
 
 [Русский](README.ru.md) · [中文](README.zh.md)
 
@@ -35,21 +35,21 @@ Helioz keeps long agent work moving across sessions, checks, and handoffs, so no
 
 ## What This Is
 
-Helioz is a conveyor for agent work. You say what you want once. It interrogates you, writes the plans, hands tasks to coding agents, checks the result with a second agent, and reports back. It runs on your machine and keeps every bit of state on disk.
+Helioz is a conveyor. You say one sentence about what you need. It interrogates you until the goal is clear, cuts it into small tasks and hands them to agents. Whoever did the work never checks it. All of this runs on your own machine, and everything Helioz knows sits on disk.
 
 ## Why It Helps
 
-An agent forgets the task between sessions, says "done" when it is not, and wakes you at night over a small fork. Helioz answers each of those with an instrument: state on disk, a blind verifier, and a night council. You get progress by morning instead of a stalled chat window.
+An agent forgets the task the moment you close the laptop. It says done when it is not. It wakes you at night over nothing. Each of those gets an instrument here rather than a promise: the state lives on disk, a stranger does the checking, and small night forks go to a council. In the morning you read what moved instead of staring at a frozen chat.
 
 ## The Main Advantage
 
-**Main advantage:** the finish mark is written by code, not by the agent that did the work.
+**Main advantage:** the finish mark is written by code, not by whoever did the work.
 
-**Why this is better:** a mark carries the commits before and after, a hash of the changed files, and the exit code of the check command. A copied or hand-written mark is caught and named out loud.
+**Why this is better:** Inside the mark: the commits before and after, a hash of the changed files, the exit code of the check. Forging it does not work. A mark copied from another task or typed in by hand gets caught and named out loud.
 
 ## How It Works
 
-One tact runs in a loop. Each step leaves a file on disk, so a killed session continues from the same line.
+The tact runs in a circle and leaves a file at every step. Kill the session mid-task and the next one continues from the same line.
 
 <!-- workflow-diagram:start -->
 
@@ -137,7 +137,7 @@ Progress goes to Telegram and to disk. A small fork goes to a council of four le
 
 ## Quickstart
 
-You need macOS or Linux, Node.js 20 or newer, git, and at least one agent CLI: `claude`, `codex`, or `kimi`. Pick any of the three ways in.
+You need a Mac or Linux, Node.js 20 or newer, git, and at least one agent in the terminal: `claude`, `codex` or `kimi`. Three doors from here, any of them works.
 
 ```bash
 git clone https://github.com/zarubinvibe/helioz.git ~/helioz
@@ -150,7 +150,7 @@ No Git? Download [the ZIP](https://github.com/zarubinvibe/helioz/archive/refs/he
 
 Never done this before? [The onboarding](docs/ONBOARDING.md) walks the whole first run step by step and says what you see after every command.
 
-**You get:** the installer introduces itself, checks Node, git, and your agent CLIs, runs the instrument selftests, and names what is left to do by hand.
+**You get:** the installer explains what it is, looks at what you already have, runs its own selftests, and names honestly what is left for you to do.
 
 ## Simple Comparison
 
@@ -182,18 +182,18 @@ Never done this before? [The onboarding](docs/ONBOARDING.md) walks the whole fir
 - Production actions and expensive forks are refused by the council and wait for you.
 - An empty queue, unreadable state, or a goalless council is a red result, not a pass.
 
-Review `git diff` and run the public gate before any push.
+Before any push, read `git diff` and run the public gate.
 
 ## Limits
 
-Status: working local system, run daily by its author.
+Status: working, its author runs it daily.
 
 - macOS and Linux only; there is no Windows path.
 - Quality of the work is the quality of the agent CLI you installed.
 - The gate proves file state and command output. It does not judge product taste.
 - Telegram, the night council, and the watchdog are optional and can be switched off.
 
-Deeper reading: [the full reference](docs/DETAILS.md), [state contracts](docs/CONTRACTS.md), [the orchestrator prompt](ORCHESTRATOR.md), and [the master plan](docs/MASTER-PLAN.md). Proof of the claims above: `node scripts/helioz-probes.mjs` runs thirteen adversarial probes and all of them must be green.
+Deeper: [the full reference](docs/DETAILS.md), [state contracts](docs/CONTRACTS.md), [the orchestrator prompt](ORCHESTRATOR.md), [the master plan](docs/MASTER-PLAN.md). Not taking it on trust? `node scripts/helioz-probes.mjs` runs thirteen probes that try to fool it. All of them must come back green.
 
 ## Star And Contribute
 

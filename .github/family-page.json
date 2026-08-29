@@ -14,16 +14,16 @@
     "en": {
       "title": "Helioz",
       "name": "Helioz",
-      "tagline": "Helioz keeps long agent work moving across sessions, checks, and handoffs, so nothing stalls while you sleep.",
+      "tagline": "While you sleep the work keeps moving: Helioz drives it and shows you in the morning what shifted.",
       "hero_alt": "Helios in white marble with a golden sun disc beside the classical column, blue and gold threads assembling a conveyor of glass cards",
-      "what": "Helioz is a conveyor for agent work. You say what you want once. It interrogates you, writes the plans, hands tasks to coding agents, checks the result with a second agent, and reports back. It runs on your machine and keeps every bit of state on disk.",
-      "why": "An agent forgets the task between sessions, says \"done\" when it is not, and wakes you at night over a small fork. Helioz answers each of those with an instrument: state on disk, a blind verifier, and a night council. You get progress by morning instead of a stalled chat window.",
-      "advantage": "the finish mark is written by code, not by the agent that did the work.",
-      "better": "a mark carries the commits before and after, a hash of the changed files, and the exit code of the check command. A copied or hand-written mark is caught and named out loud.",
-      "how": "One tact runs in a loop. Each step leaves a file on disk, so a killed session continues from the same line.",
-      "quick_intro": "You need macOS or Linux, Node.js 20 or newer, git, and at least one agent CLI: `claude`, `codex`, or `kimi`. Pick any of the three ways in.",
+      "what": "Helioz is a conveyor. You say one sentence about what you need. It interrogates you until the goal is clear, cuts it into small tasks and hands them to agents. Whoever did the work never checks it. All of this runs on your own machine, and everything Helioz knows sits on disk.",
+      "why": "An agent forgets the task the moment you close the laptop. It says done when it is not. It wakes you at night over nothing. Each of those gets an instrument here rather than a promise: the state lives on disk, a stranger does the checking, and small night forks go to a council. In the morning you read what moved instead of staring at a frozen chat.",
+      "advantage": "the finish mark is written by code, not by whoever did the work.",
+      "better": "Inside the mark: the commits before and after, a hash of the changed files, the exit code of the check. Forging it does not work. A mark copied from another task or typed in by hand gets caught and named out loud.",
+      "how": "The tact runs in a circle and leaves a file at every step. Kill the session mid-task and the next one continues from the same line.",
+      "quick_intro": "You need a Mac or Linux, Node.js 20 or newer, git, and at least one agent in the terminal: `claude`, `codex` or `kimi`. Three doors from here, any of them works.",
       "quick_extra": "No Git? Download [the ZIP](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.zip), unpack it, and run the same `bash install.sh en` inside. Prefer an archive in the terminal? Take [the tarball](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.tar.gz). First time here? Open the project in Claude Code and run `/helioz-setup`: the install goes as a conversation, one question at a time, and nothing is installed without your yes.",
-      "quick_result": "the installer introduces itself, checks Node, git, and your agent CLIs, runs the instrument selftests, and names what is left to do by hand.",
+      "quick_result": "the installer explains what it is, looks at what you already have, runs its own selftests, and names honestly what is left for you to do.",
       "compare": [
         [
           "**Helioz**",
@@ -68,31 +68,31 @@
         "Production actions and expensive forks are refused by the council and wait for you.",
         "An empty queue, unreadable state, or a goalless council is a red result, not a pass."
       ],
-      "safety_tail": "Review `git diff` and run the public gate before any push.",
-      "status": "Status: working local system, run daily by its author.",
+      "safety_tail": "Before any push, read `git diff` and run the public gate.",
+      "status": "Status: working, its author runs it daily.",
       "limits": [
         "macOS and Linux only; there is no Windows path.",
         "Quality of the work is the quality of the agent CLI you installed.",
         "The gate proves file state and command output. It does not judge product taste.",
         "Telegram, the night council, and the watchdog are optional and can be switched off."
       ],
-      "docs": "Deeper reading: [the full reference](docs/DETAILS.md), [state contracts](docs/CONTRACTS.md), [the orchestrator prompt](ORCHESTRATOR.md), and [the master plan](docs/MASTER-PLAN.md). Proof of the claims above: `node scripts/helioz-probes.mjs` runs thirteen adversarial probes and all of them must be green.",
+      "docs": "Deeper: [the full reference](docs/DETAILS.md), [state contracts](docs/CONTRACTS.md), [the orchestrator prompt](ORCHESTRATOR.md), [the master plan](docs/MASTER-PLAN.md). Not taking it on trust? `node scripts/helioz-probes.mjs` runs thirteen probes that try to fool it. All of them must come back green.",
       "license": "MIT. See [LICENSE](LICENSE).",
       "welcome": "Hello. I am a lawyer with two daughters and a coffee business, and my evenings are short. I built Helioz because the work kept stopping the moment I closed the laptop: the agent forgot the task, called it done when it was not, and woke me at night over a small fork.\n\nIt runs on my own machine every day. If it moves your work forward while you sleep, take it and make it yours."
     },
     "ru": {
       "title": "Helioz",
       "name": "Helioz",
-      "tagline": "Helioz двигает долгую работу агентов через сессии, проверки и передачи, чтобы дело не вставало, пока вы спите.",
+      "tagline": "Пока вы спите, работа не стоит: Helioz ведёт её дальше и утром показывает, что сдвинулось.",
       "hero_alt": "Гелиос из белого мрамора с золотым солнечным диском у классической колонны, голубые и золотые нити собирают конвейер стеклянных карточек",
-      "what": "Helioz это конвейер для работы агентов. Вы один раз говорите, что нужно. Он допрашивает вас, пишет планы, раздаёт задачи агентам, проверяет результат вторым агентом и отчитывается. Работает на вашем компьютере, всё состояние лежит на диске.",
-      "why": "Агент забывает задачу между сессиями, говорит «готово», когда не готово, и будит вас ночью из-за мелкой развилки. На каждую из этих бед у Helioz есть прибор: состояние на диске, слепой проверяющий и ночной совет. К утру у вас движение, а не замерший чат.",
-      "advantage": "отметку о готовности пишет код, а не тот агент, который делал работу.",
-      "better": "в отметке лежат коммиты до и после, хеш изменённых файлов и код возврата проверочной команды, поэтому скопированную или написанную руками отметку видно и о ней говорят вслух.",
-      "how": "Такт крутится по кругу. Каждый шаг оставляет файл на диске, поэтому убитая сессия продолжает с той же строки.",
-      "quick_intro": "Нужны macOS или Linux, Node.js 20 или новее, git и хотя бы один агентский CLI: `claude`, `codex` или `kimi`. Заходить можно любым из трёх путей.",
+      "what": "Helioz это конвейер. Вы говорите одну фразу о том, что нужно сделать. Дальше он допрашивает вас, пока не поймёт цель, режет её на мелкие задачи и раздаёт агентам. Проверяет результат не тот, кто его делал. Крутится всё это на вашем компьютере, и всё, что Helioz знает, лежит на диске.",
+      "why": "Агент забывает задачу, стоит закрыть ноутбук. Говорит «готово», когда не готово. Будит ночью из-за ерунды. На каждую беду тут стоит прибор, а не обещание: состояние живёт на диске, проверяет чужой, мелкие ночные развилки уходят в совет. Утром вы читаете, что сдвинулось, а не смотрите на замерший чат.",
+      "advantage": "отметку «сделано» ставит код, а не тот, кто делал работу.",
+      "better": "Внутри отметки коммиты до и после, хеш изменённых файлов, код возврата проверки. Подделать не выйдет. Скопированную из другой задачи или дописанную руками отметку он находит и говорит о ней вслух.",
+      "how": "Такт идёт по кругу и на каждом шаге оставляет файл. Убейте сессию посреди работы, следующая продолжит с той же строки.",
+      "quick_intro": "Нужен Mac или Linux, Node.js 20 или новее, git и хотя бы один агент в терминале: `claude`, `codex` или `kimi`. Дальше три двери, любая подходит.",
       "quick_extra": "Нет Git? Скачайте [ZIP](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.zip), распакуйте и запустите внутри тот же `bash install.sh en`. Привыкли к архиву из терминала? Возьмите [tar.gz](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.tar.gz). Первый раз? Откройте проект в Claude Code и запустите `/helioz-setup`: установка пройдёт разговором, по одному вопросу, и ничего не поставится без вашего «да».",
-      "quick_result": "установщик представляется, проверяет Node, git и ваши агентские CLI, гоняет селф-тесты приборов и называет то, что осталось сделать руками.",
+      "quick_result": "установщик сначала объясняет, кто он такой, потом смотрит, что у вас уже стоит, гоняет самопроверки и честно называет то, что осталось на вас.",
       "compare": [
         [
           "**Helioz**",
@@ -137,31 +137,31 @@
         "Продакшн-действия и дорогие развилки совет отклоняет, они ждут вас.",
         "Пустая очередь, нечитаемое состояние или совет без цели это красный результат, а не пропуск."
       ],
-      "safety_tail": "Перед любым push просмотрите `git diff` и прогоните публичный gate.",
-      "status": "Статус: рабочая локальная система, автор гоняет её каждый день.",
+      "safety_tail": "Перед любым push посмотрите `git diff` и прогоните публичный gate.",
+      "status": "Статус: работает, автор гоняет каждый день.",
       "limits": [
         "Только macOS и Linux, пути под Windows нет.",
         "Качество работы это качество того агентского CLI, который вы поставили.",
         "Ворота доказывают состояние файлов и вывод команд, но не оценивают продуктовый вкус.",
         "Telegram, ночной совет и сторож необязательны, их можно выключить."
       ],
-      "docs": "Глубже: [полный разбор](docs/DETAILS.ru.md), [контракты состояния](docs/CONTRACTS.md), [промпт оркестратора](ORCHESTRATOR.md) и [мастер-план](docs/MASTER-PLAN.md). Доказательство сказанного выше: `node scripts/helioz-probes.mjs` гоняет тринадцать враждебных проб, и все они должны быть зелёными.",
+      "docs": "Глубже: [полный разбор](docs/DETAILS.ru.md), [контракты состояния](docs/CONTRACTS.md), [промпт оркестратора](ORCHESTRATOR.md), [мастер-план](docs/MASTER-PLAN.md). Не верите на слово? `node scripts/helioz-probes.mjs` гоняет тринадцать проб, которые пытаются его обмануть. Все должны быть зелёными.",
       "license": "MIT. Текст в файле [LICENSE](LICENSE).",
       "welcome": "Привет. Я юрист, у меня две дочки и кофейное дело, а вечера короткие. Helioz появился, потому что работа вставала ровно в тот момент, когда я закрывал ноутбук: агент забывал задачу, называл сделанным несделанное и будил ночью из-за мелкой развилки.\n\nОн крутится у меня каждый день. Если он двигает вашу работу, пока вы спите, забирайте и делайте своим."
     },
     "zh": {
       "title": "Helioz",
       "name": "Helioz",
-      "tagline": "Helioz 让长时间的智能体工作跨越会话、检查和交接继续推进，你睡觉的时候活也不停。",
+      "tagline": "你睡觉的时候活不会停：Helioz 继续往前推，早上告诉你动了什么。",
       "hero_alt": "白色大理石的赫利俄斯手持金色日轮站在古典石柱旁，蓝色与金色的丝线把玻璃卡片汇成一条传送带",
-      "what": "Helioz 是一条智能体工作的传送带。你只说一次要做什么。它逐条追问，写出计划，把任务交给编码智能体，再让第二个智能体检查结果，然后向你汇报。它跑在你自己的电脑上，所有状态都写在磁盘里。",
-      "why": "智能体在会话之间会忘记任务，没做完也说“做完了”，还会为一个小岔路在半夜叫醒你。Helioz 对每一条毛病都给出一件工具：状态写在磁盘、盲检的验证者、夜间议事会。早上你看到的是进展，而不是停住的对话框。",
-      "advantage": "完成标记由代码写下，而不是由干活的那个智能体自己写。",
-      "better": "标记里记着前后两个提交、改动文件的哈希和检查命令的退出码。复制来的或手写的标记会被发现，并被当场点名。",
-      "how": "一个节拍循环运行。每一步都在磁盘上留下文件，所以会话被杀掉，也能从同一行继续。",
-      "quick_intro": "你需要 macOS 或 Linux、Node.js 20 以上、git，以及至少一个智能体命令行：`claude`、`codex` 或 `kimi`。三条路进来都行。",
+      "what": "Helioz 是一条传送带。你只说一句话：要做什么。它一直追问，直到目标清楚，然后把目标切成小任务分给智能体。干活的那个从不检查自己的活。这些都在你自己的机器上跑，它知道的一切都写在磁盘上。",
+      "why": "合上笔记本，智能体就忘了任务。没做完也说做完了。为一点小事半夜叫醒你。这里每一条毛病都对应一件工具，而不是一句承诺：状态写在磁盘，检查的人不是干活的人，夜里的小岔路交给议事会。早上你读到的是进展，而不是一个停住的对话框。",
+      "advantage": "完成标记由代码写下，不是由干活的那个智能体写。",
+      "better": "标记里有前后两个提交、改动文件的哈希、检查命令的退出码。伪造行不通。从别的任务复制来的、或者手敲上去的标记，会被抓出来并当场点名。",
+      "how": "节拍绕圈跑，每一步都在磁盘上留下文件。半路把会话杀掉，下一个会话从同一行接着走。",
+      "quick_intro": "需要 Mac 或 Linux、Node.js 20 以上、git，以及终端里至少一个智能体：`claude`、`codex` 或 `kimi`。从这里有三扇门，走哪扇都行。",
       "quick_extra": "没有 Git？下载 [ZIP](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.zip) 解压后在里面执行同样的 `bash install.sh en`。习惯在终端里用压缩包？拿 [tar.gz](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.tar.gz)。 第一次用？在 Claude Code 里打开项目并运行 `/helioz-setup`：安装以对话的方式进行，一次问一个问题，没有你的同意不会装任何东西。",
-      "quick_result": "安装脚本先做自我介绍，检查 Node、git 和你的智能体命令行，跑一遍各个器件的自检，然后告诉你还剩下哪些要手动做。",
+      "quick_result": "安装脚本先说明自己是什么，再看你已经有什么，跑一遍自检，最后老实告诉你还剩什么要自己做。",
       "compare": [
         [
           "**Helioz**",
@@ -206,15 +206,15 @@
         "生产环境的动作和代价大的岔路会被议事会拒绝，它们等你来定。",
         "空队列、读不出来的状态、没有目标的议事会都算红色结果，不算通过。"
       ],
-      "safety_tail": "任何 push 之前，先看 `git diff`，再跑一遍公开发布闸门。",
-      "status": "状态：可用的本地系统，作者每天都在用。",
+      "safety_tail": "任何 push 之前，先看 `git diff`，再跑一遍公开闸门。",
+      "status": "状态：可用，作者每天都在跑。",
       "limits": [
         "只支持 macOS 和 Linux，没有 Windows 的路径。",
         "工作的质量就是你装的那个智能体命令行的质量。",
         "闸门证明的是文件状态和命令输出，不评判产品品味。",
         "Telegram、夜间议事会和看门狗都是可选的，可以关掉。"
       ],
-      "docs": "想看得更深：[完整参考](docs/DETAILS.md)、[状态契约](docs/CONTRACTS.md)、[编排提示词](ORCHESTRATOR.md) 和 [总计划](docs/MASTER-PLAN.md)。上面这些说法的证据：`node scripts/helioz-probes.mjs` 会跑十三个对抗性探针，全部必须是绿的。",
+      "docs": "想更深：[完整参考](docs/DETAILS.md)、[状态契约](docs/CONTRACTS.md)、[编排提示词](ORCHESTRATOR.md)、[总计划](docs/MASTER-PLAN.md)。不想只听说法？`node scripts/helioz-probes.mjs` 会跑十三个专门骗它的探针，必须全绿。",
       "license": "MIT。见 [LICENSE](LICENSE)。",
       "welcome": "你好。我是一名律师，有两个女儿和一份咖啡生意，晚上的时间很短。做 Helioz 是因为：只要我合上笔记本，活就停了。智能体忘记任务，把没做完的说成做完了，还为一个小岔路半夜叫醒我。\n\n它每天都在我自己的机器上跑。如果它能在你睡觉的时候推进你的工作，就拿去，把它变成你自己的。"
     }
