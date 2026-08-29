@@ -1,171 +1,183 @@
-# helioz - the work never stops
+# Helioz
 
-Helioz is a local-first agent work conveyor that keeps long tasks moving across sessions, agents, checks, and handoffs.
+Helioz keeps long agent work moving across sessions, checks, and handoffs, so nothing stalls while you sleep.
 
-<p align="center">
-  <img src="docs/assets/pantheon/hero.png" alt="Helioz: a white marble statue of Helios with a golden sun-disc beside the classical column, warm ivory light, blue and gold threads assembling a conveyor of glass cards" width="100%">
-</p>
+[Русский](README.ru.md)
 
-## Who I am
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![Stars](https://img.shields.io/github/stars/zarubinvibe/helioz?style=flat&color=C9A87A)](https://github.com/zarubinvibe/helioz/stargazers) [![Status](https://img.shields.io/badge/status-working-brightgreen.svg)](https://github.com/zarubinvibe/helioz) [![Olympuz](https://img.shields.io/badge/olympuz-family-B8D6EA.svg)](https://github.com/zarubinvibe/athena#olympuz-family)
 
-Hello. I am Helioz.
+<p align="center"><img src="docs/assets/pantheon/hero.png" alt="Helios in white marble with a golden sun disc beside the classical column, blue and gold threads assembling a conveyor of glass cards" width="100%"></p>
 
-In the old stories I drove the sun chariot across the sky every single day. No weekends, no holidays, no "not feeling it today". The sun rose because I was working.
+## Contents
 
-Now I do the same with tasks.
+- [What This Is](#what-this-is)
+- [Why It Helps](#why-it-helps)
+- [The Main Advantage](#the-main-advantage)
+- [How It Works](#how-it-works)
+- [Quickstart](#quickstart)
+- [Simple Comparison](#simple-comparison)
+- [Simple Words](#simple-words)
+- [Safety And Privacy](#safety-and-privacy)
+- [Limits](#limits)
+- [Star And Contribute](#star-and-contribute)
 
-Philipp Zarubin built me. The reason is dull: he has no time. Night, court, kids, and the work sits still because nobody is driving it. Now I drive.
+<!-- beginner-readme:start -->
 
-I work alongside [Zeuz](https://github.com/zarubinvibe/zeuz), the system factory; [Mnemazine](https://github.com/zarubinvibe/mnemazine), the memory layer; [Themis](https://github.com/zarubinvibe/themis), the legal workflow; and [Athena](https://github.com/zarubinvibe/athena), the agent OS. My one job here is continuity.
+## What This Is
 
-## Why you need me
+Helioz is a conveyor for agent work. You say what you want once. It interrogates you, writes the plans, hands tasks to coding agents, checks the result with a second agent, and reports back. It runs on your machine and keeps every bit of state on disk.
 
-Picture a worker who can do anything but lies, wakes you over nothing, and forgets everything. He says "done" when it is not. He calls at 3am to ask about an indent. Switch him off for a minute, switch him back on, and he cannot recall what he was doing.
+## Why It Helps
 
-Every flaw gets an instrument, not a promise.
+An agent forgets the task between sessions, says "done" when it is not, and wakes you at night over a small fork. Helioz answers each of those with an instrument: state on disk, a blind verifier, and a night council. You get progress by morning instead of a stalled chat window.
 
-**I never start from a guess.** The interrogation comes first. One question at a time, each with my own answer already attached: agree and say "yes". The topics are fixed, so half a day later it never turns out we were carefully building the wrong thing. Without answers to the main questions I refuse to plan.
+## The Main Advantage
 
-**"Done" is judged by a program, not by whoever did the work.** One agent works, another verifies, and the verifier never reads the first one's report: it looks at the disk and runs commands. Nobody grades their own homework. Me included.
+**Main advantage:** the finish mark is written by code, not by the agent that did the work.
 
-**The "finished" mark is written by code.** Inside it are fingerprints: commits before and after, a hash of the changed files, the exit code of the check. Forging it does not work. A mark written by hand, truncated, or copied from another task gets seen and called out loud.
+**Why this is better:** a mark carries the commits before and after, a hash of the changed files, and the exit code of the check command. A copied or hand-written mark is caught and named out loud.
 
-**At night nobody wakes you.** Small forks go to a council with four lenses: risk, cost of undoing, your constraints, and simplicity. A decision needs at least three valid positions. Each advisor writes alone, blind to the others. Then the decision is checked against your goal. In the morning you read it and replay it with one message if you disagree.
+## How It Works
 
-**Three things I never decide.** Production actions, a clash with someone else's work, and a fork that is expensive to undo either way. Those wait for you. While they wait I take other work, because idling is not something I do.
+One tact runs in a loop. Each step leaves a file on disk, so a killed session continues from the same line.
 
-**Kill me at any moment and nothing is lost.** Everything I know lives on disk, not in my head. The next me continues from the same line.
-
-**Empty counts as red.** An empty queue, unreadable state, a council with no goal: all refusals, not "eh, close enough". A gate that turns green on nothing is worse than no gate at all.
-
-## How it looks
-
-All I need from you is one sentence:
-
-```bash
-node scripts/helioz-plan.mjs grill --idea "move billing onto the new schema"
-```
-
-Then I interrogate you. One question at a time, each with my recommendation: agree, answer "yes", and it records itself. The questions are not improvised. The interview has a fixed set of slots: the goal, how readiness is measured, what must never be touched, what counts as failure, what I may decide alone. A separate block walks into awkward corners: where it breaks first, what falls apart after a month, which obvious solution you actually do not want. Anything the disk can answer I never ask, I go and look.
-
-Answer wherever you happen to be working. The channel means nothing to me, the question goes out everywhere at once:
-
-- in your editor: fill in the answer line inside `queue/BRIEF.md`, from VS Code, a JetBrains IDE, a desktop app or vim;
-- in a terminal or an agent session (Claude Code, Codex, whatever you run): `node scripts/helioz-plan.mjs answer --slot goal.done --text "yes"`;
-- in Telegram: just message the bot when you are out and only have a phone.
-
-Start in the cockpit, continue from a taxi, finish in the terminal. The state is one and it lives on disk.
-
-While a single critical slot sits empty there will be no plans. Not to be difficult: guessing costs more than waiting for one sentence from you. I will not idle over it either, I take other work and the question keeps hanging.
-
-Once the interview closes, I write the plans myself. A master plan for me, a pile of small tasks for the executors, and the smaller the task the better. Two different agents plan alone, blind to each other's draft. A third merges them blind. One agent, however clever, is fond of its own mistakes. Two of them argue.
+<!-- workflow-diagram:start -->
 
 ```text
-one sentence of intent
-   ↓
-slot-driven interrogation (one question at a time, with a recommendation) → queue/BRIEF.md
-   ↓
-final goal → queue/GOAL.md   (the compass for every decision made without you)
-   ↓
-plans: two agents apart → blind merge → docs/MASTER-PLAN.md + queue/tasks/*.task.md
-   ↓
-tact: heartbeat → pull your answers → budget → pick a task → probe the agents
-   → start (code will not let two touch one file) → executor → blind verifier
-   → check command + adversarial probe → integrity mark → report to you
-   ↓
-fork? your three cases wait in the queue while I keep working · small night forks go to the council
-   (lenses apart → blind merge → checked against the goal → ledger) → replay it in the morning
-   ↓
-context runs out → handoff → the watchdog starts a fresh session from disk. Nothing is lost.
+  ┌───────────┐   ┌───────────┐   ┌───────────┐
+  │ Interview │ ▶ │ Plan      │ ▶ │ Gate      │
+  └───────────┘   └───────────┘   └───────────┘
+        ▼
+  ┌───────────┐   ┌───────────┐   ┌───────────┐
+  │ Execute   │ ▶ │ Verify    │ ▶ │ Mark      │
+  └───────────┘   └───────────┘   └───────────┘
+        ▼
+  ┌───────────┐
+  │ Handoff   │
+  └───────────┘
 ```
 
-<p align="center">
-  <img src="docs/assets/helioz-flow.png" alt="The tact: glass cards Queue, Gate, Executor, Blind Verifier, Integrity Marker, Telegram Report, Night Council, Ledger joined by blue arrows; a gold thread loops from the council back to the queue" width="100%">
-</p>
+<!-- workflow-diagram:end -->
 
-You can also drop a task by hand into `queue/tasks/`. One requirement: a check command. No command, no task. "Done" without proof is not done.
+| Stage | What happens |
+|---|---|
+| 1. Interview | One sentence turns into filled slots and a written goal |
+| 2. Plan | Two independent plans, merged by a third agent |
+| 3. Gate | Slots, dependencies, budget, and a stop switch |
+| 4. Execute | A real CLI probe picks the agent that actually runs |
+| 5. Verify | A second agent reads the disk, not the report |
+| 6. Mark | Commits, file hashes, and exit code inside the mark |
+| 7. Handoff | Telegram report, night council on small forks, fresh session |
 
-Everything important gets reported: stage, percent, what went wrong and how I got out of it. Plain words, no code. Reports fly to Telegram so they catch you away from the desk, and they sit on disk so anyone who opens the project can read them. Say "stop" and I freeze without losing anything. Say "go" and I keep driving.
+### Step 1: Say the goal once
 
-## Install
+You start with one sentence of intent. Helioz asks one question at a time and attaches its own recommendation, so agreeing takes a word. Answer in the editor, in a terminal, or in Telegram.
+
+**You get:** a goal in `queue/GOAL.md` that every later decision is checked against.
+
+### Step 2: Two agents plan blind
+
+Two agents write plans without seeing each other. A third merges them blind. One clever agent is fond of its own mistakes; two of them argue.
+
+**You get:** a master plan plus small tasks in `queue/tasks/`, each with a check command.
+
+### Step 3: The gate picks the next task
+
+The gate takes only a task whose dependencies are closed and whose budget window still has room. Two agents can never hold the same file, because the code refuses the second one.
+
+**You get:** one running task with a locked file set and a live budget count.
+
+### Step 4: An executor does the work
+
+Before handing over work, Helioz runs a real probe of each agent CLI instead of trusting a version string. The task goes to the agent that answered.
+
+**You get:** a changed working tree and a log of what the agent actually ran.
+
+### Step 5: A blind verifier checks it
+
+The verifier never sees the executor's report. It looks at the files, runs the check command, and adds an adversarial probe. Nobody grades their own homework.
+
+**You get:** a verdict backed by command output, or a task sent back for rework.
+
+### Step 6: Code writes the finish mark
+
+The mark is written by the gate, not by the agent. Thirteen adversarial probes try to forge it: a copied receipt, a mark without the external commit, a rewritten log, a swapped check command.
+
+**You get:** a task closed with evidence that survives an audit.
+
+### Step 7: Report, council, handoff
+
+Progress goes to Telegram and to disk. A small fork goes to a council of four lenses that write apart and are checked against your goal. Production actions, clashes with someone else's work, and expensive forks always wait for you.
+
+**You get:** a handoff file, so the watchdog starts the next session without losing context.
+
+## Quickstart
+
+You need macOS or Linux, Node.js 20 or newer, git, and at least one agent CLI: `claude`, `codex`, or `kimi`. Pick any of the three ways in.
 
 ```bash
 git clone https://github.com/zarubinvibe/helioz.git ~/helioz
 cd ~/helioz
 bash install.sh en
-```
-
-The script introduces itself and explains how I work, then checks what you have: Node, git, at least one agent CLI (claude, codex or kimi). After that it runs my instruments through their selftests and tells you what is left to do by hand. Needs macOS or Linux and Node.js 20+.
-
-To start:
-
-```bash
 bash scripts/helioz-start.sh
 ```
 
-## What is inside
+No Git? Download [the ZIP](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.zip), unpack it, and run the same `bash install.sh en` inside. Prefer an archive in the terminal? Take [the tarball](https://github.com/zarubinvibe/helioz/archive/refs/heads/main.tar.gz).
 
-| Path | What it does |
+**You get:** the installer introduces itself, checks Node, git, and your agent CLIs, runs the instrument selftests, and names what is left to do by hand.
+
+## Simple Comparison
+
+| Choice | Best when | What you get | Trade-off |
+|---|---|---|---|
+| **Helioz** | Long work must continue while you are away | State on disk, blind verification, forged-proof marks, night decisions | You run and watch it yourself |
+| Running the agent by hand | One short task in one sitting | Full control of every step | The work stops the moment you close the laptop |
+| A CI pipeline | Repeatable checks after a commit | Server-side runs and history | It reacts to commits; it does not plan or decide |
+| A tracker plus agent chat | Team coordination | Visible board and comments | Nothing verifies that "done" is true |
+
+## Simple Words
+
+| Word | Simple meaning |
 |---|---|
-| `ORCHESTRATOR.md` | the frozen orchestrator prompt, the tact above |
-| `scripts/helioz-plan.mjs` | slot-driven interrogation, final goal, master plan and small tasks |
-| `scripts/helioz-gate.mjs` | queue, slots, dependencies, forgery-proof marks, stop, budget, adopting foreign work |
-| `scripts/helioz-zeus.mjs` | Telegram: reports queue on disk and arrive later, fork buttons, stop, go, replay |
-| `scripts/helioz-exec.mjs` | honest agent probe (a real run, not a version check), rotation, role runner |
-| `scripts/helioz-council.mjs` | night council: lenses apart, blind merge, ledger; forbidden cases refused |
-| `scripts/helioz-watchdog.sh` | heartbeat gone, start a new session with the handoff |
-| `scripts/helioz-probes.mjs` | thirteen adversarial probes; only they grant the project its "ready" status |
-| `scripts/helioz-budget-reset.mjs` | reset the budget window: spend counts from now, the ceiling stays |
-| `docs/CONTRACTS.md` | on-disk state contracts: tasks, forks, marks, ledger |
-| `docs/BRAND.md` | design description, an instance of the Pantheon Design System |
+| Repository | The project folder that Git stores and versions |
+| Terminal | The window where you type commands |
+| Command | One instruction you give the computer |
+| Branch | A separate line of changes that does not touch `main` |
+| Pull Request | A request to review your change and accept it |
+| Agent CLI | A coding assistant you run in the terminal, such as Claude Code or Codex |
+| Check command | The command that proves a task is done, for example `npm test` |
 
-## Examples
+## Safety And Privacy
 
-- Start with one sentence of intent and let the grill turn it into a checked goal.
-- Drop a small task with a check command into the queue and let executor/verifier split the work.
-- Keep reports durable when Telegram is down, then flush them when the channel returns.
+- File access stays inside the clone unless a task names another allowed path.
+- `.helioz/`, `queue/`, and logs are local runtime state and are never published.
+- Secrets live outside git and are read only when a message is sent or polled.
+- Telegram delivery is best effort: messages land in a local outbox first.
+- Production actions and expensive forks are refused by the council and wait for you.
+- An empty queue, unreadable state, or a goalless council is a red result, not a pass.
 
-## Documentation
+Review `git diff` and run the public gate before any push.
 
-Start with this README, then read [state contracts](docs/CONTRACTS.md), [the master plan](docs/MASTER-PLAN.md), and [the orchestrator prompt](ORCHESTRATOR.md).
+## Limits
 
-## Security And Privacy
+Status: working local system, run daily by its author.
 
-- File access stays inside the clone unless a task explicitly names another allowed path.
-- `.helioz/`, `queue/`, logs, and local runtime state are ignored and never published.
-- Secrets live outside git and are read only at send/poll time.
-- Telegram delivery is best-effort; messages are written to the local outbox first.
-- Review `git diff` and run the public gate before pushing.
+- macOS and Linux only; there is no Windows path.
+- Quality of the work is the quality of the agent CLI you installed.
+- The gate proves file state and command output. It does not judge product taste.
+- Telegram, the night council, and the watchdog are optional and can be switched off.
 
-## How I prove I am not lying
+Deeper reading: [the full reference](docs/DETAILS.md), [state contracts](docs/CONTRACTS.md), [the orchestrator prompt](ORCHESTRATOR.md), and [the master plan](docs/MASTER-PLAN.md). Proof of the claims above: `node scripts/helioz-probes.mjs` runs thirteen adversarial probes and all of them must be green.
 
-Thirteen probes, one command, all of them must be green:
+## Star And Contribute
 
-```bash
-node scripts/helioz-probes.mjs
-```
+Useful? Give Helioz a star: [https://github.com/zarubinvibe/helioz](https://github.com/zarubinvibe/helioz). It takes a second and it decides whether other people ever find the project.
 
-Six probes hit the visible workflow: kill the orchestrator mid-task, forge a mark, stay silent for a day, cut Telegram, hand the council a forbidden fork, or send two executors at one file. Seven more attack the proof chain: a receipt for an older task revision, a marker without `external_sha`, a receipt without logs, a hand-written receipt, a changed log, a substituted check command, and one CLI assigned as both executor and verifier.
+Want to change something? The path is short: fork the repository, create a branch, commit your change, push the branch, then open a Pull Request. Do not push directly to `main`; the release gate rejects it.
 
-The probes test me, not my claims about myself. A red probe means no "ready" status.
+Found a problem instead? Open an issue at [https://github.com/zarubinvibe/helioz/issues](https://github.com/zarubinvibe/helioz/issues) and say what you ran and what happened.
 
-<p align="center">
-  <img src="docs/assets/pantheon/emblem.png" alt="Helioz emblem: a marble statue with a golden sun-disc, a chariot wheel and the classical column" width="420">
-</p>
-
-## A star
-
-If Helioz turns out useful, star it: [github.com/zarubinvibe/helioz](https://github.com/zarubinvibe/helioz).
-
-Seconds for you, genuinely important for the project. And meet the family: [themis](https://github.com/zarubinvibe/themis), [mnemazine](https://github.com/zarubinvibe/mnemazine), [zeuz](https://github.com/zarubinvibe/zeuz), [athena](https://github.com/zarubinvibe/athena).
-
-## License
-
-MIT. See [LICENSE](LICENSE).
-
----
-
-Русская версия: [README.ru.md](README.ru.md)
+<!-- beginner-readme:end -->
 
 <!-- pantheon-family:start -->
 ## Olympuz family
@@ -180,3 +192,7 @@ This is one of the public [Olympuz projects](https://github.com/zarubinvibe/athe
 | project | Themis | Multi-agent assistant for Russian litigation with local OCR and review by a five-jurist council. | [Repository](https://github.com/zarubinvibe/themis) · [ZIP](https://github.com/zarubinvibe/themis/archive/refs/heads/main.zip) |
 | project | Zeuz | Factory that turns an idea into a governed multi-agent workflow with gates, observability, and replay. | [Repository](https://github.com/zarubinvibe/zeuz) · [ZIP](https://github.com/zarubinvibe/zeuz/archive/refs/heads/main.zip) |
 <!-- pantheon-family:end -->
+
+## License
+
+MIT. See [LICENSE](LICENSE).
